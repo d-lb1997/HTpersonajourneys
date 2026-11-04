@@ -118,17 +118,10 @@ export default function App() {
     <div className="wrap">
       <style>{dimCss}</style>
       <header className="page-header">
-        <div className="row">
-          <div>
-            <h1>Personas and journeys</h1>
-            <p>Pick a persona by flipping its badge, then see how they move through the journey. Click a stage to see detail, add notes and set how confident we are.</p>
-          </div>
-          <button className="themebtn" type="button" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
-        </div>
-        <div className="banner"><b>Placeholder content.</b> All names, quotes, stages and scores below are examples to show how the page works. Replace them in <code>src/data.ts</code>.</div>
+        <h1>Personas and journeys</h1>
+        <button className="themebtn" type="button" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
       </header>
 
-      <h2 className="sec" id="h-personas">Personas</h2>
       <div className="picker" data-sel={pIndex ?? ""}>
         <TeamLanyardRail
           items={lanyardItems}
@@ -229,7 +222,7 @@ export default function App() {
       )}
       </div>
 
-      <footer className="page-footer">Notes and confidence settings are saved in this browser only. Content is placeholder text.</footer>
+      <footer className="page-footer">Notes and confidence settings are saved in this browser only. Content is placeholder text: replace it in <code>src/data.ts</code>.</footer>
     </div>
   );
 }

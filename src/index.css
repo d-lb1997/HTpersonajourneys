@@ -161,3 +161,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .picker-body .nobox, .picker-body .stage { border: 0; background: transparent; padding-left: 0; padding-right: 0; }
 .picker-body .subbox { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
 h2.sec.first { margin-top: 16px; }
+
+.page-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0 8px; }
+.page-header h1 { font-size: 1.25rem; margin: 0; }
+.picker { margin-top: 4px; }
