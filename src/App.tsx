@@ -64,7 +64,7 @@ function Device({ type, screen }: { type: DeviceType; screen: string }) {
 }
 
 function List({ items }: { items: string[] }) {
-  if (!items.length) return <span style={{ color: "var(--muted-foreground)" }}>None noted</span>;
+  if (!items.length) return <span className="t-caption">None noted</span>;
   return <ul>{items.map((x) => <li key={x}>{x}</li>)}</ul>;
 }
 
@@ -178,8 +178,8 @@ export default function App() {
           <h2 className="sec first">Profile</h2>
       <div className="pdetail nobox" aria-live="polite">
         <div className="who">
-          <b style={{ fontSize: "1.1rem" }}>{persona.name}</b>
-          <small style={{ color: "var(--muted-foreground)" }}>{persona.role}</small>
+          <b className="t-h2">{persona.name}</b>
+          <small>{persona.role}</small>
           <span className={`badge ${badgeClass(statusOf(persona))}`}>{statusOf(persona)}</span>
         </div>
         <div className="quote">{persona.quote}</div>
@@ -192,7 +192,7 @@ export default function App() {
           <select id="pstatus" value={statusOf(persona)} onChange={(e) => update(persona.id, { status: e.target.value as Status })}>
             {STATUSES.map((s) => <option key={s}>{s}</option>)}
           </select>
-          <small style={{ color: "var(--muted-foreground)" }}>Assumption, emerging from evidence, or confirmed with the client.</small>
+          <small>Assumption, emerging from evidence, or confirmed with the client.</small>
         </div>
       </div>
 
@@ -211,13 +211,13 @@ export default function App() {
       </div>
       <dl className="pdetail nobox" aria-live="polite">
         {([["Site", persona.org.site], ["City", `${persona.org.city}, ${persona.org.country}`], ["Department", persona.org.department], ["Level", persona.org.level], ["Reports to", persona.org.reportsTo]] as const).map(([k, v]) => (
-          <div key={k}><dt style={{ fontSize: ".78rem", textTransform: "uppercase", letterSpacing: ".05em", color: "var(--muted-foreground)", fontWeight: 700 }}>{k}</dt><dd style={{ margin: 0 }}>{v}</dd></div>
+          <div key={k}><dt className="t-label">{k}</dt><dd style={{ margin: 0 }}>{v}</dd></div>
         ))}
       </dl>
 
       <h2 className="sec">Journey</h2>
       <div className="tools" role="group" aria-label="Show or hide rows">
-        <span style={{ color: "var(--muted-foreground)", fontSize: ".88rem" }}>Show:</span>
+        <span className="t-caption">Show:</span>
         {LAYERS.map(([k, label]) => (
           <button key={k} type="button" className="chip" aria-pressed={layers[k]} onClick={() => setLayers((l) => ({ ...l, [k]: !l[k] }))}>{label}</button>
         ))}
@@ -242,7 +242,7 @@ export default function App() {
       <div className="stage" aria-live="polite">
         <div className="full">
           <h3>{persona.name} · {STAGES[sIndex]}</h3>
-          <b style={{ fontSize: "1.15rem" }}>{STAGE_NAMES[sIndex]}</b>{" "}
+          <b className="t-h2">{STAGE_NAMES[sIndex]}</b>{" "}
           <span className="meter" aria-label={`Emotion ${emo} out of 5`}>{[1, 2, 3, 4, 5].map((v) => <i key={v} className={v <= emo ? "on" : ""} />)}</span>
         </div>
         <div><h3>Actions</h3><List items={j.actions[sIndex] ?? []} /></div>
