@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personas and Journeys</title>
+<style>
+:root{
+  --bg:#ffffff;--surface:#ffffff;--surface2:#eef1f7;--ink:#18202f;--muted:#525d78;--line:#d8deeb;
+  --accent:#2e4e95;--accent-ink:#ffffff;--accent-soft:#e3e9f6;--red:#b22420;--red-soft:#f9e3e2;--green:#1b7a4f;--green-soft:#dff3e8;--amber:#8a5a00;--amber-soft:#fbefd0;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1626;--surface:#172036;--surface2:#1f2a46;--ink:#e8ecf6;--muted:#9aa6c4;--line:#2a3552;
+    --accent:#8ea8e8;--accent-ink:#0f1626;--accent-soft:#1f2d58;--red:#ff8782;--red-soft:#3b2023;--green:#4cc58c;--green-soft:#173a2b;--amber:#f0b955;--amber-soft:#3a2f12;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1626;--surface:#172036;--surface2:#1f2a46;--ink:#e8ecf6;--muted:#9aa6c4;--line:#2a3552;
+  --accent:#8ea8e8;--accent-ink:#0f1626;--accent-soft:#1f2d58;--red:#ff8782;--red-soft:#3b2023;--green:#4cc58c;--green-soft:#173a2b;--amber:#f0b955;--amber-soft:#3a2f12;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:16px;line-height:1.5}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 64px}
+header{padding:24px 0 8px;border-top:6px solid var(--accent)}
+header .row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+h1{font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1.15;margin:0 0 4px}
+header p{margin:0;color:var(--muted);max-width:70ch}
+h2{font-size:1.25rem;margin:28px 0 10px}
+h3{font-size:1rem;margin:0 0 6px}
+.banner{background:var(--amber-soft);border-left:5px solid var(--amber);border-radius:10px;padding:10px 14px;margin:14px 0;font-size:.94rem}
+button{font:inherit;color:inherit;cursor:pointer}
+.themebtn{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 14px;font-size:.88rem}
+
+/* persona cards */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.pcard{text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;position:relative}
+.pcard:hover{border-color:var(--accent)}
+.pcard[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:1.1rem}
+.pcard b{font-size:1.05rem}
+.pcard small{color:var(--muted)}
+.badge{align-self:flex-start;font-size:.72rem;font-weight:700;border-radius:99px;padding:2px 10px;background:var(--surface2);color:var(--muted)}
+.badge.ok{background:var(--green-soft);color:var(--green)}
+.badge.mid{background:var(--amber-soft);color:var(--amber)}
+
+/* persona detail */
+.pdetail{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pdetail h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.pdetail ul{margin:0;padding-left:18px}
+.pdetail .quote{grid-column:1/-1;border-left:4px solid var(--accent);padding:4px 12px;color:var(--muted);font-style:italic}
+.conf{display:flex;gap:8px;align-items:center;flex-wrap:wrap;grid-column:1/-1}
+.conf select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+
+/* layers */
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 14px;font-size:.88rem}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+/* journey */
+.journey{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.jgrid{display:grid;grid-template-columns:120px repeat(var(--n),minmax(150px,1fr));min-width:calc(120px + var(--n)*150px)}
+.jgrid>div{padding:10px 12px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);font-size:.92rem}
+.jgrid>div:nth-child(var(--cols)n){border-right:0}
+.jgrid .rl{background:var(--surface2);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.jgrid .sh{padding:0}
+.jgrid .sh button{width:100%;height:100%;text-align:left;background:var(--surface2);border:0;padding:10px 12px;font-weight:800}
+.jgrid .sh button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.jgrid .sh small{display:block;font-weight:500;opacity:.8}
+.cell.sel{background:var(--accent-soft)}
+.cell ul{margin:0;padding-left:16px}
+.pain{color:var(--red)}
+.opp{color:var(--green)}
+.emo{padding:0 !important;grid-column:2/-1;background:var(--surface)}
+.emo svg{display:block;width:100%;height:150px}
+.hidden{display:none !important}
+
+/* stage panel */
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.stage h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.stage ul{margin:0;padding-left:18px}
+.stage .full{grid-column:1/-1}
+.stage textarea{width:100%;min-height:70px;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.stage .nav{display:flex;gap:8px;grid-column:1/-1}
+.nav button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 14px}
+.nav button:disabled{opacity:.4;cursor:default}
+.meter{display:flex;gap:4px;align-items:center}
+.meter i{width:22px;height:8px;border-radius:4px;background:var(--surface2)}
+.meter i.on{background:var(--accent)}
+footer{margin-top:36px;color:var(--muted);font-size:.86rem}
+@media (max-width:600px){.jgrid{grid-template-columns:96px repeat(var(--n),minmax(140px,1fr));min-width:calc(96px + var(--n)*140px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="row">
+    <div>
+      <h1>Personas and journeys</h1>
+      <p>Pick a persona to see who they are and how they move through the journey. Click a stage to see detail, add notes and set how confident we are.</p>
+    </div>
+    <button class="themebtn" id="themebtn" type="button" aria-label="Toggle light or dark theme">Theme</button>
+  </div>
+  <div class="banner"><b>Placeholder content.</b> All names, quotes, stages and scores below are examples to show how the page works. Replace them in the <code>DATA</code> block at the bottom of this file.</div>
+</header>
+
+<h2 id="h-personas">1. Personas</h2>
+<div class="personas" id="personas" role="group" aria-labelledby="h-personas"></div>
+<div class="pdetail" id="pdetail" aria-live="polite"></div>
+
+<h2>2. Journey</h2>
+<div class="tools" id="layers" role="group" aria-label="Show or hide rows"></div>
+<div class="journey"><div class="jgrid" id="jgrid"></div></div>
+<div class="stage" id="stage" aria-live="polite"></div>
+
+<footer>Notes and confidence settings are saved in this browser only. Content is placeholder text.</footer>
+</div>
+
+<script>
+/* ============ DATA: replace with real content ============ */
+var DATA={
+  stages:["Stage 1","Stage 2","Stage 3","Stage 4","Stage 5","Stage 6"],
+  stageNames:["Awareness","First contact","Everyday use","Problem or question","Resolution","Looking back"],
+  personas:[
+    {id:"p1",initials:"A",name:"Persona A (placeholder)",role:"Role or segment goes here",status:"Assumption",
+     quote:"“A short quote that sums up what this person cares about goes here.”",
+     goals:["Placeholder goal one","Placeholder goal two","Placeholder goal three"],
+     frustrations:["Placeholder frustration one","Placeholder frustration two"],
+     channels:["Channel one","Channel two","Channel three"],
+     facts:["Age or tenure: placeholder","Location or site: placeholder","Device: placeholder","Language: placeholder"],
+     journey:{
+       emotion:[3,4,4,2,3,4],
+       actions:[["Hears about the topic"],["Tries it for the first time"],["Uses it regularly","Shares with a colleague"],["Gets stuck on something"],["Asks for help","Finds an answer"],["Reflects on how it went"]],
+       touchpoints:[["Touchpoint 1"],["Touchpoint 2","Touchpoint 3"],["Touchpoint 4"],["Touchpoint 5"],["Touchpoint 6","Touchpoint 7"],["Touchpoint 8"]],
+       pains:[["Unclear where to start"],[],["Too many steps"],["Cannot find the right person"],["Waiting for a reply"],[]],
+       opps:[["Clear first message"],["Simple welcome"],["Shortcut for common tasks"],["Visible help route"],["Faster answers"],["Ask for feedback"]]
+     }},
+    {id:"p2",initials:"B",name:"Persona B (placeholder)",role:"Another role or segment",status:"Emerging",
+     quote:"“Another placeholder quote about needs and worries.”",
+     goals:["Placeholder goal one","Placeholder goal two"],
+     frustrations:["Placeholder frustration one","Placeholder frustration two","Placeholder frustration three"],
+     channels:["Channel one","Channel four"],
+     facts:["Age or tenure: placeholder","Location or site: placeholder","Device: placeholder","Language: placeholder"],
+     journey:{
+       emotion:[2,3,3,2,2,3],
+       actions:[["Hears from a colleague"],["Needs someone to show them"],["Uses it occasionally"],["Hits a limit"],["Works around it"],["Decides whether to keep using it"]],
+       touchpoints:[["Touchpoint 2"],["Touchpoint 5"],["Touchpoint 1","Touchpoint 4"],["Touchpoint 6"],["Touchpoint 3"],["Touchpoint 8"]],
+       pains:[["Heard late"],["Needs help to get started"],[],["No clear owner"],["Workaround takes time"],["Unsure it is worth it"]],
+       opps:[["Reach them where they are"],["Buddy or guide"],["Keep it simple"],["Name an owner"],["Fix the root cause"],["Show what changed"]]
+     }},
+    {id:"p3",initials:"C",name:"Persona C (placeholder)",role:"A third role or segment",status:"Confirmed",
+     quote:"“A third placeholder quote goes here.”",
+     goals:["Placeholder goal one","Placeholder goal two","Placeholder goal three"],
+     frustrations:["Placeholder frustration one"],
+     channels:["Channel two","Channel three","Channel five"],
+     facts:["Age or tenure: placeholder","Location or site: placeholder","Device: placeholder","Language: placeholder"],
+     journey:{
+       emotion:[4,4,5,3,4,5],
+       actions:[["Looks for it proactively"],["Sets things up"],["Uses it daily","Helps others"],["Spots a gap"],["Suggests an improvement"],["Champions it"]],
+       touchpoints:[["Touchpoint 1","Touchpoint 3"],["Touchpoint 2"],["Touchpoint 4"],["Touchpoint 5"],["Touchpoint 7"],["Touchpoint 6"]],
+       pains:[[],[],["Few ways to share what works"],["Suggestions go nowhere"],[],[]],
+       opps:[["Early access"],["Templates"],["Recognise their help"],["Feedback loop"],["Show what happened to ideas"],["Invite as champion"]]
+     }}
+  ]
+};
+/* ========================================================= */
+
+var LAYERS=[["emotion","Emotion"],["actions","Actions"],["touchpoints","Touchpoints"],["pains","Pain points"],["opps","Opportunities"]];
+var STATUS=["Assumption","Emerging","Confirmed"];
+var state={p:0,s:0,layers:{emotion:true,actions:true,touchpoints:true,pains:true,opps:true}};
+var KEY="persona-journeys-placeholder-v1",saved={};
+try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}}
+function $(id){return document.getElementById(id)}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function list(a){return a.length?'<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>':'<span style="color:var(--muted)">None noted</span>'}
+function status(p){return (saved[p.id]&&saved[p.id].status)||p.status}
+function badgeClass(s){return s==="Confirmed"?"ok":(s==="Emerging"?"mid":"")}
+
+function renderCards(){
+  $("personas").innerHTML=DATA.personas.map(function(p,i){
+    var st=status(p);
+    return '<button type="button" class="pcard" data-p="'+i+'" aria-pressed="'+(i===state.p)+'"><span class="avatar" aria-hidden="true">'+esc(p.initials)+'</span><b>'+esc(p.name)+'</b><small>'+esc(p.role)+'</small><span class="badge '+badgeClass(st)+'">'+esc(st)+'</span></button>';
+  }).join("");
+}
+function renderPersonas(){
+  renderCards();
+  var p=DATA.personas[state.p];
+  $("pdetail").innerHTML='<div class="quote">'+esc(p.quote)+'</div><div><h3>Goals</h3>'+list(p.goals)+'</div><div><h3>Frustrations</h3>'+list(p.frustrations)+'</div><div><h3>Channels</h3>'+list(p.channels)+'</div><div><h3>Facts</h3>'+list(p.facts)+'</div>'+
+    '<div class="conf"><label for="pstatus"><b>How confident are we?</b></label><select id="pstatus">'+STATUS.map(function(s){return '<option'+(status(p)===s?' selected':'')+'>'+s+'</option>'}).join("")+'</select><small style="color:var(--muted)">Assumption, emerging from evidence, or confirmed with the client.</small></div>';
+}
+function renderLayers(){
+  $("layers").innerHTML='<span style="color:var(--muted);font-size:.88rem">Show:</span>'+LAYERS.map(function(l){return '<button type="button" class="chip" data-layer="'+l[0]+'" aria-pressed="'+state.layers[l[0]]+'">'+l[1]+'</button>'}).join("");
+}
+function curve(emo){
+  var n=emo.length,w=1000,h=150,pad=24,x=function(i){return (i+0.5)*w/n},y=function(v){return h-pad-(v-1)*(h-2*pad)/4};
+  var pts=emo.map(function(v,i){return x(i)+","+y(v)}).join(" ");
+  var g='';for(var k=1;k<=5;k++)g+='<line x1="0" x2="'+w+'" y1="'+y(k)+'" y2="'+y(k)+'" stroke="var(--line)" stroke-dasharray="4 6"/>';
+  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" role="img" aria-label="Emotion curve across stages, scale 1 low to 5 high">'+g+'<polyline points="'+pts+'" fill="none" stroke="var(--accent)" stroke-width="3" vector-effect="non-scaling-stroke"/>'+
+   emo.map(function(v,i){return '<circle cx="'+x(i)+'" cy="'+y(v)+'" r="'+(i===state.s?9:6)+'" fill="'+(i===state.s?'var(--accent)':'var(--surface)')+'" stroke="var(--accent)" stroke-width="3" vector-effect="non-scaling-stroke"/>'}).join("")+'</svg>';
+}
+function renderJourney(){
+  var p=DATA.personas[state.p],j=p.journey,n=DATA.stages.length,L=state.layers,h='';
+  var g=$("jgrid");g.style.setProperty("--n",n);g.style.setProperty("--cols",n+1);
+  h+='<div class="rl">Stage</div>'+DATA.stages.map(function(s,i){return '<div class="sh"><button type="button" data-s="'+i+'" aria-pressed="'+(i===state.s)+'">'+esc(s)+'<small>'+esc(DATA.stageNames[i])+'</small></button></div>'}).join("");
+  h+='<div class="rl'+(L.emotion?'':' hidden')+'">Emotion</div><div class="emo'+(L.emotion?'':' hidden')+'">'+curve(j.emotion)+'</div>';
+  function row(key,label,cls,fn){h+='<div class="rl'+(L[key]?'':' hidden')+'">'+label+'</div>'+j[key].map(function(c,i){return '<div class="cell'+(i===state.s?' sel':'')+(L[key]?'':' hidden')+'"'+(cls?' ':'')+'>'+fn(c)+'</div>'}).join("")}
+  row("actions","Actions","",list);
+  row("touchpoints","Touchpoints","",list);
+  row("pains","Pain points","pain",function(c){return '<span class="pain">'+list(c)+'</span>'});
+  row("opps","Opportunities","opp",function(c){return '<span class="opp">'+list(c)+'</span>'});
+  g.innerHTML=h;
+}
+function renderStage(){
+  var p=DATA.personas[state.p],j=p.journey,i=state.s,k=p.id+":"+i,note=(saved[k]&&saved[k].note)||"",c=j.emotion[i];
+  var meter='<span class="meter" aria-label="Emotion '+c+' out of 5">'+[1,2,3,4,5].map(function(v){return '<i class="'+(v<=c?'on':'')+'"></i>'}).join("")+'</span>';
+  $("stage").innerHTML='<div class="full"><h3>'+esc(p.name)+' · '+esc(DATA.stages[i])+'</h3><b style="font-size:1.15rem">'+esc(DATA.stageNames[i])+'</b> '+meter+'</div>'+
+   '<div><h3>Actions</h3>'+list(j.actions[i])+'</div><div><h3>Touchpoints</h3>'+list(j.touchpoints[i])+'</div>'+
+   '<div><h3>Pain points</h3><span class="pain">'+list(j.pains[i])+'</span></div><div><h3>Opportunities</h3><span class="opp">'+list(j.opps[i])+'</span></div>'+
+   '<div class="full"><h3><label for="note">Your notes for this stage</label></h3><textarea id="note" placeholder="What did you hear? What is still an assumption?">'+esc(note)+'</textarea></div>'+
+   '<div class="nav"><button type="button" id="prev"'+(i===0?' disabled':'')+'>Previous stage</button><button type="button" id="next"'+(i===DATA.stages.length-1?' disabled':'')+'>Next stage</button></div>';
+}
+function renderAll(){renderPersonas();renderLayers();renderJourney();renderStage()}
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest("button");if(!b)return;
+  if(b.dataset.p!==undefined){state.p=+b.dataset.p;renderAll()}
+  else if(b.dataset.s!==undefined){state.s=+b.dataset.s;renderJourney();renderStage()}
+  else if(b.dataset.layer){state.layers[b.dataset.layer]=!state.layers[b.dataset.layer];renderLayers();renderJourney()}
+  else if(b.id==="prev"){state.s=Math.max(0,state.s-1);renderJourney();renderStage()}
+  else if(b.id==="next"){state.s=Math.min(DATA.stages.length-1,state.s+1);renderJourney();renderStage()}
+  else if(b.id==="themebtn"){
+    var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+    r.dataset.theme=dark?"light":"dark";
+  }
+});
+document.addEventListener("change",function(e){
+  if(e.target.id==="pstatus"){var p=DATA.personas[state.p];saved[p.id]=saved[p.id]||{};saved[p.id].status=e.target.value;save();renderCards()}
+});
+document.addEventListener("input",function(e){
+  if(e.target.id==="note"){var k=DATA.personas[state.p].id+":"+state.s;saved[k]=saved[k]||{};saved[k].note=e.target.value;save()}
+});
+renderAll();
+</script>
+</body>
+</html>

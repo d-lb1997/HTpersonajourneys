@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+ * shadcn-style tokens, themed after HellermannTyton's corporate look:
+ * deep navy + brand blue on white, with a signal-yellow highlight.
+ * These are approximations (the site could not be fetched) - adjust the hex values here.
+ */
+:root {
+  --background: #ffffff;
+  --foreground: #0b2545;
+  --card: #ffffff;
+  --card-foreground: #0b2545;
+  --muted: #eef2f7;
+  --muted-foreground: #5b6b82;
+  --border: #d6dde8;
+  --ring: #0062b1;
+  --primary: #0062b1;
+  --primary-foreground: #ffffff;
+  --accent-brand: #ffc20e;
+  --chart-1: #003a78;
+  --chart-2: #0062b1;
+  --chart-3: #3a9ad9;
+  --chart-4: #e3a600;
+  --chart-5: #5b6b82;
+
+  /* journey-view aliases */
+  --bg: var(--background);
+  --surface: var(--card);
+  --surface2: var(--muted);
+  --ink: var(--foreground);
+  --muted-ink: var(--muted-foreground);
+  --line: var(--border);
+  --accent: var(--primary);
+  --accent-ink: var(--primary-foreground);
+  --accent-soft: #dbe9f6;
+  --red: #b22420;
+  --red-soft: #f9e3e2;
+  --green: #1b7a4f;
+  --green-soft: #dff3e8;
+  --amber: #7a5600;
+  --amber-soft: #fff1c2;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --background: #07182e;
+  --foreground: #e8eef7;
+  --card: #0d2340;
+  --card-foreground: #e8eef7;
+  --muted: #14305a;
+  --muted-foreground: #9db0cb;
+  --border: #1f3b66;
+  --ring: #6cb4ee;
+  --primary: #5aa9ea;
+  --primary-foreground: #07182e;
+  --accent-brand: #ffd04a;
+  --chart-1: #6cb4ee;
+  --chart-2: #3a8fd9;
+  --chart-3: #9fd0f5;
+  --chart-4: #ffd04a;
+  --chart-5: #9db0cb;
+  --accent-soft: #123a68;
+  --red: #ff8782;
+  --red-soft: #3b2023;
+  --green: #4cc58c;
+  --green-soft: #173a2b;
+  --amber: #f0b955;
+  --amber-soft: #3a2f12;
+  color-scheme: dark;
+}
+
+/* static: also emit the --color-* variables the lanyard component reads from inline styles */
+@theme static inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+}
+
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.5; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px 64px; }
+
+/* page header (scoped so it does not touch the lanyard's own <header>) */
+.page-header { padding: 24px 0 8px; border-top: 6px solid var(--accent); position: relative; }
+.page-header::before { content: ""; position: absolute; top: -6px; left: 0; width: 96px; height: 6px; background: var(--accent-brand); }
+.page-header .row { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.page-header h1 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); line-height: 1.15; margin: 0 0 4px; font-weight: 700; color: var(--foreground); }
+.page-header p { margin: 0; color: var(--muted-foreground); max-width: 70ch; }
+.picker { margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.picker-action { display: inline-flex; align-items: center; gap: 8px; border-radius: 99px; background: var(--accent); color: var(--accent-ink); padding: 8px 18px; font-size: .88rem; font-weight: 600; }
+.picker-action i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-brand); }
+h2.sec { font-size: 1.25rem; margin: 28px 0 10px; font-weight: 700; }
+h3 { font-size: 1rem; margin: 0 0 6px; }
+.banner { background: var(--amber-soft); border-left: 5px solid var(--accent-brand); border-radius: 10px; padding: 10px 14px; margin: 14px 0; font-size: .94rem; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.themebtn { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 6px 14px; font-size: .88rem; }
+.badge { align-self: flex-start; font-size: .72rem; font-weight: 700; border-radius: 99px; padding: 2px 10px; background: var(--surface2); color: var(--muted-foreground); }
+.badge.ok { background: var(--green-soft); color: var(--green); }
+.badge.mid { background: var(--amber-soft); color: var(--amber); }
+
+/* persona detail */
+.pdetail { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.pdetail h3, .stage h3 { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted-foreground); }
+.pdetail ul, .stage ul, .cell ul { margin: 0; padding-left: 18px; list-style: disc; }
+.pdetail .quote { grid-column: 1/-1; border-left: 4px solid var(--accent-brand); padding: 4px 12px; color: var(--muted-foreground); font-style: italic; }
+.pdetail .who { grid-column: 1/-1; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.conf { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; grid-column: 1/-1; }
+.conf select { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
+
+/* layers */
+.tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 6px 0 12px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 5px 14px; font-size: .88rem; }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* journey */
+.journey { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.jgrid { display: grid; grid-template-columns: 120px repeat(var(--n), minmax(150px, 1fr)); min-width: calc(120px + var(--n) * 150px); }
+.jgrid > div { padding: 10px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); font-size: .92rem; }
+.jgrid > div:nth-child(var(--cols)n) { border-right: 0; }
+.jgrid .rl { background: var(--surface2); font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted-foreground); }
+.jgrid .sh { padding: 0; }
+.jgrid .sh button { width: 100%; height: 100%; text-align: left; background: var(--surface2); border: 0; padding: 10px 12px; font-weight: 800; }
+.jgrid .sh button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.jgrid .sh small { display: block; font-weight: 500; opacity: .8; }
+.cell.sel { background: var(--accent-soft); }
+.pain { color: var(--red); }
+.opp { color: var(--green); }
+.emo { padding: 0 !important; grid-column: 2/-1; background: var(--surface); }
+.emo svg { display: block; width: 100%; height: 150px; }
+.hidden { display: none !important; }
+
+/* stage panel */
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.stage .full { grid-column: 1/-1; }
+.stage textarea { width: 100%; min-height: 70px; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+.stage .nav { display: flex; gap: 8px; grid-column: 1/-1; }
+.nav button { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 14px; }
+.nav button:disabled { opacity: .4; cursor: default; }
+.meter { display: inline-flex; gap: 4px; align-items: center; }
+.meter i { width: 22px; height: 8px; border-radius: 4px; background: var(--surface2); }
+.meter i.on { background: var(--accent); }
+.page-footer { margin-top: 36px; color: var(--muted-foreground); font-size: .86rem; }
+@media (max-width: 600px) { .jgrid { grid-template-columns: 96px repeat(var(--n), minmax(140px, 1fr)); min-width: calc(96px + var(--n) * 140px); } }
