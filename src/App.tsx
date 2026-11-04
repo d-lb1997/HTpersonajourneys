@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
-import { PERSONAS, STAGES, STAGE_NAMES, type Persona, type Status } from "@/data";
+import { PERSONAS, STAGES, STAGE_NAMES, type DeviceType, type Persona, type Status } from "@/data";
 
 const LAYERS = [["emotion", "Emotion"], ["actions", "Actions"], ["touchpoints", "Touchpoints"], ["pains", "Pain points"], ["opps", "Opportunities"]] as const;
 type LayerKey = (typeof LAYERS)[number][0];
@@ -20,6 +20,48 @@ function avatar(initials: string, bg: string) {
 }
 
 const AVATAR_BG = ["#003a78", "#0062b1", "#3a9ad9"];
+
+function Device({ type, screen }: { type: DeviceType; screen: string }) {
+  const stroke = "var(--foreground)";
+  const body = "var(--card)";
+  const glass = "var(--accent-soft)";
+  const txt = (x: number, y: number) => (
+    <text x={x} y={y} textAnchor="middle" fontSize="9" fontWeight="700" fill="var(--primary)">{screen}</text>
+  );
+  if (type === "mobile") {
+    return (
+      <svg viewBox="0 0 80 150" role="img" aria-label="Mobile phone" className="device mobile">
+        <rect x="4" y="4" width="72" height="142" rx="12" fill={body} stroke={stroke} strokeWidth="3" />
+        <rect x="11" y="18" width="58" height="114" rx="4" fill={glass} />
+        <rect x="31" y="9" width="18" height="4" rx="2" fill={stroke} />
+        {txt(40, 78)}
+        <rect x="30" y="137" width="20" height="3" rx="1.5" fill={stroke} opacity=".5" />
+      </svg>
+    );
+  }
+  if (type === "desktop") {
+    return (
+      <svg viewBox="0 0 220 160" role="img" aria-label="Desktop computer" className="device desktop">
+        <rect x="8" y="6" width="204" height="124" rx="8" fill={body} stroke={stroke} strokeWidth="3" />
+        <rect x="16" y="14" width="188" height="104" rx="3" fill={glass} />
+        <rect x="16" y="14" width="188" height="12" fill="var(--primary)" opacity=".85" />
+        {txt(110, 72)}
+        <path d="M96 130h28l4 20H92z" fill={body} stroke={stroke} strokeWidth="3" strokeLinejoin="round" />
+        <rect x="70" y="150" width="80" height="6" rx="3" fill={stroke} />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 110 200" role="img" aria-label="Kiosk terminal" className="device kiosk">
+      <rect x="12" y="4" width="86" height="120" rx="8" fill={body} stroke={stroke} strokeWidth="3" />
+      <rect x="20" y="12" width="70" height="86" rx="3" fill={glass} />
+      {txt(55, 58)}
+      <rect x="34" y="104" width="42" height="12" rx="3" fill={stroke} opacity=".25" />
+      <rect x="44" y="124" width="22" height="58" fill={body} stroke={stroke} strokeWidth="3" />
+      <rect x="22" y="182" width="66" height="10" rx="4" fill={stroke} />
+    </svg>
+  );
+}
 
 function List({ items }: { items: string[] }) {
   if (!items.length) return <span style={{ color: "var(--muted-foreground)" }}>None noted</span>;
@@ -217,6 +259,15 @@ export default function App() {
         </div>
       </div>
 
+          <h2 className="sec">Devices</h2>
+          <div className="devices">
+            {persona.devices.map((d) => (
+              <figure key={d.type} className="devfig">
+                <Device type={d.type} screen={persona.initials} />
+                <figcaption><b>{d.type === "desktop" ? "PC / Desktop" : d.type === "mobile" ? "Mobile" : "Kiosk"}</b><small>{d.use}</small></figcaption>
+              </figure>
+            ))}
+          </div>
           <button type="button" className="chip" onClick={() => setPIndex(null)}>Clear selection</button>
         </div>
       )}
