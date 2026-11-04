@@ -68,16 +68,19 @@ function List({ items }: { items: string[] }) {
   return <ul>{items.map((x) => <li key={x}>{x}</li>)}</ul>;
 }
 
-function Curve({ emotion, selected }: { emotion: number[]; selected: number }) {
+function Curve({ emotion, selected, hover, onHover, onSelect }: { emotion: number[]; selected: number; hover: number | null; onHover: (i: number | null) => void; onSelect: (i: number) => void }) {
   const n = emotion.length, w = 1000, h = 150, pad = 24;
   const x = (i: number) => ((i + 0.5) * w) / n;
   const y = (v: number) => h - pad - ((v - 1) * (h - 2 * pad)) / 4;
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" role="img" aria-label="Emotion curve across stages, scale 1 low to 5 high">
-      {[1, 2, 3, 4, 5].map((k) => <line key={k} x1="0" x2={w} y1={y(k)} y2={y(k)} stroke="var(--line)" strokeDasharray="4 6" />)}
-      <polyline points={emotion.map((v, i) => `${x(i)},${y(v)}`).join(" ")} fill="none" stroke="var(--accent)" strokeWidth="3" vectorEffect="non-scaling-stroke" />
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" role="img" aria-label="Emotion curve across stages, scale 1 low to 5 high" onMouseLeave={() => onHover(null)}>
+      {emotion.map((_, i) => (
+        <rect key={`c${i}`} x={(i * w) / n} y="0" width={w / n} height={h} className="emo-col" data-on={i === hover || i === selected ? (i === selected ? "sel" : "hov") : undefined} onMouseEnter={() => onHover(i)} onClick={() => onSelect(i)} />
+      ))}
+      {[1, 2, 3, 4, 5].map((k) => <line key={k} x1="0" x2={w} y1={y(k)} y2={y(k)} stroke="var(--line)" strokeDasharray="4 6" pointerEvents="none" />)}
+      <polyline points={emotion.map((v, i) => `${x(i)},${y(v)}`).join(" ")} fill="none" stroke="var(--accent)" strokeWidth="3" vectorEffect="non-scaling-stroke" pointerEvents="none" />
       {emotion.map((v, i) => (
-        <circle key={i} cx={x(i)} cy={y(v)} r={i === selected ? 9 : 6} fill={i === selected ? "var(--accent)" : "var(--surface)"} stroke="var(--accent)" strokeWidth="3" vectorEffect="non-scaling-stroke" />
+        <circle key={i} cx={x(i)} cy={y(v)} r={i === selected || i === hover ? 9 : 6} fill={i === selected ? "var(--accent)" : "var(--surface)"} stroke="var(--accent)" strokeWidth="3" vectorEffect="non-scaling-stroke" pointerEvents="none" style={{ transition: "r .15s" }} />
       ))}
     </svg>
   );
@@ -86,6 +89,7 @@ function Curve({ emotion, selected }: { emotion: number[]; selected: number }) {
 export default function App() {
   const [pIndex, setPIndex] = useState<number | null>(null);
   const [sIndex, setSIndex] = useState(0);
+  const [hS, setHS] = useState<number | null>(null);
   const [layers, setLayers] = useState<Record<LayerKey, boolean>>({ emotion: true, actions: true, touchpoints: true, pains: true, opps: true });
   const [saved, setSaved] = useState<Saved>(loadSaved);
 
@@ -148,7 +152,7 @@ export default function App() {
       <>
         <div className={`rl${layers[key] ? "" : " hidden"}`}>{label}</div>
         {j[key].map((c, i) => (
-          <div key={i} className={`cell${i === sIndex ? " sel" : ""}${layers[key] ? "" : " hidden"}`}>
+          <div key={i} className={`cell${i === sIndex ? " sel" : ""}${i === hS ? " hov" : ""}${layers[key] ? "" : " hidden"}`} onMouseEnter={() => setHS(i)} onClick={() => setSIndex(i)}>
             <span className={cls}><List items={c} /></span>
           </div>
         ))}
@@ -223,15 +227,15 @@ export default function App() {
         ))}
       </div>
       <div className="journey">
-        <div className="jgrid" style={{ ["--n" as string]: n, ["--cols" as string]: n + 1 }}>
+        <div className="jgrid" data-hover={hS ?? undefined} onMouseLeave={() => setHS(null)} style={{ ["--n" as string]: n, ["--cols" as string]: n + 1 }}>
           <div className="rl">Stage</div>
           {STAGES.map((s, i) => (
-            <div key={s} className="sh">
-              <button type="button" aria-pressed={i === sIndex} onClick={() => setSIndex(i)}>{s}<small>{STAGE_NAMES[i]}</small></button>
+            <div key={s} className={`sh${i === hS ? " hov" : ""}`} onMouseEnter={() => setHS(i)}>
+              <button type="button" aria-pressed={i === sIndex} onFocus={() => setHS(i)} onBlur={() => setHS(null)} onClick={() => setSIndex(i)}>{s}<small>{STAGE_NAMES[i]}</small></button>
             </div>
           ))}
           <div className={`rl${layers.emotion ? "" : " hidden"}`}>Emotion</div>
-          <div className={`emo${layers.emotion ? "" : " hidden"}`}><Curve emotion={j.emotion} selected={sIndex} /></div>
+          <div className={`emo${layers.emotion ? "" : " hidden"}`}><Curve emotion={j.emotion} selected={sIndex} hover={hS} onHover={setHS} onSelect={setSIndex} /></div>
           {row("actions", "Actions")}
           {row("touchpoints", "Touchpoints")}
           {row("pains", "Pain points", "pain")}

@@ -205,3 +205,16 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 .jgrid .rl { font-size: var(--fs-label); }
 [data-slot] [data-quote-card] blockquote, [data-slot] [data-quote-card] blockquote p { font-size: var(--fs-body); line-height: 1.5; }
 [data-slot] h2 { margin: 6px 0 0; text-wrap: balance; }
+
+/* journey hover: highlight the whole stage column, soften the rest */
+.cell { cursor: pointer; transition: background-color .15s ease, opacity .15s ease; }
+.cell.hov { background: color-mix(in oklab, var(--accent-soft) 60%, transparent); }
+.cell.sel { background: var(--accent-soft); }
+.jgrid[data-hover] .cell:not(.hov):not(.sel) { opacity: .55; }
+.jgrid .sh { transition: background-color .15s ease; }
+.jgrid .sh.hov button:not([aria-pressed="true"]) { background: var(--accent-soft); }
+.jgrid .sh button { transition: background-color .15s ease, color .15s ease; }
+.emo-col { fill: transparent; cursor: pointer; transition: fill .15s ease; }
+.emo-col[data-on="hov"] { fill: color-mix(in oklab, var(--accent-soft) 60%, transparent); }
+.emo-col[data-on="sel"] { fill: var(--accent-soft); }
+@media (prefers-reduced-motion: reduce) { .cell, .jgrid .sh, .jgrid .sh button, .emo-col { transition: none; } }
