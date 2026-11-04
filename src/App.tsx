@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { PERSONAS, STAGES, STAGE_NAMES, type Persona, type Status } from "@/data";
 
@@ -75,6 +76,20 @@ export default function App() {
     [saved],
   );
 
+  const globeItems: GlobeTestimonial[] = PERSONAS.map((p, i) => ({
+    id: p.id,
+    quote: p.quote.replace(/[“”]/g, ""),
+    name: p.name.replace(" (placeholder)", ""),
+    role: p.org.level,
+    company: p.org.department,
+    city: p.org.city,
+    country: p.org.country,
+    lat: p.org.lat,
+    lng: p.org.lng,
+    image: avatar(p.initials, AVATAR_BG[i % AVATAR_BG.length]!),
+    tone: ((i % 3) + 1) as 1 | 2 | 3,
+  }));
+
   const toggleTheme = () => {
     const r = document.documentElement;
     r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark";
@@ -141,7 +156,26 @@ export default function App() {
         </div>
       </div>
 
-      <h2 className="sec">2. Journey</h2>
+      <h2 className="sec">2. Location and profile in the company</h2>
+      <div className="picker">
+        <TestimonialGlobe
+          items={globeItems}
+          eyebrow="Where they work"
+          heading={`${persona.name.replace(" (placeholder)", "")} · ${persona.org.city}`}
+          autoRotate={false}
+          size={380}
+          active={pIndex}
+          onActiveChange={(i) => { if (i !== null) { setPIndex(i); setSIndex(0); } }}
+          labels={{ previous: "Previous persona", next: "Next persona", pin: "Show persona" }}
+        />
+      </div>
+      <dl className="pdetail" aria-live="polite">
+        {([["Site", persona.org.site], ["City", `${persona.org.city}, ${persona.org.country}`], ["Department", persona.org.department], ["Level", persona.org.level], ["Reports to", persona.org.reportsTo]] as const).map(([k, v]) => (
+          <div key={k}><dt style={{ fontSize: ".78rem", textTransform: "uppercase", letterSpacing: ".05em", color: "var(--muted-foreground)", fontWeight: 700 }}>{k}</dt><dd style={{ margin: 0 }}>{v}</dd></div>
+        ))}
+      </dl>
+
+      <h2 className="sec">3. Journey</h2>
       <div className="tools" role="group" aria-label="Show or hide rows">
         <span style={{ color: "var(--muted-foreground)", fontSize: ".88rem" }}>Show:</span>
         {LAYERS.map(([k, label]) => (
