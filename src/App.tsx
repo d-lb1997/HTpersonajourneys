@@ -90,7 +90,7 @@ export default function App() {
   const [pIndex, setPIndex] = useState<number | null>(null);
   const [sIndex, setSIndex] = useState(0);
   const [hS, setHS] = useState<number | null>(null);
-  const [layers, setLayers] = useState<Record<LayerKey, boolean>>({ emotion: true, actions: true, touchpoints: true, pains: true, opps: true });
+  const [layers] = useState<Record<LayerKey, boolean>>({ emotion: true, actions: true, touchpoints: true, pains: true, opps: true });
   const [saved, setSaved] = useState<Saved>(loadSaved);
 
   const selected = pIndex !== null;
@@ -220,12 +220,6 @@ export default function App() {
       </dl>
 
       <h2 className="sec">Journey</h2>
-      <div className="tools" role="group" aria-label="Show or hide rows">
-        <span className="t-caption">Show:</span>
-        {LAYERS.map(([k, label]) => (
-          <button key={k} type="button" className="chip" aria-pressed={layers[k]} onClick={() => setLayers((l) => ({ ...l, [k]: !l[k] }))}>{label}</button>
-        ))}
-      </div>
       <div className="journey">
         <div className="jgrid" data-hover={hS ?? undefined} onMouseLeave={() => setHS(null)} style={{ ["--n" as string]: n, ["--cols" as string]: n + 1 }}>
           <div className="rl">Stage</div>
