@@ -155,3 +155,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .meter i.on { background: var(--accent); }
 .page-footer { margin-top: 36px; color: var(--muted-foreground); font-size: .86rem; }
 @media (max-width: 600px) { .jgrid { grid-template-columns: 96px repeat(var(--n), minmax(140px, 1fr)); min-width: calc(96px + var(--n) * 140px); } }
+
+[data-lanyard] { transition: opacity .25s ease; }
+.picker-body { border-top: 1px solid var(--line); padding: 4px 16px 20px; }
+.picker-body .nobox, .picker-body .stage { border: 0; background: transparent; padding-left: 0; padding-right: 0; }
+.picker-body .subbox { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+h2.sec.first { margin-top: 16px; }

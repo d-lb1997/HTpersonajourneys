@@ -42,12 +42,13 @@ function Curve({ emotion, selected }: { emotion: number[]; selected: number }) {
 }
 
 export default function App() {
-  const [pIndex, setPIndex] = useState(0);
+  const [pIndex, setPIndex] = useState<number | null>(null);
   const [sIndex, setSIndex] = useState(0);
   const [layers, setLayers] = useState<Record<LayerKey, boolean>>({ emotion: true, actions: true, touchpoints: true, pains: true, opps: true });
   const [saved, setSaved] = useState<Saved>(loadSaved);
 
-  const persona: Persona = PERSONAS[pIndex]!;
+  const selected = pIndex !== null;
+  const persona: Persona = PERSONAS[pIndex ?? 0]!;
   const j = persona.journey;
   const n = STAGES.length;
   const statusOf = (p: Persona): Status => saved[p.id]?.status ?? p.status;
@@ -90,6 +91,8 @@ export default function App() {
     tone: ((i % 3) + 1) as 1 | 2 | 3,
   }));
 
+  const dimCss = PERSONAS.map((_, i) => `.picker[data-sel="${i}"] [data-lanyard]:not([data-lanyard="${i}"]){opacity:.3}`).join("\n");
+
   const toggleTheme = () => {
     const r = document.documentElement;
     r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark";
@@ -113,6 +116,7 @@ export default function App() {
 
   return (
     <div className="wrap">
+      <style>{dimCss}</style>
       <header className="page-header">
         <div className="row">
           <div>
@@ -124,19 +128,20 @@ export default function App() {
         <div className="banner"><b>Placeholder content.</b> All names, quotes, stages and scores below are examples to show how the page works. Replace them in <code>src/data.ts</code>.</div>
       </header>
 
-      <h2 className="sec" id="h-personas">1. Personas</h2>
-      <div className="picker">
+      <h2 className="sec" id="h-personas">Personas</h2>
+      <div className="picker" data-sel={pIndex ?? ""}>
         <TeamLanyardRail
           items={lanyardItems}
           eyebrow="Persona picker"
           heading="Who are we designing for?"
-          caption="Hover along the rail, then click a badge to flip it and show that persona below."
+          caption="Hover along the rail, then click a badge to select a persona."
           onFlippedChange={(i) => { if (i !== null) { setPIndex(i); setSIndex(0); } }}
-          action={<span className="picker-action"><i aria-hidden="true" />Viewing: {persona.name.replace(" (placeholder)", "")}</span>}
+          action={<span className="picker-action"><i aria-hidden="true" />{selected ? `Selected: ${persona.name.replace(" (placeholder)", "")}` : "No persona selected"}</span>}
         />
-      </div>
-
-      <div className="pdetail" aria-live="polite">
+      {selected && (
+        <div className="picker-body">
+          <h2 className="sec first">Profile</h2>
+      <div className="pdetail nobox" aria-live="polite">
         <div className="who">
           <b style={{ fontSize: "1.1rem" }}>{persona.name}</b>
           <small style={{ color: "var(--muted-foreground)" }}>{persona.role}</small>
@@ -156,26 +161,26 @@ export default function App() {
         </div>
       </div>
 
-      <h2 className="sec">2. Location and profile in the company</h2>
-      <div className="picker">
+      <h2 className="sec">Location and profile in the company</h2>
+      <div className="subbox">
         <TestimonialGlobe
           items={globeItems}
           eyebrow="Where they work"
           heading={`${persona.name.replace(" (placeholder)", "")} · ${persona.org.city}`}
           autoRotate={false}
           size={380}
-          active={pIndex}
+          active={selected ? pIndex : null}
           onActiveChange={(i) => { if (i !== null) { setPIndex(i); setSIndex(0); } }}
           labels={{ previous: "Previous persona", next: "Next persona", pin: "Show persona" }}
         />
       </div>
-      <dl className="pdetail" aria-live="polite">
+      <dl className="pdetail nobox" aria-live="polite">
         {([["Site", persona.org.site], ["City", `${persona.org.city}, ${persona.org.country}`], ["Department", persona.org.department], ["Level", persona.org.level], ["Reports to", persona.org.reportsTo]] as const).map(([k, v]) => (
           <div key={k}><dt style={{ fontSize: ".78rem", textTransform: "uppercase", letterSpacing: ".05em", color: "var(--muted-foreground)", fontWeight: 700 }}>{k}</dt><dd style={{ margin: 0 }}>{v}</dd></div>
         ))}
       </dl>
 
-      <h2 className="sec">3. Journey</h2>
+      <h2 className="sec">Journey</h2>
       <div className="tools" role="group" aria-label="Show or hide rows">
         <span style={{ color: "var(--muted-foreground)", fontSize: ".88rem" }}>Show:</span>
         {LAYERS.map(([k, label]) => (
@@ -217,6 +222,11 @@ export default function App() {
           <button type="button" disabled={sIndex === 0} onClick={() => setSIndex((s) => Math.max(0, s - 1))}>Previous stage</button>
           <button type="button" disabled={sIndex === n - 1} onClick={() => setSIndex((s) => Math.min(n - 1, s + 1))}>Next stage</button>
         </div>
+      </div>
+
+          <button type="button" className="chip" onClick={() => setPIndex(null)}>Clear selection</button>
+        </div>
+      )}
       </div>
 
       <footer className="page-footer">Notes and confidence settings are saved in this browser only. Content is placeholder text.</footer>
