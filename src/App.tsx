@@ -19,7 +19,7 @@ function avatar(initials: string, bg: string) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-const AVATAR_BG = ["#003a78", "#0062b1", "#3a9ad9"];
+const AVATAR_BG = ["#2b4c9b", "#b5251d", "#6f8fd4"];
 
 function Device({ type, screen }: { type: DeviceType; screen: string }) {
   const stroke = "var(--foreground)";
