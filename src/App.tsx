@@ -262,6 +262,16 @@ export default function App() {
         </div>
       </div>
 
+      <h2 className="sec">Devices</h2>
+      <div className="devices">
+        {persona.devices.map((d) => (
+          <figure key={d.type} className="devfig">
+            <Device type={d.type} screen={persona.initials} />
+            <figcaption><b>{d.type === "desktop" ? "PC / Desktop" : d.type === "mobile" ? "Mobile" : "Kiosk"}</b><small>{d.use}</small></figcaption>
+          </figure>
+        ))}
+      </div>
+
       <div className="stage" aria-live="polite">
         <div className="full">
           <h3>{persona.name} · {STAGES[sIndex]}</h3>
@@ -282,15 +292,6 @@ export default function App() {
         </div>
       </div>
 
-          <h2 className="sec">Devices</h2>
-          <div className="devices">
-            {persona.devices.map((d) => (
-              <figure key={d.type} className="devfig">
-                <Device type={d.type} screen={persona.initials} />
-                <figcaption><b>{d.type === "desktop" ? "PC / Desktop" : d.type === "mobile" ? "Mobile" : "Kiosk"}</b><small>{d.use}</small></figcaption>
-              </figure>
-            ))}
-          </div>
           <button type="button" className="chip" onClick={() => setPIndex(null)}>Clear selection</button>
         </div>
       )}
