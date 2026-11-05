@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { PERSONAS, STAGES, STAGE_NAMES, type DeviceType, type Persona, type Status } from "@/data";
@@ -90,6 +90,8 @@ function Curve({ emotion, selected, hover, onHover, onSelect }: { emotion: numbe
 export default function App() {
   const [pIndex, setPIndex] = useState<number | null>(null);
   const [sIndex, setSIndex] = useState(0);
+  const railRef = useRef<HTMLDivElement>(null);
+  const [railVisible, setRailVisible] = useState(true);
   const [hS, setHS] = useState<number | null>(null);
   const [layers] = useState<Record<LayerKey, boolean>>({ emotion: true, actions: true, touchpoints: true, pains: true, opps: true });
   const [saved, setSaved] = useState<Saved>(loadSaved);
@@ -140,6 +142,16 @@ export default function App() {
 
   const dimCss = PERSONAS.map((_, i) => `.picker[data-sel="${i}"] [data-lanyard]:not([data-lanyard="${i}"]){opacity:.3}`).join("\n");
 
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setRailVisible(e?.isIntersecting ?? true), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const pick = (i: number) => { setPIndex(i); setSIndex(0); };
+
   const toggleTheme = () => {
     const r = document.documentElement;
     r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark";
@@ -164,19 +176,31 @@ export default function App() {
   return (
     <div className="wrap">
       <style>{dimCss}</style>
+      <nav className="glass-nav" data-show={!railVisible} aria-label="Switch persona" inert={railVisible}>
+        <div className="glass-nav-inner">
+          {PERSONAS.map((p, i) => (
+            <button key={p.id} type="button" className="glass-chip" aria-pressed={pIndex === i} onClick={() => pick(i)}>
+              <i aria-hidden="true" style={{ background: `var(--p${i})` }} />
+              {p.name.replace(" (placeholder)", "")}
+            </button>
+          ))}
+        </div>
+      </nav>
       <header className="page-header">
-        <h1>Personas and journeys</h1>
+        <h1>Personas and journeys for intranet experience</h1>
         <button className="themebtn" type="button" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
       </header>
 
       <div className="picker" data-sel={pIndex ?? ""}>
+        <div ref={railRef}>
         <TeamLanyardRail
           items={lanyardItems}
           eyebrow="Persona picker"
           heading="Who are we designing for?"
           caption="Hover along the rail, then click a badge to select a persona."
           onFlippedChange={(i) => { if (i !== null) { setPIndex(i); setSIndex(0); } }}
-          action={<span className="picker-action"><i aria-hidden="true" />{selected ? `Selected: ${persona.name.replace(" (placeholder)", "")}` : "No persona selected"}</span>}
+          action={<span className="picker-action"><i aria-hidden="true" />
+        </div>{selected ? `Selected: ${persona.name.replace(" (placeholder)", "")}` : "No persona selected"}</span>}
         />
       {selected && (
         <div className="picker-body">

@@ -254,3 +254,17 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 [data-lanyard="2"] [class*="text-chart-"] { color: var(--p2); }
 [data-lanyard="3"] [class*="text-chart-"] { color: var(--p3); }
 [data-lanyard="4"] [class*="text-chart-"] { color: var(--p4); }
+
+/* liquid-glass top navigation, shown when the badge rail has scrolled out of view */
+.glass-nav { position: fixed; top: 12px; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding: 0 12px; pointer-events: none; opacity: 0; transform: translateY(-16px); transition: opacity .25s ease, transform .25s ease; }
+.glass-nav[data-show="true"] { opacity: 1; transform: translateY(0); }
+.glass-nav-inner { pointer-events: auto; display: flex; gap: 4px; max-width: 100%; overflow-x: auto; padding: 5px; border-radius: 999px;
+  background: color-mix(in oklab, var(--background) 38%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, #FFFFFF 55%, transparent), 0 8px 28px color-mix(in oklab, #000000 18%, transparent); }
+.glass-chip { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; border: 0; background: transparent; border-radius: 999px; padding: 7px 14px; font-size: var(--fs-caption); font-weight: 500; color: var(--foreground); transition: background-color .15s ease; }
+.glass-chip i { width: 9px; height: 9px; border-radius: 50%; }
+.glass-chip:hover { background: color-mix(in oklab, var(--foreground) 10%, transparent); }
+.glass-chip[aria-pressed="true"] { background: color-mix(in oklab, var(--foreground) 16%, transparent); font-weight: 600; box-shadow: inset 0 1px 0 color-mix(in oklab, #FFFFFF 45%, transparent); }
+@media (prefers-reduced-motion: reduce) { .glass-nav, .glass-chip { transition: none; } }
