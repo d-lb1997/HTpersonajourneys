@@ -268,3 +268,10 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 .glass-chip:hover { background: color-mix(in oklab, var(--foreground) 10%, transparent); }
 .glass-chip[aria-pressed="true"] { background: color-mix(in oklab, var(--foreground) 16%, transparent); font-weight: 600; box-shadow: inset 0 1px 0 color-mix(in oklab, #FFFFFF 45%, transparent); }
 @media (prefers-reduced-motion: reduce) { .glass-nav, .glass-chip { transition: none; } }
+
+/* persona headline: name (h1 style) with role underneath */
+:root { --fs-h1: 1.75rem; }
+.headline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 20px 0 4px; }
+.headline h2.t-h1 { font-size: var(--fs-h1); line-height: 1.15; font-weight: 700; letter-spacing: -.01em; margin: 0; }
+.headline-role { flex-basis: 100%; order: 3; margin: 0; font-size: var(--fs-body); color: var(--muted-foreground); }
+.headline .badge { align-self: center; }

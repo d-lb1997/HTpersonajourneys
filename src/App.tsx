@@ -204,13 +204,12 @@ export default function App() {
         </div>
       {selected && (
         <div className="picker-body">
-          <h2 className="sec first">Profile</h2>
+          <div className="headline">
+            <h2 className="t-h1" id="persona-headline">{persona.name.replace(" (placeholder)", "")}</h2>
+            <p className="headline-role">{persona.role}</p>
+            <span className={`badge ${badgeClass(statusOf(persona))}`}>{statusOf(persona)}</span>
+          </div>
       <div className="pdetail nobox" aria-live="polite">
-        <div className="who">
-          <b className="t-h2">{persona.name}</b>
-          <small>{persona.role}</small>
-          <span className={`badge ${badgeClass(statusOf(persona))}`}>{statusOf(persona)}</span>
-        </div>
         <div className="quote">{persona.quote}</div>
         <div><h3>Goals</h3><List items={persona.goals} /></div>
         <div><h3>Frustrations</h3><List items={persona.frustrations} /></div>
