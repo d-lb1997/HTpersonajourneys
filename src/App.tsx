@@ -199,9 +199,9 @@ export default function App() {
           heading="Who are we designing for?"
           caption="Hover along the rail, then click a badge to select a persona."
           onFlippedChange={(i) => { if (i !== null) { setPIndex(i); setSIndex(0); } }}
-          action={<span className="picker-action"><i aria-hidden="true" />
-        </div>{selected ? `Selected: ${persona.name.replace(" (placeholder)", "")}` : "No persona selected"}</span>}
+          action={<span className="picker-action"><i aria-hidden="true" />{selected ? `Selected: ${persona.name.replace(" (placeholder)", "")}` : "No persona selected"}</span>}
         />
+        </div>
       {selected && (
         <div className="picker-body">
           <h2 className="sec first">Profile</h2>
