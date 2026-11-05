@@ -262,3 +262,9 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 [data-slot="testimonial-globe"] [data-pin="5"] [data-pin-face] { --tw-ring-color: var(--p5); }
 [data-slot="testimonial-globe"] [data-pin="5"] [data-ping] { border-color: var(--p5); }
 [data-slot="testimonial-globe"] [data-quote-card][data-index="5"] figcaption > span:first-child { --tw-ring-color: var(--p5); }
+[data-lanyard="0"] [class*="text-chart-"] { color: var(--p0); }
+[data-lanyard="1"] [class*="text-chart-"] { color: var(--p1); }
+[data-lanyard="2"] [class*="text-chart-"] { color: var(--p2); }
+[data-lanyard="3"] [class*="text-chart-"] { color: var(--p3); }
+[data-lanyard="4"] [class*="text-chart-"] { color: var(--p4); }
+[data-lanyard="5"] [class*="text-chart-"] { color: var(--p5); }
