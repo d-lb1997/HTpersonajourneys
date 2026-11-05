@@ -275,3 +275,8 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 .headline h2.t-h1 { font-size: var(--fs-h1); line-height: 1.15; font-weight: 700; letter-spacing: -.01em; margin: 0; }
 .headline-role { flex-basis: 100%; order: 3; margin: 0; font-size: var(--fs-body); color: var(--muted-foreground); }
 .headline .badge { align-self: center; }
+
+/* badge fronts: let long names wrap onto a second line instead of truncating */
+[data-slot="team-lanyard-rail"] [data-face="front"] [class*="text-[1.08em]"] { white-space: normal; overflow: visible; text-overflow: clip; text-wrap: balance; line-height: 1.2; }
+/* …and make room for it */
+[data-slot="team-lanyard-rail"] [data-face="front"] [class*="size-[5.3em]"] { width: 4.6em; height: 4.6em; }
