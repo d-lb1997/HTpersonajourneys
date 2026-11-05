@@ -15,11 +15,12 @@ function loadSaved(): Saved {
 }
 
 function avatar(initials: string, bg: string) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="${bg}"/><text x="40" y="53" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="38" font-weight="700" fill="#fff">${initials}</text></svg>`;
+  const fg = bg === "#ADC7EA" ? "#234F9A" : "#FFFFFF";
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="${bg}"/><text x="40" y="53" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="38" font-weight="700" fill="${fg}">${initials}</text></svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-const AVATAR_BG = ["#1d3374", "#2b4c9b", "#6f8fd4", "#b5251d", "#7d1a15", "#d4534b"];
+const AVATAR_BG = ["#234F9A", "#628FDB", "#C20012", "#ADC7EA", "#8A8A89"];
 
 function Device({ type, screen }: { type: DeviceType; screen: string }) {
   const stroke = "var(--foreground)";

@@ -2,28 +2,29 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/*
- * shadcn-style tokens, themed after HellermannTyton's corporate look:
- * deep navy + brand blue on white, with a signal-yellow highlight.
- * These are approximations (the site could not be fetched) - adjust the hex values here.
- */
+/* shadcn-style tokens, using only the brand palette */
+/* Brand palette (only these colors are used):
+   Corporate blue #234F9A, tones #628FDB / #ADC7EA / #E2ECF9
+   Corporate red  #C20012
+   Black #000000, tones #8A8A89 / #C4C5C5 / #ECECEC
+   White #FFFFFF */
 :root {
-  --background: #ffffff;
-  --foreground: #121c3d;
-  --card: #ffffff;
-  --card-foreground: #121c3d;
-  --muted: #f1f3f8;
-  --muted-foreground: #5a6480;
-  --border: #dde1ec;
-  --ring: #2b4c9b;
-  --primary: #2b4c9b;
-  --primary-foreground: #ffffff;
-  --accent-brand: #b5251d;
-  --chart-1: #1d3374;
-  --chart-2: #2b4c9b;
-  --chart-3: #b5251d;
-  --chart-4: #d4534b;
-  --chart-5: #6f8fd4;
+  --background: #FFFFFF;
+  --foreground: #000000;
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  --muted: #ECECEC;
+  --muted-foreground: #8A8A89;
+  --border: #C4C5C5;
+  --ring: #234F9A;
+  --primary: #234F9A;
+  --primary-foreground: #FFFFFF;
+  --accent-brand: #C20012;
+  --chart-1: #234F9A;
+  --chart-2: #628FDB;
+  --chart-3: #C20012;
+  --chart-4: #ADC7EA;
+  --chart-5: #8A8A89;
 
   /* journey-view aliases */
   --bg: var(--background);
@@ -34,40 +35,40 @@
   --line: var(--border);
   --accent: var(--primary);
   --accent-ink: var(--primary-foreground);
-  --accent-soft: #e3e9f6;
-  --red: #b22420;
-  --red-soft: #f9e3e2;
-  --green: #1b7a4f;
-  --green-soft: #dff3e8;
-  --amber: #7a5600;
-  --amber-soft: #fff1c2;
+  --accent-soft: #E2ECF9;
+  --red: #C20012;
+  --red-soft: #ECECEC;
+  --green: #234F9A;
+  --green-soft: #E2ECF9;
+  --amber: #000000;
+  --amber-soft: #ECECEC;
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
   --background: #000000;
-  --foreground: #f2f2f2;
-  --card: #0a0a0a;
-  --card-foreground: #e8eef7;
-  --muted: #161616;
-  --muted-foreground: #a3a3a3;
-  --border: #262626;
-  --ring: #8ea8e8;
-  --primary: #8ea8e8;
+  --foreground: #FFFFFF;
+  --card: #000000;
+  --card-foreground: #FFFFFF;
+  --muted: #000000;
+  --muted-foreground: #C4C5C5;
+  --border: #8A8A89;
+  --ring: #628FDB;
+  --primary: #628FDB;
   --primary-foreground: #000000;
-  --accent-brand: #ff6b62;
-  --chart-1: #6f8fd4;
-  --chart-2: #8ea8e8;
-  --chart-3: #ff6b62;
-  --chart-4: #ff8f87;
-  --chart-5: #b8c6f0;
-  --accent-soft: #16224a;
-  --red: #ff8782;
-  --red-soft: #2a1213;
-  --green: #4cc58c;
-  --green-soft: #0f2a1d;
-  --amber: #f0b955;
-  --amber-soft: #241c08;
+  --accent-brand: #C20012;
+  --chart-1: #628FDB;
+  --chart-2: #ADC7EA;
+  --chart-3: #C20012;
+  --chart-4: #E2ECF9;
+  --chart-5: #8A8A89;
+  --accent-soft: #234F9A;
+  --red: #C20012;
+  --red-soft: #000000;
+  --green: #ADC7EA;
+  --green-soft: #000000;
+  --amber: #FFFFFF;
+  --amber-soft: #000000;
   color-scheme: dark;
 }
 
@@ -221,22 +222,12 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 
 .picker { border: 0; }
 
-/* one brand color per persona: navy, blue, sky, red, burgundy, coral */
+
 :root {
-  --p0: #1d3374;
-  --p1: #2b4c9b;
-  --p2: #6f8fd4;
-  --p3: #b5251d;
-  --p4: #7d1a15;
-  --p5: #d4534b;
+  --p0: #234F9A; --p1: #628FDB; --p2: #C20012; --p3: #ADC7EA; --p4: #8A8A89;
 }
 :root[data-theme="dark"] {
-  --p0: #6f8fd4;
-  --p1: #8ea8e8;
-  --p2: #b8c6f0;
-  --p3: #ff6b62;
-  --p4: #d4534b;
-  --p5: #ff8f87;
+  --p0: #628FDB; --p1: #ADC7EA; --p2: #C20012; --p3: #E2ECF9; --p4: #8A8A89;
 }
 [data-lanyard="0"] { color: var(--p0); }
 [data-slot="testimonial-globe"] [data-pin="0"] [data-pin-face] { --tw-ring-color: var(--p0); }
@@ -258,13 +249,8 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 [data-slot="testimonial-globe"] [data-pin="4"] [data-pin-face] { --tw-ring-color: var(--p4); }
 [data-slot="testimonial-globe"] [data-pin="4"] [data-ping] { border-color: var(--p4); }
 [data-slot="testimonial-globe"] [data-quote-card][data-index="4"] figcaption > span:first-child { --tw-ring-color: var(--p4); }
-[data-lanyard="5"] { color: var(--p5); }
-[data-slot="testimonial-globe"] [data-pin="5"] [data-pin-face] { --tw-ring-color: var(--p5); }
-[data-slot="testimonial-globe"] [data-pin="5"] [data-ping] { border-color: var(--p5); }
-[data-slot="testimonial-globe"] [data-quote-card][data-index="5"] figcaption > span:first-child { --tw-ring-color: var(--p5); }
 [data-lanyard="0"] [class*="text-chart-"] { color: var(--p0); }
 [data-lanyard="1"] [class*="text-chart-"] { color: var(--p1); }
 [data-lanyard="2"] [class*="text-chart-"] { color: var(--p2); }
 [data-lanyard="3"] [class*="text-chart-"] { color: var(--p3); }
 [data-lanyard="4"] [class*="text-chart-"] { color: var(--p4); }
-[data-lanyard="5"] [class*="text-chart-"] { color: var(--p5); }
