@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, personaPdf } from "@/personaPdf";
@@ -215,6 +216,7 @@ export default function App() {
         <div ref={railRef}>
         <TeamLanyardRail
           items={lanyardItems}
+          logo={logo}
           eyebrow="Persona picker"
           heading="Who are we designing for?"
           caption="Hover along the rail, then click a badge to select a persona."

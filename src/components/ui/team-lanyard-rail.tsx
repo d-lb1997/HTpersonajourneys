@@ -56,6 +56,8 @@ export interface TeamLanyardRailProps extends React.ComponentProps<"section"> {
   flipped?: number | null;
   onFlippedChange?: (index: number | null) => void;
   labels?: TeamLanyardRailLabels;
+  /** Logo image URL printed on the front of every badge, above the barcode. */
+  logo?: string;
 }
 
 const RATIO = 96 / 62;
@@ -314,7 +316,7 @@ function Silhouette() {
   );
 }
 
-const BadgeFaces = React.memo(function BadgeFaces({ item, tone }: { item: LanyardMember; tone: string }) {
+const BadgeFaces = React.memo(function BadgeFaces({ item, tone, logo }: { item: LanyardMember; tone: string; logo?: string }) {
   const seed = React.useMemo(() => hash(`${item.id}:${item.name}`), [item.id, item.name]);
   const qr = React.useMemo(() => qrPath(seed), [seed]);
   const bars = React.useMemo(() => barcode(seed), [seed]);
@@ -336,6 +338,7 @@ const BadgeFaces = React.memo(function BadgeFaces({ item, tone }: { item: Lanyar
         <span className="mt-[0.55em] block w-full truncate text-center text-[1.08em] font-semibold leading-tight tracking-tight">{item.name}</span>
         <span className="mt-[0.15em] block w-full truncate text-center text-[0.8em] leading-snug text-muted-foreground">{item.role}</span>
         {item.team && <span className="mt-[0.5em] block w-full truncate text-center text-[0.6em] font-medium uppercase tracking-[0.2em] text-muted-foreground">{item.team}</span>}
+        {logo && <img src={logo} alt="" draggable={false} data-badge-logo className="pointer-events-none mt-[0.6em] block h-auto w-[7.2em] shrink-0 select-none" />}
         <span className="mt-auto block w-full border-t border-dashed border-border pt-[0.5em]">
           <svg aria-hidden="true" viewBox={`0 0 ${bars.width} 20`} preserveAspectRatio="none" className="block h-[1.6em] w-full text-foreground/80">
             <path d={bars.d} fill="currentColor" />
@@ -391,6 +394,7 @@ export function TeamLanyardRail({
   flipped: flippedProp,
   onFlippedChange,
   labels = DEFAULT_LABELS,
+  logo,
   className,
   ...rest
 }: TeamLanyardRailProps) {
@@ -1077,7 +1081,7 @@ export function TeamLanyardRail({
                     onClick={(event) => { const pending = pendingOpen.current; pendingOpen.current = -1; if (event.detail === 0 || pending === i) toggle(i); }}
                   >
                     <span ref={(node) => { flips.current[i] = node; }} data-flip className="absolute inset-0 block [transform-style:preserve-3d]" style={{ transform: `perspective(${PERSPECTIVE}px) rotateY(${REST_Y[i % REST_Y.length] ?? 0}deg)` }}>
-                      <BadgeFaces item={item} tone={tone} />
+                      <BadgeFaces item={item} tone={tone} logo={logo} />
                     </span>
                   </button>
                   <span aria-hidden="true" className="pointer-events-none absolute block" style={{ left: W / 2 - g.clipW / 2, top: 0, width: g.clipW, height: g.clipH + 10 * g.u }}>
