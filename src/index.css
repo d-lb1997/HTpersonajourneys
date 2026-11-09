@@ -300,3 +300,6 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 
 /* the logo's blue disappears on black: give it a white chip in dark mode */
 :root[data-theme="dark"] [data-badge-logo] { background: #FFFFFF; padding: .25em .4em; border-radius: .3em; width: 7.2em; box-sizing: border-box; }
+
+.headline-avatar { flex-basis: 100%; }
+.headline-avatar img { display: block; width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--muted); box-shadow: 0 0 0 3px var(--background), 0 0 0 5px var(--primary); }

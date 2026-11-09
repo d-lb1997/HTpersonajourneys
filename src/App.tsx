@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import newEmployeePhoto from "@/assets/persona-new-employee.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
@@ -21,6 +22,9 @@ function avatar(initials: string, bg: string) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="${bg}"/><text x="40" y="53" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="38" font-weight="700" fill="${fg}">${initials}</text></svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
+
+/** Real portraits by persona id; personas without one get a colored initials avatar. */
+const PHOTOS: Record<string, string> = { "new-employee": newEmployeePhoto };
 
 const AVATAR_BG = ["#234F9A", "#628FDB", "#C20012", "#ADC7EA", "#8A8A89"];
 
@@ -112,6 +116,8 @@ export default function App() {
       return next;
     });
 
+  const imageFor = (p: Persona, i: number) => PHOTOS[p.id] ?? avatar(p.initials, AVATAR_BG[i % AVATAR_BG.length]!);
+
   const lanyardItems: LanyardMember[] = useMemo(
     () => PERSONAS.map((p, i) => ({
       id: p.id,
@@ -119,7 +125,7 @@ export default function App() {
       role: p.role,
       team: statusOf(p),
       tone: ((i % 3) + 1) as 1 | 2 | 3,
-      image: avatar(p.initials, AVATAR_BG[i % AVATAR_BG.length]!),
+      image: imageFor(p, i),
       bio: p.quote.replace(/[“”]/g, ""),
       tags: p.channels.slice(0, 2),
     })),
@@ -138,7 +144,7 @@ export default function App() {
     country: p.org.country,
     lat: p.org.lat,
     lng: p.org.lng,
-    image: avatar(p.initials, AVATAR_BG[i % AVATAR_BG.length]!),
+    image: imageFor(p, i),
     tone: ((i % 3) + 1) as 1 | 2 | 3,
   }));
 
@@ -227,6 +233,7 @@ export default function App() {
       {selected && (
         <div className="picker-body">
           <div className="headline">
+            <div className="headline-avatar"><img src={imageFor(persona, pIndex ?? 0)} alt="" width={96} height={96} /></div>
             <h2 className="t-h1" id="persona-headline">{persona.name.replace(" (placeholder)", "")}</h2>
             <p className="headline-role">{persona.role}</p>
             <span className={`badge ${badgeClass(statusOf(persona))}`}>{statusOf(persona)}</span>
