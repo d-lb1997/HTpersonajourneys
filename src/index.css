@@ -280,3 +280,20 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 [data-slot="team-lanyard-rail"] [data-face="front"] [class*="text-[1.08em]"] { white-space: normal; overflow: visible; text-overflow: clip; text-wrap: balance; line-height: 1.2; }
 /* …and make room for it */
 [data-slot="team-lanyard-rail"] [data-face="front"] [class*="size-[5.3em]"] { width: 4.6em; height: 4.6em; }
+
+/* header, same structure as the card sort page */
+.top { border-bottom: 1px solid var(--line); }
+.brandbar { height: 6px; background: linear-gradient(90deg, #234F9A 0 64%, #C20012 64% 100%); }
+.top-inner { max-width: 1600px; margin: 0 auto; padding: 20px 24px; display: flex; gap: 24px; justify-content: space-between; flex-wrap: wrap; align-items: flex-end; }
+.titles { max-width: 640px; }
+.top h1 { font-size: 2rem; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.t-blue { color: var(--primary); }
+.t-red { color: var(--accent-brand); }
+.controls { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.hbtn { border: 1px solid transparent; border-radius: 6px; padding: 8px 14px; font-weight: 600; font-size: 1rem; cursor: pointer; background: var(--background); }
+.hbtn:disabled { opacity: .45; cursor: not-allowed; }
+.hbtn-primary { background: var(--primary); color: var(--primary-foreground); }
+.hbtn-primary:hover:not(:disabled) { opacity: .9; }
+.hbtn-secondary { border-color: var(--primary); color: var(--primary); }
+.hbtn-secondary:hover { background: var(--accent-soft); }

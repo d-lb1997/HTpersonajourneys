@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
+import { downloadPdf, personaPdf } from "@/personaPdf";
 import { PERSONAS, STAGES, STAGE_NAMES, type DeviceType, type Persona, type Status } from "@/data";
 
 const LAYERS = [["emotion", "Emotion"], ["actions", "Actions"], ["touchpoints", "Touchpoints"], ["pains", "Pain points"], ["opps", "Opportunities"]] as const;
@@ -174,6 +175,29 @@ export default function App() {
   }
 
   return (
+    <>
+    <header className="top">
+      <div className="brandbar" aria-hidden="true" />
+      <div className="top-inner">
+        <div className="titles">
+          <h1><span className="t-blue">Intranet</span> <span className="t-red">persona</span></h1>
+        </div>
+        <div className="controls">
+          <div className="btn-row">
+            <button type="button" className="hbtn hbtn-primary" disabled={!selected}
+              title={selected ? undefined : "Select a persona first"}
+              onClick={() => downloadPdf(`persona-${persona.id}.pdf`, personaPdf([persona], (x) => statusOf(x)))}>
+              Download PDF
+            </button>
+            <button type="button" className="hbtn hbtn-secondary"
+              onClick={() => downloadPdf("personas-all.pdf", personaPdf(PERSONAS, (x) => statusOf(x)))}>
+              Download all PDFs
+            </button>
+            <button type="button" className="hbtn hbtn-secondary" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
+          </div>
+        </div>
+      </div>
+    </header>
     <div className="wrap">
       <style>{dimCss}</style>
       <nav className="glass-nav" data-show={!railVisible} aria-label="Switch persona" inert={railVisible}>
@@ -186,10 +210,6 @@ export default function App() {
           ))}
         </div>
       </nav>
-      <header className="page-header">
-        <h1>Personas and journeys for intranet experience</h1>
-        <button className="themebtn" type="button" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
-      </header>
 
       <div className="picker" data-sel={pIndex ?? ""}>
         <div ref={railRef}>
@@ -298,5 +318,6 @@ export default function App() {
 
       <footer className="page-footer">Notes and confidence settings are saved in this browser only. Content is placeholder text: replace it in <code>src/data.ts</code>.</footer>
     </div>
+    </>
   );
 }
