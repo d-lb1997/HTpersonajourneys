@@ -5,7 +5,7 @@ import newEmployeePhoto from "@/assets/persona-new-employee.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
-import { downloadPdf, personaPdf } from "@/personaPdf";
+import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
 import { PERSONAS, STAGES, STAGE_NAMES, type DeviceType, type Persona, type Status } from "@/data";
 
 const LAYERS = [["emotion", "Emotion"], ["actions", "Actions"], ["touchpoints", "Touchpoints"], ["pains", "Pain points"], ["opps", "Opportunities"]] as const;
@@ -163,6 +163,17 @@ export default function App() {
     return () => io.disconnect();
   }, []);
 
+  const makeAvatars = async () => {
+    const out: Record<string, PdfAvatar> = {};
+    await Promise.all(PERSONAS.map(async (p, i) => {
+      const url = PHOTOS[p.id];
+      let photo;
+      try { photo = url ? await loadJpeg(url) : undefined; } catch { photo = undefined; }
+      out[p.id] = { hex: AVATAR_BG[i % AVATAR_BG.length]!, initials: p.initials, photo };
+    }));
+    return out;
+  };
+
   const pick = (i: number) => { setPIndex(i); setSIndex(0); };
 
   const toggleTheme = () => {
@@ -198,11 +209,11 @@ export default function App() {
           <div className="btn-row">
             <button type="button" className="hbtn hbtn-primary" disabled={!selected}
               title={selected ? undefined : "Select a persona first"}
-              onClick={() => downloadPdf(`persona-${persona.id}.pdf`, personaPdf([persona], (x) => statusOf(x)))}>
+              onClick={async () => downloadPdf(`persona-${persona.id}.pdf`, personaPdf([persona], (x) => statusOf(x), await makeAvatars()))}>
               Download PDF
             </button>
             <button type="button" className="hbtn hbtn-secondary"
-              onClick={() => downloadPdf("personas-all.pdf", personaPdf(PERSONAS, (x) => statusOf(x)))}>
+              onClick={async () => downloadPdf("personas-all.pdf", personaPdf(PERSONAS, (x) => statusOf(x), await makeAvatars()))}>
               Download all PDFs
             </button>
             <button type="button" className="hbtn hbtn-secondary" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>

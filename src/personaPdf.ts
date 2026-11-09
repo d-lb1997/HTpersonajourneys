@@ -1,6 +1,43 @@
 import type { Persona } from "./data";
 import { STAGES, STAGE_NAMES } from "./data";
 
+export interface PdfPhoto { bytes: Uint8Array; width: number; height: number; components: number }
+export interface PdfAvatar { hex: string; initials: string; photo?: PdfPhoto }
+
+/** Reads size and channel count of a baseline/progressive JPEG; returns null for anything else. */
+export function parseJpeg(bytes: Uint8Array): PdfPhoto | null {
+  if (bytes[0] !== 0xff || bytes[1] !== 0xd8) return null;
+  let i = 2;
+  while (i + 9 < bytes.length) {
+    if (bytes[i] !== 0xff) { i++; continue; }
+    const marker = bytes[i + 1]!;
+    if (marker === 0xd8 || (marker >= 0xd0 && marker <= 0xd7) || marker === 0x01 || marker === 0xff) { i += marker === 0xff ? 1 : 2; continue; }
+    const len = (bytes[i + 2]! << 8) | bytes[i + 3]!;
+    if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+      return { bytes, height: (bytes[i + 5]! << 8) | bytes[i + 6]!, width: (bytes[i + 7]! << 8) | bytes[i + 8]!, components: bytes[i + 9]! };
+    }
+    i += 2 + len;
+  }
+  return null;
+}
+
+/** Fetches a JPEG from a URL (browser). Resolves to undefined if it is not a JPEG. */
+export async function loadJpeg(url: string): Promise<PdfPhoto | undefined> {
+  const res = await fetch(url);
+  return parseJpeg(new Uint8Array(await res.arrayBuffer())) ?? undefined;
+}
+
+function hexToRgb(hex: string) {
+  const n = parseInt(hex.replace("#", ""), 16);
+  return `${((n >> 16) & 255) / 255} ${((n >> 8) & 255) / 255} ${(n & 255) / 255}`;
+}
+
+function bytesToString(bytes: Uint8Array) {
+  let out = "";
+  for (let i = 0; i < bytes.length; i += 8192) out += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  return out;
+}
+
 /* Minimal dependency-free PDF writer (A4, standard Helvetica fonts). */
 
 const W = 595.28, H = 841.89, M = 48;
@@ -42,6 +79,7 @@ function wrap(text: string, size: number, bold: boolean, max: number) {
 
 class Doc {
   pages: string[] = [];
+  images: { data: string; w: number; h: number; cs: string }[] = [];
   cur = "";
   y = 0;
   newPage(first = false) {
@@ -56,6 +94,27 @@ class Doc {
   }
   rect(x: number, y: number, w: number, h: number, color: string) {
     this.cur += `${color} rg ${x.toFixed(2)} ${y.toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)} re f\n`;
+  }
+  circlePath(cx: number, cy: number, r: number) {
+    const k = r * 0.5523;
+    return `${cx + r} ${cy} m ${cx + r} ${cy + k} ${cx + k} ${cy + r} ${cx} ${cy + r} c ${cx - k} ${cy + r} ${cx - r} ${cy + k} ${cx - r} ${cy} c ${cx - r} ${cy - k} ${cx - k} ${cy - r} ${cx} ${cy - r} c ${cx + k} ${cy - r} ${cx + r} ${cy - k} ${cx + r} ${cy} c h`;
+  }
+  avatar(cx: number, cy: number, r: number, a: PdfAvatar | undefined) {
+    if (a?.photo) {
+      const ph = a.photo;
+      const name = `Im${this.images.length}`;
+      this.images.push({ data: bytesToString(ph.bytes), w: ph.width, h: ph.height, cs: ph.components === 1 ? "/DeviceGray" : ph.components === 4 ? "/DeviceCMYK" : "/DeviceRGB" });
+      const side = Math.min(ph.width, ph.height);
+      const scale = (2 * r) / side;
+      const w = ph.width * scale, h = ph.height * scale;
+      this.cur += `q ${this.circlePath(cx, cy, r)} W n ${w.toFixed(2)} 0 0 ${h.toFixed(2)} ${(cx - w / 2).toFixed(2)} ${(cy - h / 2).toFixed(2)} cm /${name} Do Q\n`;
+    } else {
+      this.cur += `${hexToRgb(a?.hex ?? "#234F9A")} rg ${this.circlePath(cx, cy, r)} f\n`;
+      const letter = a?.initials ?? "";
+      const size = r * 0.95;
+      this.run(cx - width(letter, size, true) / 2, cy - size * 0.35, letter, size, "F2", "1 1 1");
+    }
+    this.cur += `${BLUE} RG 1.5 w ${this.circlePath(cx, cy, r + 2)} S\n`;
   }
   run(x: number, y: number, text: string, size: number, font: "F1" | "F2" | "F3", color: string) {
     this.cur += `BT /${font} ${size} Tf ${color} rg ${x.toFixed(2)} ${y.toFixed(2)} Td (${enc(text)}) Tj ET\n`;
@@ -95,9 +154,14 @@ class Doc {
     objs[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
     objs[4] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
     objs[5] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>";
+    const imgBase = 6 + n * 2;
+    const xobj = this.images.length ? ` /XObject << ${this.images.map((_, k) => `/Im${k} ${imgBase + k} 0 R`).join(" ")} >>` : "";
     this.pages.forEach((content, i) => {
-      objs[6 + i * 2] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents ${7 + i * 2} 0 R >>`;
+      objs[6 + i * 2] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >>${xobj} >> /Contents ${7 + i * 2} 0 R >>`;
       objs[7 + i * 2] = `<< /Length ${content.length} >>\nstream\n${content}endstream`;
+    });
+    this.images.forEach((im, k) => {
+      objs[imgBase + k] = `<< /Type /XObject /Subtype /Image /Width ${im.w} /Height ${im.h} /ColorSpace ${im.cs} /BitsPerComponent 8 /Filter /DCTDecode /Length ${im.data.length} >>\nstream\n${im.data}\nendstream`;
     });
     let pdf = "%PDF-1.4\n";
     const offsets: number[] = [];
@@ -110,14 +174,19 @@ class Doc {
   }
 }
 
-function addPersona(d: Doc, p: Persona, status: string) {
+function addPersona(d: Doc, p: Persona, status: string, avatar?: PdfAvatar) {
   d.newPage(true);
   d.run(M, d.y, "Intranet", 12, "F2", BLUE);
   d.run(M + width("Intranet ", 12, true), d.y, "persona", 12, "F2", RED);
-  d.gap(30);
-  d.text(p.name.replace(" (placeholder)", ""), { size: 24, bold: true, lead: 28 });
-  d.text(p.role, { size: 12, color: GREY });
-  d.text(`Status: ${status}`, { size: 10, bold: true, color: BLUE });
+  d.gap(24);
+  const top = d.y;
+  const r = 38;
+  d.avatar(M + r + 2, top - r - 4, r, avatar);
+  d.gap(20);
+  d.text(p.name.replace(" (placeholder)", ""), { size: 24, bold: true, lead: 28, indent: 2 * r + 20 });
+  d.text(p.role, { size: 12, color: GREY, indent: 2 * r + 20 });
+  d.text(`Status: ${status}`, { size: 10, bold: true, color: BLUE, indent: 2 * r + 20 });
+  d.y = Math.min(d.y, top - 2 * r - 14);
   d.gap(8);
   d.text(p.quote, { size: 12, italic: true, indent: 10 });
   d.heading("Goals"); d.bullets(p.goals);
@@ -142,9 +211,9 @@ function addPersona(d: Doc, p: Persona, status: string) {
   });
 }
 
-export function personaPdf(personas: Persona[], statusOf: (p: Persona) => string) {
+export function personaPdf(personas: Persona[], statusOf: (p: Persona) => string, avatars: Record<string, PdfAvatar> = {}) {
   const d = new Doc();
-  for (const p of personas) addPersona(d, p, statusOf(p));
+  for (const p of personas) addPersona(d, p, statusOf(p), avatars[p.id]);
   return d.build();
 }
 
