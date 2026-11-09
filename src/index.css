@@ -303,3 +303,8 @@ button, select, textarea, .chip, .themebtn, .nav button { font-size: var(--fs-ca
 
 .headline-avatar { flex-basis: 100%; }
 .headline-avatar img { display: block; width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: var(--muted); box-shadow: 0 0 0 3px var(--background), 0 0 0 5px var(--primary); }
+
+/* hovered or focused badges are always fully opaque, even while another persona is selected */
+.picker[data-sel] [data-lanyard]:has([data-badge][data-active]),
+.picker[data-sel] [data-lanyard]:has([data-badge]:hover),
+.picker[data-sel] [data-lanyard]:has([data-badge]:focus-visible) { opacity: 1; }
