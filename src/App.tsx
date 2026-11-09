@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import currentUserPhoto from "@/assets/persona-current-user.jpg";
+import deptRepPhoto from "@/assets/persona-dept-rep.jpg";
 import newEmployeePhoto from "@/assets/persona-new-employee.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
@@ -25,7 +27,7 @@ function avatar(initials: string, bg: string) {
 
 /** Portraits are picked up automatically: put src/assets/persona-<id>.jpg (id as in src/data.ts, e.g. persona-current-user.jpg). Personas without a file get a colored initials avatar. */
 const photoFiles = import.meta.glob("/src/assets/persona-*.{jpg,jpeg,png,webp}", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
-const PHOTOS: Record<string, string> = { "new-employee": newEmployeePhoto, ...Object.fromEntries(
+const PHOTOS: Record<string, string> = { "current-user": currentUserPhoto, "dept-rep": deptRepPhoto, "new-employee": newEmployeePhoto, ...Object.fromEntries(
   Object.entries(photoFiles).map(([path, url]) => [path.replace(/^.*persona-/, "").replace(/\.\w+$/, ""), url]),
 ) };
 
