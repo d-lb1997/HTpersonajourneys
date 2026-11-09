@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import newEmployeePhoto from "@/assets/persona-new-employee.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
@@ -24,9 +25,9 @@ function avatar(initials: string, bg: string) {
 
 /** Portraits are picked up automatically: put src/assets/persona-<id>.jpg (id as in src/data.ts, e.g. persona-current-user.jpg). Personas without a file get a colored initials avatar. */
 const photoFiles = import.meta.glob("/src/assets/persona-*.{jpg,jpeg,png,webp}", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
-const PHOTOS: Record<string, string> = Object.fromEntries(
+const PHOTOS: Record<string, string> = { "new-employee": newEmployeePhoto, ...Object.fromEntries(
   Object.entries(photoFiles).map(([path, url]) => [path.replace(/^.*persona-/, "").replace(/\.\w+$/, ""), url]),
-);
+) };
 
 const AVATAR_BG = ["#234F9A", "#628FDB", "#C20012", "#ADC7EA", "#8A8A89"];
 
