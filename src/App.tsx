@@ -53,39 +53,6 @@ function Bullets({ items }: { items: string[] }) {
   return <ul>{items.map((x, i) => <li key={i}><Rich text={x} /></li>)}</ul>;
 }
 
-/** One short clause from the first sentence, for the back of a badge. */
-function blurb(text: string) {
-  const first = text.replace(/\s*\[S\d[^\]]*\]/g, "").split(/(?<=\.)\s/)[0] ?? text;
-  const clause = first.split(/:|, and |, so |, locally/)[0]!.replace(/^This (persona|is) /, "").replace(/\.$/, "");
-  return clause.charAt(0).toUpperCase() + clause.slice(1);
-}
-
-function Bullets({ items }: { items: string[] }) {
-  return <ul>{items.map((x, i) => <li key={i}><Rich text={x} /></li>)}</ul>;
-}
-
-function DocBlocks({ blocks }: { blocks: DocBlock[] }) {
-  return (
-    <>
-      {blocks.map((b, i) => {
-        if (b.t === "p") return <p key={i} className="doc-p"><Rich text={b.text} /></p>;
-        if (b.t === "h3") return <h3 key={i} className="doc-h3">{b.text}</h3>;
-        if (b.t === "ul") return <div key={i} className="doc-list"><Bullets items={b.items} /></div>;
-        if (b.t === "ol") return <ol key={i} className="doc-list">{b.items.map((x, k) => <li key={k}><Rich text={x} /></li>)}</ol>;
-        const keep = b.head.map((_, k) => k).filter((k) => b.head[k] !== "Sources");
-        return (
-          <div key={i} className="tablewrap">
-            <table className="doc-table">
-              <thead><tr>{keep.map((k) => <th key={k}>{b.head[k]}</th>)}</tr></thead>
-              <tbody>{b.rows.map((r, k) => <tr key={k}>{keep.map((m) => <td key={m}><Rich text={r[m] ?? ""} /></td>)}</tr>)}</tbody>
-            </table>
-          </div>
-        );
-      })}
-    </>
-  );
-}
-
 function Device({ type, screen }: { type: DeviceType; screen: string }) {
   const stroke = "var(--foreground)";
   const body = "var(--card)";
