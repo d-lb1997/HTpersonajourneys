@@ -379,3 +379,14 @@ ol.doc-list { list-style: decimal; }
 /* generous room under the badges: a flipped badge grows and lifts, and its shadow reaches further down */
 [data-slot="team-lanyard-rail"] { padding-bottom: 88px; }
 .picker-body { padding-top: 12px; }
+
+/* journey map */
+.jgrid .cell ul { padding-left: 16px; margin: 0; }
+.jgrid .cell li, .jgrid .cell { font-size: var(--fs-caption); line-height: 1.45; }
+.jgrid .cell li { margin-bottom: 4px; }
+.jgrid .sh button { display: flex; flex-direction: column; gap: 2px; font-size: var(--fs-caption); }
+.jgrid .sh button small { order: -1; }
+.friction { display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+.friction-bar { display: block; height: 6px; min-width: 4px; border-radius: 3px; background: var(--accent-brand); }
+.stage h3 { margin-bottom: 6px; }
+.stage ul { padding-left: 18px; }

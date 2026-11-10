@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import productSearcherPhoto from "@/assets/persona-product-searcher.jpg";
 import deptRepPhoto from "@/assets/persona-dept-rep.jpg";
 import newJoinerPhoto from "@/assets/persona-new-joiner.jpg";
@@ -10,7 +10,7 @@ import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimo
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
 import { stripSources } from "@/lib/text";
-import { PERSONAS, type Block, type DeviceType, type Persona } from "@/data";
+import { PERSONAS, type Block, type DeviceType, type JourneyStage, type Persona } from "@/data";
 
 function avatar(initials: string, bg: string) {
   const fg = bg === "#ADC7EA" ? "#234F9A" : "#FFFFFF";
@@ -65,6 +65,75 @@ function BlockView({ b, alwaysTitle }: { b: Block; alwaysTitle?: boolean }) {
 
 function Bullets({ items }: { items: string[] }) {
   return <ul>{items.map((x, i) => <li key={i}><Rich text={x} /></li>)}</ul>;
+}
+
+const JOURNEY_ROWS = [
+  ["actions", "Actions & goals", ""],
+  ["touchpoints", "Touchpoints", ""],
+  ["pains", "Pain points", "pain"],
+  ["opps", "Opportunities", "opp"],
+  ["works", "What works", ""],
+] as const;
+
+/** Interactive journey map: hover a stage to highlight it, click to see its full detail. */
+function JourneyMap({ stages }: { stages: JourneyStage[] }) {
+  const [sel, setSel] = useState(0);
+  const [hov, setHov] = useState<number | null>(null);
+  const n = stages.length;
+  const rows = JOURNEY_ROWS.filter(([k]) => k !== "works" || stages.some((st) => st.works.length > 0));
+  const maxPain = Math.max(1, ...stages.map((st) => st.pains.length));
+  const cur = stages[sel]!;
+  const cellList = (items: string[]) => (items.length ? <Bullets items={items} /> : <span className="t-caption">Not documented</span>);
+  return (
+    <>
+      <div className="journey">
+        <div className="jgrid" data-hover={hov ?? undefined} onMouseLeave={() => setHov(null)} style={{ ["--n" as string]: n }}>
+          <div className="rl">Stage</div>
+          {stages.map((st, i) => (
+            <div key={st.name} className={`sh${i === hov ? " hov" : ""}`} onMouseEnter={() => setHov(i)}>
+              <button type="button" aria-pressed={i === sel} onFocus={() => setHov(i)} onBlur={() => setHov(null)} onClick={() => setSel(i)}>
+                <small>Stage {i + 1}</small>{st.name}
+              </button>
+            </div>
+          ))}
+          <div className="rl">Friction</div>
+          {stages.map((st, i) => (
+            <div key={`f${i}`} className={`cell friction${i === sel ? " sel" : ""}${i === hov ? " hov" : ""}`} onMouseEnter={() => setHov(i)} onClick={() => setSel(i)}
+              aria-label={`${st.pains.length} documented pain points`}>
+              <span className="friction-bar" style={{ width: `${(st.pains.length / maxPain) * 100}%` }} />
+              <span className="t-caption">{st.pains.length} pain point{st.pains.length === 1 ? "" : "s"}</span>
+            </div>
+          ))}
+          {rows.map(([key, label, cls]) => (
+            <Fragment key={key}>
+              <div className="rl">{label}</div>
+              {stages.map((st, i) => (
+                <div key={i} className={`cell ${cls}${i === sel ? " sel" : ""}${i === hov ? " hov" : ""}`} onMouseEnter={() => setHov(i)} onClick={() => setSel(i)}>
+                  {cellList(st[key])}
+                </div>
+              ))}
+            </Fragment>
+          ))}
+        </div>
+      </div>
+      <div className="stage" aria-live="polite">
+        <div className="full">
+          <span className="t-label">Stage {sel + 1} of {n}</span>
+          <h4 className="t-h2" style={{ margin: "2px 0 0" }}>{cur.name}</h4>
+        </div>
+        {rows.map(([key, label, cls]) => (
+          <div key={key}>
+            <h3>{label}</h3>
+            <span className={cls}>{cellList(cur[key])}</span>
+          </div>
+        ))}
+        <div className="nav">
+          <button type="button" disabled={sel === 0} onClick={() => setSel((v) => Math.max(0, v - 1))}>Previous stage</button>
+          <button type="button" disabled={sel === n - 1} onClick={() => setSel((v) => Math.min(n - 1, v + 1))}>Next stage</button>
+        </div>
+      </div>
+    </>
+  );
 }
 
 function Device({ type, screen }: { type: DeviceType; screen: string }) {
@@ -264,6 +333,12 @@ export default function App() {
                 {persona.blocks.filter((b) => b.group === "More context").map((b, i) => <BlockView key={i} b={b} alwaysTitle />)}
               </section>
             )}
+
+            <section>
+              <h3>Journey map</h3>
+              <p className="caption-p">Built only from what is known about this persona. Hover a stage to follow it, click to see the detail. Empty cells are not yet documented.</p>
+              <JourneyMap key={persona.id} stages={persona.journey} />
+            </section>
 
             {persona.quotes.length > 0 && (
               <section>

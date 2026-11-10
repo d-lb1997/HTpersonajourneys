@@ -7,6 +7,7 @@ export interface DeviceUse { type: DeviceType; status: "today" | "future"; use: 
 export type Group = "Behaviour" | "Goals" | "Pain points" | "Needs and wishes" | "More context";
 export interface Block { title: string; group: Group; note: string; items: string[]; paras: string[] }
 export interface Org { city: string; country: string; lat: number; lng: number; site: string }
+export interface JourneyStage { name: string; actions: string[]; touchpoints: string[]; pains: string[]; opps: string[]; works: string[] }
 export interface Moscow { note: string; must: string[]; should: string[]; could: string[]; wont: string[] }
 
 export interface Persona {
@@ -29,6 +30,8 @@ export interface Persona {
   moscow: Moscow | null;
   /** Site shown on the globe (HellermannTyton locations; the pairing with personas is an assumption). */
   org: Org;
+  /** Journey map built only from statements in this persona. */
+  journey: JourneyStage[];
   /** Only where a source names the device. */
   devices?: DeviceUse[];
   /** Shown above the devices, e.g. when there is no access today. */
@@ -143,6 +146,99 @@ export const PERSONAS: Persona[] = [
         "status": "today",
         "use": "Assumed: works across STEP, SAP, CRM and eQMS"
       }
+    ],
+    "journey": [
+      {
+        "name": "Start a search",
+        "actions": [
+          "Start with the search bar, the most commonly mentioned first action [S7, \"first thing you look for\"]",
+          "Search by article number, product name or UNS number [S7, \"how do you usually find information\"]"
+        ],
+        "touchpoints": [
+          "Intranet search bar [S7]"
+        ],
+        "pains": [
+          "The search engine is unintuitive and lacks wildcard, exclusion and filtering [S7, \"frustrates you\"]",
+          "Poor keyword tagging makes image and content searches unreliable [S7]"
+        ],
+        "opps": [
+          "AI-powered search with smart suggestions, filter by uploader, attachments, article availability and warehouse location [S7, \"wish you could do\"]",
+          "Must have: Advanced Search & Filtering [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Review results",
+        "actions": [
+          "Look for product codes, names, specifications and new product launches [S7, \"first thing you look for\"]"
+        ],
+        "touchpoints": [
+          "Search results, product database [S7]"
+        ],
+        "pains": [
+          "Results include duplicates, irrelevant items and outdated or misleading entries [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "See key product attributes in search results, and find similar products, product groups and alternatives [S7, \"wish you could do\"]",
+          "Could have: Enhanced Search Capabilities [S4]"
+        ],
+        "works": [
+          "Product information is relatively easy to find via article numbers or UNS [S7]"
+        ]
+      },
+      {
+        "name": "Compare and download",
+        "actions": [
+          "Compare products and find substitutes [S7, \"most often\"]",
+          "Access certificates and approvals, download images, drawings and documents [S7, \"most often\"]"
+        ],
+        "touchpoints": [
+          "Image server, customer download portal [S7, \"most often\"]"
+        ],
+        "pains": [
+          "Product comparison tools do not work, and long lists of alternatives need manual SAP checks [S7, \"frustrates you\"]",
+          "Product information is missing or incomplete, and no CAD files or complete certificates are available [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Compare several parts, see which parts are locked or not for general sale, and export solutions by market including approvals [S7, \"wish you could do\"]",
+          "Download 3D models and customer drawings, and see complete datasheets including logistics and packaging [S7, \"wish you could do\"]",
+          "Should have: Product & Inventory Information [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Check stock and systems",
+        "actions": [
+          "Work across STEP, SAP, CRM and eQMS [S7, \"essential for your role\"]"
+        ],
+        "touchpoints": [
+          "STEP, SAP, CRM, eQMS [S7]"
+        ],
+        "pains": [],
+        "opps": [
+          "View stock by country or location [S7, \"wish you could do\"]",
+          "Windchill (CAD and engineering data) integrated [S7, \"systems you wish were integrated\"]",
+          "Serve customers with quick access to inventory status and lead times [S6, slide 4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Fall back on people",
+        "actions": [
+          "Ask colleagues, product managers or back-office teams when the intranet does not answer [S7, \"how do you usually find information\"]"
+        ],
+        "touchpoints": [
+          "Colleagues, product managers, back-office teams, email [S7; S6, slide 4]"
+        ],
+        "pains": [
+          "Time-consuming to find accurate information [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Reach commercial contacts, not just product managers [S7, \"wish you could do\"]",
+          "Have all product information in one place, reducing reliance on email [S6, slide 4]"
+        ],
+        "works": []
+      }
     ]
   },
   {
@@ -242,6 +338,77 @@ export const PERSONAS: Persona[] = [
         "type": "desktop",
         "status": "today",
         "use": "Assumed: works in Microsoft 365, Dayforce, SAP and other desktop tools"
+      }
+    ],
+    "journey": [
+      {
+        "name": "Maintain department documents",
+        "actions": [
+          "Rely on policies, procedures, template letters, SOPs, risk assessments and single point lessons [S7]"
+        ],
+        "touchpoints": [
+          "Microsoft 365, Monday.com, Dayforce, eQMS, SAP, STEP, CRM, ServiceNow [S7]"
+        ],
+        "pains": [
+          "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Centralise SOPs, risk assessments, single point lessons and department documents, with file collaboration and version control [S7]",
+          "Keep their own content current, owned by the department [S7, \"who should be responsible\"]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Share updates",
+        "actions": [
+          "Share updates through Teams, email, Monday.com, SharePoint and OneDrive, plus team briefs, morning meetings and local newsletters [S7]"
+        ],
+        "touchpoints": [
+          "Teams, email, Monday.com, SharePoint, OneDrive, team briefs, morning meetings, local newsletters [S7]"
+        ],
+        "pains": [
+          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]",
+          "There is no department-specific news [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Hold all department content in a dedicated department area [S6, slide 4]",
+          "One clear landing page with a consistent structure across departments [S7]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Collaborate across teams",
+        "actions": [
+          "Use the intranet mainly for general information, not team-specific updates [S7]"
+        ],
+        "touchpoints": [
+          "Teams [S7]"
+        ],
+        "pains": [
+          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach [S7]",
+          "Too many platforms create confusion, and information is scattered across them [S7]"
+        ],
+        "opps": [
+          "Centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7]",
+          "Chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4]",
+          "A dedicated project area integrated with Teams [S7]",
+          "Won't have: features that duplicate Teams [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Help colleagues find things",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [
+          "Information is scattered across email, drives, Teams and the intranet [S7]"
+        ],
+        "opps": [
+          "A knowledge base with FAQs and video tutorials, and a best-practices page [S7]",
+          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7]",
+          "Success: all departments know where to find key information [S7, \"What would success look like\"]"
+        ],
+        "works": []
       }
     ]
   },
@@ -344,7 +511,51 @@ export const PERSONAS: Persona[] = [
         "use": "Mobile access for everyone"
       }
     ],
-    "deviceNote": "No access today."
+    "deviceNote": "No access today.",
+    "journey": [
+      {
+        "name": "Stay informed",
+        "actions": [],
+        "touchpoints": [
+          "Internal display systems for production staff without email [S7]",
+          "Team briefs and morning meetings appear among the ways people stay informed [S7, \"stay informed\"]"
+        ],
+        "pains": [],
+        "opps": [
+          "Global messages in multiple languages [S1, \"Consistent Multi-lingual communication\"]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Access the intranet",
+        "actions": [],
+        "touchpoints": [
+          "None today"
+        ],
+        "pains": [
+          "They cannot access it."
+        ],
+        "opps": [
+          "Mobile access and kiosks for employees without regular computer use [S6, slide 4]",
+          "Access for all employees, including production and logistics staff [S7, \"anything else\"]",
+          "An intranet available to all employees on their mobile phones [S1, \"Mobile friendly\"]",
+          "Must have: Language & Accessibility (fully mobile-optimised) [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Daily work and HR tasks (to validate)",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [],
+        "opps": [
+          "Real-time company and shift performance data, and dashboards such as OEE and bonus trackers (inference, to test) [S7]",
+          "Alerts for site closures, IT issues and key updates (inference, to test) [S7]",
+          "One-click HR and IT services such as sick notes and vacation requests (inference, to test) [S7]"
+        ],
+        "works": []
+      }
+    ]
   },
   {
     "id": "new-joiner",
@@ -434,6 +645,62 @@ export const PERSONAS: Persona[] = [
         "status": "today",
         "use": "Assumed: onboarding, directory and HR self-service"
       }
+    ],
+    "journey": [
+      {
+        "name": "Join and get welcomed",
+        "actions": [],
+        "touchpoints": [
+          "New employee announcement on the intranet, with a photo (planned) [S1]"
+        ],
+        "pains": [],
+        "opps": [
+          "Announcements with a photo so they can be welcomed by others when seen at site [S1]",
+          "Should have: Employee Announcements [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Find their way around",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [
+          "There is no onboarding or \"how-to\" guide for new users [S7, \"frustrates you\"]",
+          "Many employees lack awareness that the intranet exists and how to reach it [S6, slide 4]"
+        ],
+        "opps": [
+          "How-to guides, short videos or tutorials on navigating the intranet, and guidance videos on the homepage [S7]",
+          "Clear guidance on how to use the intranet and where to find things [S7]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Learn and get trained",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [],
+        "opps": [
+          "Onboarding and compliance training among content to prioritise [S7]",
+          "A training repository showing what is available and how to request or book it [S1]",
+          "Central HR policies they can search and see localised to them [S1]",
+          "Must have: HR Policies & Self Service, Knowledge Sharing & Training hub [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Find colleagues",
+        "actions": [
+          "Today's users check profile pictures before meetings and look up who does what and where they are located [S7, \"most often\"]"
+        ],
+        "touchpoints": [],
+        "pains": [],
+        "opps": [
+          "A directory with photo, job title, location and line manager [S1, \"Employee directory\"]",
+          "Must have: Employee Directory [S4]",
+          "Won't have: interactive org charts with contact details [S4]"
+        ],
+        "works": []
+      }
     ]
   },
   {
@@ -518,6 +785,67 @@ export const PERSONAS: Persona[] = [
         "type": "mobile",
         "status": "future",
         "use": "Wished for: a mobile-optimised experience or app"
+      }
+    ],
+    "journey": [
+      {
+        "name": "Stay informed away from the office",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [
+          "The intranet is not mobile-friendly [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Accessible on all devices, especially for remote and hybrid workers [S7, \"What would success look like\"]",
+          "A mobile-optimised experience or dedicated app, with push notifications [S7]",
+          "Must have: Smart Notifications (opt in or out) [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Find information",
+        "actions": [],
+        "touchpoints": [
+          "Teams, SharePoint, drives, intranet [S7]"
+        ],
+        "pains": [
+          "Information is scattered across Teams, SharePoint, drives and the intranet [S7]"
+        ],
+        "opps": [
+          "Integration with Microsoft Teams and other daily tools [S7; S5, FAQ 5]",
+          "Single sign-on to avoid multiple log-ins [S6, slide 4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Collaborate with colleagues",
+        "actions": [
+          "Use Teams for chat, calls and meetings [S7, \"share updates or collaborate\"]"
+        ],
+        "touchpoints": [
+          "Teams [S7]"
+        ],
+        "pains": [
+          "Collaboration in Teams is inconsistent and varies by individual [S7]"
+        ],
+        "opps": [
+          "Communities, chat and working out loud [S7]",
+          "Better cross-regional collaboration and information sharing [S7]",
+          "Knowing which colleagues are online [S7, \"first thing you look for\"]",
+          "Won't have: features that duplicate Teams [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Handle HR and IT requests",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [],
+        "opps": [
+          "Self-service for HR requests and IT tickets [S7]",
+          "Must have: HR Policies & Self Service (leave booking, holiday balances) [S4]"
+        ],
+        "works": []
       }
     ]
   },
@@ -639,6 +967,87 @@ export const PERSONAS: Persona[] = [
         "type": "mobile",
         "status": "future",
         "use": "Wished for: the intranet on mobile phones for all employees"
+      }
+    ],
+    "journey": [
+      {
+        "name": "Plan a message",
+        "actions": [
+          "Consider the audience whenever loading items [S1, \"Smart notifications\"]"
+        ],
+        "touchpoints": [],
+        "pains": [
+          "Ownership and content governance are unclear [S5, FAQ 3]"
+        ],
+        "opps": [
+          "Let individuals switch notifications on or off [S1]",
+          "Must have: Smart Notifications [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Publish and push",
+        "actions": [
+          "Push local leadership communication to the relevant business units, or out to global or regional sites [S1, \"Local Communication\"]",
+          "Publish global messages in multiple languages [S1]"
+        ],
+        "touchpoints": [
+          "Email today; the intranet landing page in future [S7; S1]"
+        ],
+        "pains": [
+          "Announcements go out by email and there is no global digital newsletter [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "The same landing page each morning, so important information reaches everyone at the same time [S1, \"Global Communication\"]",
+          "Must have: Local & Global Communication [S4]",
+          "Could have: Global digital newsletter [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Welcome and recognise",
+        "actions": [
+          "Announce new employees with a photo, communicate promotions and recognise long service [S1]",
+          "Communicate wellbeing and focus-day activities, and promote corporate culture [S1]"
+        ],
+        "touchpoints": [],
+        "pains": [
+          "HR and people-related content is lacking [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Should have: Employee Announcements, Promotions & Recognition, Wellbeing & Focus Activities [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Run HR processes",
+        "actions": [
+          "Run local and global employee surveys and share the results [S1]",
+          "Advertise open roles, filterable by business unit, country, region or global [S1]",
+          "House HR policies centrally with local adaptations [S1]"
+        ],
+        "touchpoints": [],
+        "pains": [],
+        "opps": [
+          "Make the intranet the gateway to self-service such as leave booking and holiday balances [S1]",
+          "Must have: HR Policies & Self Service [S4]",
+          "Should have: Surveys, Recruitment [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Keep it current and measure",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [
+          "Nobody maintains or deletes old content [S7, \"frustrates you\"]",
+          "Views on who keeps content current and how often to review it vary widely [S7]"
+        ],
+        "opps": [
+          "Measure visits, active users, top and failed searches, follow-up surveys and engagement [S7, \"How should we measure\"]",
+          "Won't have: advanced analytics [S4]"
+        ],
+        "works": []
       }
     ]
   }

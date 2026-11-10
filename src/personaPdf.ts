@@ -209,6 +209,21 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   }
   const more = p.blocks.filter((b) => b.group === "More context");
   if (more.length) { d.heading("More context"); for (const b of more) drawBlock(b, true); }
+  if (p.journey?.length) {
+    d.heading("Journey map");
+    const rows = [["actions", "Actions & goals"], ["touchpoints", "Touchpoints"], ["pains", "Pain points"], ["opps", "Opportunities"], ["works", "What works"]] as const;
+    p.journey.forEach((st, i) => {
+      d.ensure(60);
+      d.gap(4);
+      d.text(`Stage ${i + 1} · ${st.name}`, { bold: true, color: BLUE });
+      for (const [k, label] of rows) {
+        const items = st[k];
+        if (!items.length) continue;
+        d.text(label, { bold: true, size: 9.5, indent: 8 });
+        d.bullets(items.map(plain));
+      }
+    });
+  }
   if (p.quotes.length) {
     d.heading("In their words");
     if (p.quoteNote) d.text(plain(p.quoteNote), { size: 9, color: GREY });
