@@ -1,4 +1,5 @@
 import type { Persona } from "./data";
+import { stripSources } from "./lib/text";
 
 export interface PdfPhoto { bytes: Uint8Array; width: number; height: number; components: number }
 export interface PdfAvatar { hex: string; initials: string; photo?: PdfPhoto }
@@ -173,7 +174,7 @@ class Doc {
   }
 }
 
-const plain = (t: string) => t.replace(/\*\*/g, "");
+const plain = (t: string) => stripSources(t).replace(/\*\*/g, "");
 
 function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   d.newPage(true);
@@ -194,7 +195,7 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   d.text(`Evidence rating: ${plain(p.evidence)}`, { size: 9.5, color: GREY });
   for (const b of p.blocks) {
     d.heading(b.title);
-    if (b.note) d.text(plain(b.note), { size: 9, color: GREY });
+    if (plain(b.note)) d.text(plain(b.note), { size: 9, color: GREY });
     if (b.items.length) d.bullets(b.items.map(plain));
     for (const t of b.paras) d.text(plain(t));
   }
@@ -206,7 +207,7 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   if (p.success) { d.heading("Success looks like"); d.text(plain(p.success)); }
   const m = p.moscow;
   if (m) {
-    d.heading(`Where this lands in the MoSCoW prioritisation ${m.note}`);
+    d.heading("Where this lands in the MoSCoW prioritisation");
     for (const [label, items] of [["Must have", m.must], ["Should have", m.should], ["Could have", m.could], ["Won't have", m.wont]] as const) {
       if (!items.length) continue;
       d.gap(2);

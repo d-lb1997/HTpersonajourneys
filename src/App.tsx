@@ -5,6 +5,7 @@ import siteCommunicatorPhoto from "@/assets/persona-site-communicator.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
+import { stripSources } from "@/lib/text";
 import { DOC, PERSONAS, type DeviceType, type DocBlock, type Persona } from "@/data";
 
 const NOTES_KEY = "persona-notes-v1";
@@ -30,16 +31,12 @@ const PHOTOS: Record<string, string> = {
 
 const AVATAR_BG = ["#234F9A", "#628FDB", "#C20012", "#ADC7EA", "#8A8A89", "#000000"];
 
-/** Renders **bold** and dims [S3, slide 8] style source tags. */
+/** Renders **bold** text; source tags like [S3, slide 8] are left out. */
 function Rich({ text }: { text: string }) {
-  const parts = text.split(/(\*\*[^*]+\*\*|\[S\d[^\]]*\])/g).filter(Boolean);
+  const parts = stripSources(text).split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
   return (
     <>
-      {parts.map((part, i) =>
-        part.startsWith("**") ? <strong key={i}>{part.slice(2, -2)}</strong>
-        : /^\[S\d/.test(part) ? <span key={i} className="src">{part}</span>
-        : <span key={i}>{part}</span>,
-      )}
+      {parts.map((part, i) => part.startsWith("**") ? <strong key={i}>{part.slice(2, -2)}</strong> : <span key={i}>{part}</span>)}
     </>
   );
 }
@@ -63,11 +60,12 @@ function DocBlocks({ blocks }: { blocks: DocBlock[] }) {
         if (b.t === "h3") return <h3 key={i} className="doc-h3">{b.text}</h3>;
         if (b.t === "ul") return <div key={i} className="doc-list"><Bullets items={b.items} /></div>;
         if (b.t === "ol") return <ol key={i} className="doc-list">{b.items.map((x, k) => <li key={k}><Rich text={x} /></li>)}</ol>;
+        const keep = b.head.map((_, k) => k).filter((k) => b.head[k] !== "Sources");
         return (
           <div key={i} className="tablewrap">
             <table className="doc-table">
-              <thead><tr>{b.head.map((h, k) => <th key={k}>{h}</th>)}</tr></thead>
-              <tbody>{b.rows.map((r, k) => <tr key={k}>{r.map((c, m) => <td key={m}><Rich text={c} /></td>)}</tr>)}</tbody>
+              <thead><tr>{keep.map((k) => <th key={k}>{b.head[k]}</th>)}</tr></thead>
+              <tbody>{b.rows.map((r, k) => <tr key={k}>{keep.map((m) => <td key={m}><Rich text={r[m] ?? ""} /></td>)}</tr>)}</tbody>
             </table>
           </div>
         );
@@ -245,7 +243,7 @@ export default function App() {
               {persona.blocks.map((b) => (
                 <section key={b.title}>
                   <h3>{b.title}</h3>
-                  {b.note && <p className="caption-p"><Rich text={b.note} /></p>}
+                  {stripSources(b.note) && <p className="caption-p"><Rich text={b.note} /></p>}
                   {b.items.length > 0 && <Bullets items={b.items} />}
                   {b.paras.map((t, i) => <p key={i} className="doc-p"><Rich text={t} /></p>)}
                 </section>
@@ -269,7 +267,7 @@ export default function App() {
 
             {m && (
               <section>
-                <h3>Where this lands in the MoSCoW prioritisation <span className="src">{m.note}</span></h3>
+                <h3>Where this lands in the MoSCoW prioritisation</h3>
                 <div className="moscow">
                   {([["Must have", m.must], ["Should have", m.should], ["Could have", m.could], ["Won't have", m.wont]] as const).map(([label, items]) => (
                     <div key={label} className="moscow-col" data-kind={label.split(" ")[0]!.toLowerCase()}>
