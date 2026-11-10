@@ -218,9 +218,7 @@ export default function App() {
           logo={logo}
           eyebrow="Persona picker"
           heading="Who are we designing for?"
-          caption="Hover along the rail, then click a badge to select a persona."
           onFlippedChange={(i) => { if (i !== null) setPIndex(i); }}
-          action={<span className="picker-action"><i aria-hidden="true" />{selected ? `Selected: ${persona.short}` : "No persona selected"}</span>}
         />
         </div>
       {selected && (

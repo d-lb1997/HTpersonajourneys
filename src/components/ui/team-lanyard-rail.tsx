@@ -1124,7 +1124,7 @@ export function TeamLanyardRail({
         </div>
       )}
 
-      <div className="relative z-10 flex flex-col items-center gap-3 px-6 pb-7 pt-3 text-center">
+      <div data-caption-area className="relative z-10 flex flex-col items-center gap-3 px-6 pb-7 pt-3 text-center">
         <div id={`${uid}-caption`} aria-live="polite" className="min-h-[2.6rem]">
           <p className="text-sm font-medium">{line1}</p>
           <p className="mt-0.5 text-[13px] text-muted-foreground">{line2}</p>
