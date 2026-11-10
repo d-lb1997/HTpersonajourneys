@@ -248,7 +248,7 @@ export default function App() {
       <div className="brandbar" aria-hidden="true" />
       <div className="top-inner">
         <div className="titles">
-          <h1><span className="t-blue">Intranet</span> <span className="t-red">persona</span></h1>
+          <h1 className="t-blue">Welcome to OnePlace</h1>
         </div>
         <div className="controls">
           <div className="btn-row">
