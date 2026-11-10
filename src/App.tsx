@@ -11,22 +11,6 @@ import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf"
 import { stripSources } from "@/lib/text";
 import { PERSONAS, type Block, type DeviceType, type Persona } from "@/data";
 
-const COMMENTS_KEY = "persona-comments-v1";
-const NAME_KEY = "persona-commenter-name";
-
-interface Comment { name: string; text: string; at: string }
-
-function loadComments(): Record<string, Comment[]> {
-  try { return JSON.parse(localStorage.getItem(COMMENTS_KEY) || "{}") as Record<string, Comment[]>; } catch { return {}; }
-}
-
-function loadName(): string {
-  try { return localStorage.getItem(NAME_KEY) || ""; } catch { return ""; }
-}
-
-const csvCell = (v: string) => `"${v.replace(/"/g, '""')}"`;
-}
-
 function avatar(initials: string, bg: string) {
   const fg = bg === "#ADC7EA" ? "#234F9A" : "#FFFFFF";
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="${bg}"/><text x="40" y="53" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="38" font-weight="700" fill="${fg}">${initials}</text></svg>`;
@@ -129,40 +113,9 @@ export default function App() {
   const [pIndex, setPIndex] = useState<number | null>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const [railVisible, setRailVisible] = useState(true);
-  const [comments, setComments] = useState<Record<string, Comment[]>>(loadComments);
-  const [authorName, setAuthorName] = useState(loadName);
-  const [draft, setDraft] = useState("");
 
   const selected = pIndex !== null;
   const persona: Persona = PERSONAS[pIndex ?? 0]!;
-
-  const submitComment = () => {
-    const name = authorName.trim();
-    const text = draft.trim();
-    if (!name || !text) return;
-    const next = { ...comments, [persona.id]: [...(comments[persona.id] ?? []), { name, text, at: new Date().toISOString() }] };
-    setComments(next);
-    setDraft("");
-    try {
-      localStorage.setItem(COMMENTS_KEY, JSON.stringify(next));
-      localStorage.setItem(NAME_KEY, name);
-    } catch { /* storage unavailable */ }
-  };
-
-  const exportComments = () => {
-    const rows = [["Persona", "Name", "Comment", "Date"]];
-    for (const p of PERSONAS) for (const c of comments[p.id] ?? []) rows.push([p.title, c.name, c.text, c.at]);
-    const blob = new Blob(["\uFEFF" + rows.map((r) => r.map(csvCell).join(",")).join("\n")], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "persona-comments.csv";
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const personaComments = comments[persona.id] ?? [];
-  const totalComments = Object.values(comments).reduce((n, list) => n + list.length, 0);
 
   const imageFor = (p: Persona, i: number) => PHOTOS[p.id] ?? avatar(p.initials, AVATAR_BG[i % AVATAR_BG.length]!);
 
@@ -362,29 +315,6 @@ export default function App() {
               </section>
             )}
 
-            <section aria-labelledby="comments-title">
-              <h3 id="comments-title">Comments ({personaComments.length})</h3>
-              {personaComments.length > 0 && (
-                <ul className="comment-list">
-                  {personaComments.map((c, i) => (
-                    <li key={i} className="comment">
-                      <div className="comment-head"><b>{c.name}</b><span className="t-caption">{new Date(c.at).toLocaleString()}</span></div>
-                      <p>{c.text}</p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <form className="comment-form" onSubmit={(e) => { e.preventDefault(); submitComment(); }}>
-                <label htmlFor="comment-name" className="t-caption">Your name</label>
-                <input id="comment-name" className="comment-input" value={authorName} onChange={(e) => setAuthorName(e.target.value)} placeholder="Name" autoComplete="name" required />
-                <label htmlFor="comment-text" className="t-caption">Your comment</label>
-                <textarea id="comment-text" className="notes" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="What did you hear? What is still an assumption?" required />
-                <div className="comment-actions">
-                  <button type="submit" className="hbtn hbtn-primary" disabled={!authorName.trim() || !draft.trim()}>Submit comment</button>
-                  <button type="button" className="hbtn hbtn-secondary" disabled={totalComments === 0} onClick={exportComments}>Export all comments (CSV)</button>
-                </div>
-              </form>
-            </section>
           </div>
 
           <button type="button" className="chip" onClick={() => setPIndex(null)}>Clear selection</button>
