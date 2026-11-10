@@ -346,3 +346,7 @@ ol.doc-list { list-style: decimal; }
 
 /* persona panel text spans the full container width */
 .doc-p, .caption-p, .panel li, .doc-list li, .pquote, .callout { max-width: none; }
+
+/* picker title above the badges: hidden visually, kept for screen readers */
+[data-slot="team-lanyard-rail"] > header { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+[data-slot="team-lanyard-rail"] [data-stage] { margin-top: 12px; }
