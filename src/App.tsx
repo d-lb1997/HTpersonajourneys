@@ -303,7 +303,7 @@ export default function App() {
       )}
       </div>
 
-      {DOC.map((s) => (
+      {DOC.filter((s) => s.title !== "About this document").map((s) => (
         <section key={s.title} className="doc-section">
           <h2 className="sec">{s.title}</h2>
           <DocBlocks blocks={s.blocks} />
