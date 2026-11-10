@@ -7,7 +7,7 @@ import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimo
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
 import { stripSources } from "@/lib/text";
-import { DOC, PERSONAS, type DeviceType, type DocBlock, type Persona } from "@/data";
+import { PERSONAS, type DeviceType, type Persona } from "@/data";
 
 const NOTES_KEY = "persona-notes-v1";
 
@@ -40,6 +40,17 @@ function Rich({ text }: { text: string }) {
       {parts.map((part, i) => part.startsWith("**") ? <strong key={i}>{part.slice(2, -2)}</strong> : <span key={i}>{part}</span>)}
     </>
   );
+}
+
+/** One short clause from the first sentence, for the back of a badge. */
+function blurb(text: string) {
+  const first = text.replace(/\s*\[S\d[^\]]*\]/g, "").split(/(?<=\.)\s/)[0] ?? text;
+  const clause = first.split(/:|, and |, so |, locally/)[0]!.replace(/^This (persona|is) /, "").replace(/\.$/, "");
+  return clause.charAt(0).toUpperCase() + clause.slice(1);
+}
+
+function Bullets({ items }: { items: string[] }) {
+  return <ul>{items.map((x, i) => <li key={i}><Rich text={x} /></li>)}</ul>;
 }
 
 /** One short clause from the first sentence, for the back of a badge. */
@@ -330,14 +341,6 @@ export default function App() {
       )}
       </div>
 
-      {DOC.filter((s) => !["About this document", "Executive summary"].includes(s.title)).map((s) => (
-        <section key={s.title} className="doc-section">
-          <h2 className="sec">{s.title}</h2>
-          <DocBlocks blocks={s.blocks} />
-        </section>
-      ))}
-
-      <footer className="page-footer">Source: User Personas – Revised Global Intranet (HellermannTyton). Notes are saved in this browser only.</footer>
     </div>
     </>
   );
