@@ -54,7 +54,7 @@ const PLAIN_TITLES = new Set(["What they do today", "Goals", "Pain points", "Wha
 
 function BlockView({ b, alwaysTitle }: { b: Block; alwaysTitle?: boolean }) {
   return (
-    <div className="block">
+    <div className="pblock">
       {(alwaysTitle || !PLAIN_TITLES.has(b.title)) && <h4 className="block-title">{b.title}</h4>}
       {stripSources(b.note) && <p className="caption-p"><Rich text={b.note} /></p>}
       {b.items.length > 0 && <Bullets items={b.items} />}
