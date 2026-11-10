@@ -289,12 +289,17 @@ export default function App() {
 
             {persona.devices && persona.devices.length > 0 && (
               <section>
-                <h3>Devices named in the sources</h3>
+                <h3>Devices</h3>
+                {persona.deviceNote && <p className="doc-p"><b>{persona.deviceNote}</b></p>}
                 <div className="devices">
                   {persona.devices.map((d) => (
-                    <figure key={d.type} className="devfig">
+                    <figure key={d.type} className="devfig" data-status={d.status}>
                       <Device type={d.type} screen={persona.initials} />
-                      <figcaption><b>{devLabel[d.type]}</b><small><Rich text={d.use} /></small></figcaption>
+                      <figcaption>
+                        <b>{devLabel[d.type]}</b>
+                        <span className="devstatus">{d.status === "today" ? "Today" : "Future vision"}</span>
+                        <small><Rich text={d.use} /></small>
+                      </figcaption>
                     </figure>
                   ))}
                 </div>

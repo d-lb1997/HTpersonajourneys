@@ -2,7 +2,7 @@
    Statements carry source tags such as [S3, slide 8]; nothing here is added from outside those sources. */
 export type Rating = "Strong" | "Moderate" | "Thin";
 export type DeviceType = "mobile" | "desktop" | "kiosk";
-export interface DeviceUse { type: DeviceType; use: string }
+export interface DeviceUse { type: DeviceType; status: "today" | "future"; use: string }
 
 export interface Block { title: string; note: string; items: string[]; paras: string[] }
 export interface Org { city: string; country: string; lat: number; lng: number; site: string }
@@ -30,6 +30,8 @@ export interface Persona {
   org: Org;
   /** Only where a source names the device. */
   devices?: DeviceUse[];
+  /** Shown above the devices, e.g. when there is no access today. */
+  deviceNote?: string;
 }
 
 export type DocBlock =
@@ -129,7 +131,14 @@ export const PERSONAS: Persona[] = [
         "Enhanced Search Capabilities for content, product data and assets."
       ],
       "wont": []
-    }
+    },
+    "devices": [
+      {
+        "type": "desktop",
+        "status": "today",
+        "use": "Assumed: works across STEP, SAP, CRM and eQMS"
+      }
+    ]
   },
   {
     "id": "dept-rep",
@@ -218,7 +227,14 @@ export const PERSONAS: Persona[] = [
       "wont": [
         "features that duplicate existing tools, with project collaboration already handled by Teams as the example."
       ]
-    }
+    },
+    "devices": [
+      {
+        "type": "desktop",
+        "status": "today",
+        "use": "Assumed: works in Microsoft 365, Dayforce, SAP and other desktop tools"
+      }
+    ]
   },
   {
     "id": "frontline",
@@ -300,7 +316,20 @@ export const PERSONAS: Persona[] = [
     "quoteNote": "",
     "success": "",
     "interpretation": "the persona with the largest identified access gap is served only by a mobile-first foundation in the first phase, with Option C as a later add-on.",
-    "moscow": null
+    "moscow": null,
+    "devices": [
+      {
+        "type": "kiosk",
+        "status": "future",
+        "use": "Kiosk for employees without regular computer use"
+      },
+      {
+        "type": "mobile",
+        "status": "future",
+        "use": "Mobile access for everyone"
+      }
+    ],
+    "deviceNote": "No access today."
   },
   {
     "id": "new-joiner",
@@ -372,7 +401,14 @@ export const PERSONAS: Persona[] = [
       "wont": [
         "interactive org charts with contact details."
       ]
-    }
+    },
+    "devices": [
+      {
+        "type": "desktop",
+        "status": "today",
+        "use": "Assumed: onboarding, directory and HR self-service"
+      }
+    ]
   },
   {
     "id": "remote-hybrid",
@@ -445,8 +481,14 @@ export const PERSONAS: Persona[] = [
     },
     "devices": [
       {
+        "type": "desktop",
+        "status": "today",
+        "use": "Assumed: works in Teams, SharePoint and the intranet"
+      },
+      {
         "type": "mobile",
-        "use": "Mobile-optimised experience or dedicated app, with push notifications [S7, \"wish you could do\"]"
+        "status": "future",
+        "use": "Wished for: a mobile-optimised experience or app"
       }
     ]
   },
@@ -551,7 +593,19 @@ export const PERSONAS: Persona[] = [
       "wont": [
         "complex integrations such as advanced analytics, which \"are not immediately needed\"."
       ]
-    }
+    },
+    "devices": [
+      {
+        "type": "desktop",
+        "status": "today",
+        "use": "Assumed: daily computer login to publish and read"
+      },
+      {
+        "type": "mobile",
+        "status": "future",
+        "use": "Wished for: the intranet on mobile phones for all employees"
+      }
+    ]
   }
 ];
 

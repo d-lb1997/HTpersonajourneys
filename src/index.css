@@ -359,3 +359,7 @@ ol.doc-list { list-style: decimal; }
 /* room under the badges so their drop shadows are not cut off */
 [data-slot="team-lanyard-rail"] { padding-bottom: 36px; }
 .globe-box { overflow: visible; border-radius: 0; }
+
+.devfig[data-status="future"] .device { opacity: .45; }
+.devstatus { font-size: var(--fs-label); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--primary); }
+.devfig[data-status="future"] .devstatus { color: var(--accent-brand); }
