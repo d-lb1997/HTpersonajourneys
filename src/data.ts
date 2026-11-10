@@ -210,7 +210,7 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "frontline",
-    "org": {"city": "Wuxi", "country": "CN", "lat": 31.49, "lng": 120.31, "site": "HellermannTyton (Wuxi) Electrical Accessories Co. Ltd"},
+    "org": {"city": "United Kingdom", "country": "GB", "lat": 52.5, "lng": -1.9, "site": "HellermannTyton UK"},
     "initials": "F",
     "short": "Frontline employee",
     "title": "Frontline / Non-Desk Employee",
