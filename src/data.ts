@@ -300,17 +300,7 @@ export const PERSONAS: Persona[] = [
     "quoteNote": "",
     "success": "",
     "interpretation": "the persona with the largest identified access gap is served only by a mobile-first foundation in the first phase, with Option C as a later add-on.",
-    "moscow": null,
-    "devices": [
-      {
-        "type": "mobile",
-        "use": "Mobile access for employees without regular computer use [S6, slide 4]"
-      },
-      {
-        "type": "kiosk",
-        "use": "Kiosks for employees without regular computer use [S6, slide 4]"
-      }
-    ]
+    "moscow": null
   },
   {
     "id": "new-joiner",
