@@ -364,3 +364,11 @@ ol.doc-list { list-style: decimal; }
 .devstatus { font-size: var(--fs-label); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--primary); }
 .devfig[data-status="future"] .devstatus { color: var(--accent-brand); }
 .headline-avatar { margin-bottom: 14px; }
+
+.comment-list { list-style: none; margin: 0 0 14px; padding: 0 !important; display: flex; flex-direction: column; gap: 10px; }
+.comment { background: color-mix(in oklab, var(--foreground) 5%, transparent); border-radius: 10px; padding: 10px 14px; margin: 0 !important; }
+.comment-head { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.comment p { margin: 4px 0 0; white-space: pre-wrap; }
+.comment-form { display: flex; flex-direction: column; gap: 6px; max-width: 640px; }
+.comment-input { font: inherit; font-size: var(--fs-body); padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
+.comment-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
