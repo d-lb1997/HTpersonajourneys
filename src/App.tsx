@@ -303,7 +303,7 @@ export default function App() {
       )}
       </div>
 
-      {DOC.filter((s) => s.title !== "About this document").map((s) => (
+      {DOC.filter((s) => !["About this document", "Executive summary"].includes(s.title)).map((s) => (
         <section key={s.title} className="doc-section">
           <h2 className="sec">{s.title}</h2>
           <DocBlocks blocks={s.blocks} />
