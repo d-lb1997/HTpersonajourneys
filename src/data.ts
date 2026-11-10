@@ -225,10 +225,7 @@ export const PERSONAS: Persona[] = [
         "title": "Why they do not use the intranet today",
         "note": "",
         "items": [
-          "Many employees are not aware it exists, do not know how to access it, or lack the right permissions [S6, slide 4].",
-          "Some users have no login credentials or accounts [S7, \"How easy is it to find what you need?\"].",
-          "It is not mobile-friendly [S7, \"frustrates you\"].",
-          "Important announcements are sent by email, which this group does not use [S7, \"frustrates you\"; S2, slide 2]."
+          "They cannot access it."
         ],
         "paras": []
       },
