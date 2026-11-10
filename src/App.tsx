@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import productSearcherPhoto from "@/assets/persona-product-searcher.jpg";
-import newJoinerPhoto from "@/assets/persona-new-joiner.jpg";
+import frontlinePhoto from "@/assets/persona-frontline.jpg";
 import siteCommunicatorPhoto from "@/assets/persona-site-communicator.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
@@ -25,7 +25,7 @@ function avatar(initials: string, bg: string) {
 const photoFiles = import.meta.glob("/src/assets/persona-*.{jpg,jpeg,png,webp}", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
 const PHOTOS: Record<string, string> = {
   "product-searcher": productSearcherPhoto,
-  "new-joiner": newJoinerPhoto,
+  frontline: frontlinePhoto,
   "site-communicator": siteCommunicatorPhoto,
   ...Object.fromEntries(Object.entries(photoFiles).map(([path, url]) => [path.replace(/^.*persona-/, "").replace(/\.\w+$/, ""), url])),
 };
