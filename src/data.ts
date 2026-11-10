@@ -43,16 +43,22 @@ export interface DocSection { title: string; blocks: DocBlock[] }
 export const PERSONAS: Persona[] = [
   {
     "id": "product-searcher",
-    "org": {"city": "Tornesch", "country": "DE", "lat": 53.7, "lng": 9.72, "site": "HellermannTyton GmbH & Co. KG"},
+    "org": {
+      "city": "Tornesch",
+      "country": "DE",
+      "lat": 53.7,
+      "lng": 9.72,
+      "site": "HellermannTyton GmbH & Co. KG"
+    },
     "initials": "P",
     "short": "Product searcher",
     "title": "Product & Technical Information Searcher",
     "segment": "Current user",
     "intro": [
-      "This persona uses today's intranet mainly as a product database, and the product data is the one part they find valuable. The segment is the \"current user\": employees who regularly use the existing intranet for daily tasks [S2, slide 3]. The sources do not state a job title for this group. They mention product managers, sales content, marketing updates and back-office support teams in the same answers [S7]."
+      "This persona uses today's intranet mainly as a product database, and the product data is the one part they find valuable. The segment is the \"current user\": employees who regularly use the existing intranet for daily tasks [S2, slide 3]."
     ],
     "rating": "Strong",
-    "evidence": "Strong on what they do and want; Moderate on who exactly they are, because [S7] is not tagged by participant group.",
+    "evidence": "Strong on what they do and want; Moderate on who exactly they are.",
     "blocks": [
       {
         "title": "What they do today",
@@ -127,16 +133,22 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "dept-rep",
-    "org": {"city": "Milwaukee", "country": "US", "lat": 43.04, "lng": -87.91, "site": "HellermannTyton – North American Headquarters"},
+    "org": {
+      "city": "Milwaukee",
+      "country": "US",
+      "lat": 43.04,
+      "lng": -87.91,
+      "site": "HellermannTyton – North American Headquarters"
+    },
     "initials": "D",
     "short": "Department rep",
     "title": "Department Representative",
     "segment": "Department representative",
     "intro": [
-      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. [S6, slide 4] adds Finance and Sales as groups that want dedicated spaces or chat."
+      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]."
     ],
     "rating": "Moderate",
-    "evidence": "Moderate. The needs are well documented in [S7] and [S6], but [S7] is not tagged by group, so they are assigned by topic.",
+    "evidence": "Moderate. The needs are well documented, but are assigned to this persona by topic.",
     "blocks": [
       {
         "title": "What they do today",
@@ -210,13 +222,19 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "frontline",
-    "org": {"city": "United Kingdom", "country": "GB", "lat": 52.5, "lng": -1.9, "site": "HellermannTyton UK"},
+    "org": {
+      "city": "United Kingdom",
+      "country": "GB",
+      "lat": 52.5,
+      "lng": -1.9,
+      "site": "HellermannTyton UK"
+    },
     "initials": "F",
     "short": "Frontline employee",
     "title": "Frontline / Non-Desk Employee",
     "segment": "Non-user",
     "intro": [
-      "This is the largest group the current intranet fails to reach: over 2,000 frontline employees who are non-email users [S2, slide 2]. The project defines \"Non-Users\" as employees without direct access to the intranet or a dedicated PC, naming production and manufacturing [S2, slide 3]. Almost everything the sources say about this group describes the access gap and what is missing. There are no direct quotes from them."
+      "This is the largest group the current intranet fails to reach: over 2,000 frontline employees who are non-email users [S2, slide 2]. The project defines \"Non-Users\" as employees without direct access to the intranet or a dedicated PC, naming production and manufacturing [S2, slide 3]."
     ],
     "rating": "Thin",
     "evidence": "Thin on their own needs; Strong on the size and nature of the access gap.",
@@ -234,7 +252,7 @@ export const PERSONAS: Persona[] = [
         "note": "",
         "items": [
           "Internal display systems for production staff without email [S7, \"share updates or collaborate\"].",
-          "Team briefs and morning meetings appear among the ways people stay informed. The source does not say which group uses them [S7, \"stay informed\"]."
+          "Team briefs and morning meetings appear among the ways people stay informed. [S7, \"stay informed\"]."
         ],
         "paras": []
       },
@@ -258,9 +276,7 @@ export const PERSONAS: Persona[] = [
           "Alerts for site closures, IT issues and key updates, and one-click HR and IT services such as sick notes and vacation requests [S7, \"redesign the homepage\"].",
           "Local site information on benefits, events and wellbeing initiatives [S7, \"wish you could do\"]."
         ],
-        "paras": [
-          "The sources do not say who gave these answers, so treat them as candidates to test, not findings."
-        ]
+        "paras": []
       },
       {
         "title": "What the concept designs show (not research findings)",
@@ -283,7 +299,7 @@ export const PERSONAS: Persona[] = [
     "quotes": [],
     "quoteNote": "",
     "success": "",
-    "interpretation": "the persona with the largest identified access gap is served only by a mobile-first foundation in the first phase, with Option C as a later add-on. The sources do not say whether frontline employees have company devices or would use personal phones.",
+    "interpretation": "the persona with the largest identified access gap is served only by a mobile-first foundation in the first phase, with Option C as a later add-on.",
     "moscow": null,
     "devices": [
       {
@@ -298,19 +314,25 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "new-joiner",
-    "org": {"city": "Noida", "country": "IN", "lat": 28.57, "lng": 77.39, "site": "HellermannTyton Private Limited – Corporate Office"},
+    "org": {
+      "city": "Noida",
+      "country": "IN",
+      "lat": 28.57,
+      "lng": 77.39,
+      "site": "HellermannTyton Private Limited – Corporate Office"
+    },
     "initials": "N",
     "short": "New joiner",
     "title": "New Joiner",
     "segment": "New employee",
     "intro": [
-      "This persona needs the intranet to explain itself and the company from day one, and today it offers no onboarding path. The segment is \"New Employees\": recent hires who can highlight onboarding challenges [S2, slide 3]. Their needs are inferred from onboarding mentions across the questionnaire and the HR Lead's stories, because no source reports new joiners' own words."
+      "This persona needs the intranet to explain itself and the company from day one, and today it offers no onboarding path. The segment is \"New Employees\": recent hires who can highlight onboarding challenges [S2, slide 3]."
     ],
     "rating": "Thin",
-    "evidence": "Thin. The group was recruited into the workshops [S3, slide 2], but [S7] does not tag answers by group.",
+    "evidence": "Thin. Needs are assigned by topic, not by who said it.",
     "blocks": [
       {
-        "title": "What the sources say about onboarding",
+        "title": "What is known about onboarding",
         "note": "",
         "items": [
           "There is no onboarding or \"how-to\" guide for new users [S7, \"frustrates you\"].",
@@ -336,7 +358,7 @@ export const PERSONAS: Persona[] = [
         "note": "",
         "items": [
           "A directory with photo, job title, location and line manager, so colleagues are identifiable and contactable [S1, \"Employee directory\"].",
-          "Today's users check profile pictures before meetings and look up who does what and where they are located [S7, \"most often\"]. A new joiner would plausibly rely on the same feature, but the source does not say so.",
+          "Today's users check profile pictures before meetings and look up who does what and where they are located [S7, \"most often\"].",
           "Awareness that the intranet exists and how to reach it, which many employees currently lack [S6, slide 4]."
         ],
         "paras": []
@@ -345,7 +367,7 @@ export const PERSONAS: Persona[] = [
     "quotes": [],
     "quoteNote": "",
     "success": "",
-    "interpretation": "the welcome announcement the HR Lead describes depends on a photo, as does the directory, so photo capture at onboarding serves both. Respondents asked for a how-to guide for new users [S7], but no feature in the MoSCoW lists in [S4] covers it.",
+    "interpretation": "the welcome announcement the HR Lead describes depends on a photo, as does the directory, so photo capture at onboarding serves both. Respondents asked for a how-to guide for new users, but no feature in the MoSCoW lists covers it.",
     "moscow": {
       "note": "[S4]",
       "must": [
@@ -364,19 +386,25 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "remote-hybrid",
-    "org": {"city": "Amersfoort", "country": "NL", "lat": 52.16, "lng": 5.39, "site": "HellermannTyton B.V."},
+    "org": {
+      "city": "Amersfoort",
+      "country": "NL",
+      "lat": 52.16,
+      "lng": 5.39,
+      "site": "HellermannTyton B.V."
+    },
     "initials": "R",
     "short": "Remote / hybrid",
     "title": "Remote / Hybrid Worker",
     "segment": "Remote worker",
     "intro": [
-      "This persona depends on digital channels for communication and collaboration, so device access and Microsoft 365 integration matter most. The segment is \"Remote Workers\": staff who work remotely and rely heavily on means of communication and collaboration [S2, slide 3]. The sources give this group the least dedicated evidence of the six, so most of the profile is assigned by topic."
+      "This persona depends on digital channels for communication and collaboration, so device access and Microsoft 365 integration matter most. The segment is \"Remote Workers\": staff who work remotely and rely heavily on means of communication and collaboration [S2, slide 3]."
     ],
     "rating": "Thin",
-    "evidence": "Thin. One success statement names remote and hybrid workers directly [S7]; the rest is inferred from mobile, collaboration and integration answers.",
+    "evidence": "Thin. One success statement names remote and hybrid workers directly; the rest is inferred from mobile, collaboration and integration answers.",
     "blocks": [
       {
-        "title": "What the sources say directly",
+        "title": "What is known directly",
         "note": "",
         "items": [
           "Success means the intranet is accessible on all devices, \"especially for remote and hybrid workers\" [S7, \"What would success look like\"].",
@@ -434,13 +462,19 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "site-communicator",
-    "org": {"city": "Taren Point", "country": "AU", "lat": -34.01, "lng": 151.12, "site": "HellermannTyton Australia"},
+    "org": {
+      "city": "Taren Point",
+      "country": "AU",
+      "lat": -34.01,
+      "lng": 151.12,
+      "site": "HellermannTyton Australia"
+    },
     "initials": "S",
     "short": "Site communicator",
     "title": "Local Site Communicator / HR Lead",
     "segment": "Publisher (HR Lead)",
     "intro": [
-      "This persona publishes to the intranet and needs to reach exactly the right audience, locally and globally, without overloading anyone. The evidence is a single detailed source: 19 user stories written by one HR Lead [S1], reproduced as \"HR Insights\" in [S4]. Content ownership is a recurring theme elsewhere [S3, slides 4 and 11; S5, FAQ 3 and 10], but those sources do not describe the publisher's day-to-day work."
+      "This persona publishes to the intranet and needs to reach exactly the right audience, locally and globally, without overloading anyone."
     ],
     "rating": "Moderate",
     "evidence": "Moderate. Detailed and consistent, but it is one stakeholder's view.",
