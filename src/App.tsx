@@ -8,7 +8,7 @@ import siteCommunicatorPhoto from "@/assets/persona-site-communicator.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
-import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
+import { downloadPdf, journeyPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
 import { stripSources } from "@/lib/text";
 import { PERSONAS, type Block, type DeviceType, type JourneyStage, type Persona } from "@/data";
 
@@ -260,6 +260,10 @@ export default function App() {
             <button type="button" className="hbtn hbtn-secondary"
               onClick={async () => downloadPdf("personas-all.pdf", personaPdf(PERSONAS, await makeAvatars()))}>
               Download all PDFs
+            </button>
+            <button type="button" className="hbtn hbtn-secondary"
+              onClick={async () => downloadPdf("persona-journeys.pdf", journeyPdf(PERSONAS, await makeAvatars()))}>
+              Download journeys PDF
             </button>
             <button type="button" className="hbtn hbtn-secondary" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
           </div>

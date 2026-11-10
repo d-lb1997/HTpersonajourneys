@@ -176,10 +176,10 @@ class Doc {
 
 const plain = (t: string) => stripSources(t).replace(/\*\*/g, "");
 
-function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
+function drawHeader(d: Doc, p: Persona, avatar: PdfAvatar | undefined, kicker: string) {
   d.newPage(true);
   d.run(M, d.y, "Intranet", 12, "F2", BLUE);
-  d.run(M + width("Intranet ", 12, true), d.y, "persona", 12, "F2", RED);
+  d.run(M + width("Intranet ", 12, true), d.y, kicker, 12, "F2", RED);
   d.gap(24);
   const top = d.y;
   const r = 38;
@@ -192,6 +192,26 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   d.text(`Location: ${p.org.site}, ${p.org.city}`, { size: 9.5, color: GREY, indent: ind });
   d.y = Math.min(d.y, top - 2 * r - 14);
   d.gap(8);
+}
+
+const JOURNEY_ROWS = [["actions", "Actions & goals"], ["touchpoints", "Touchpoints"], ["pains", "Pain points"], ["opps", "Opportunities"], ["works", "What works"]] as const;
+
+function drawJourney(d: Doc, p: Persona) {
+  p.journey.forEach((st, i) => {
+    d.ensure(60);
+    d.gap(4);
+    d.text(`Stage ${i + 1} · ${st.name}   (${st.pains.length} pain point${st.pains.length === 1 ? "" : "s"})`, { bold: true, color: BLUE });
+    for (const [k, label] of JOURNEY_ROWS) {
+      const items = st[k];
+      if (!items.length) continue;
+      d.text(label, { bold: true, size: 9.5, indent: 8 });
+      d.bullets(items.map(plain));
+    }
+  });
+}
+
+function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
+  drawHeader(d, p, avatar, "persona");
   for (const t of p.intro) { d.text(plain(t)); d.gap(4); }
   d.text(`Evidence rating: ${plain(p.evidence)}`, { size: 9.5, color: GREY });
   const plainTitles = ["What they do today", "Goals", "Pain points", "What they wish they could do"];
@@ -209,21 +229,7 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   }
   const more = p.blocks.filter((b) => b.group === "More context");
   if (more.length) { d.heading("More context"); for (const b of more) drawBlock(b, true); }
-  if (p.journey?.length) {
-    d.heading("Journey map");
-    const rows = [["actions", "Actions & goals"], ["touchpoints", "Touchpoints"], ["pains", "Pain points"], ["opps", "Opportunities"], ["works", "What works"]] as const;
-    p.journey.forEach((st, i) => {
-      d.ensure(60);
-      d.gap(4);
-      d.text(`Stage ${i + 1} · ${st.name}`, { bold: true, color: BLUE });
-      for (const [k, label] of rows) {
-        const items = st[k];
-        if (!items.length) continue;
-        d.text(label, { bold: true, size: 9.5, indent: 8 });
-        d.bullets(items.map(plain));
-      }
-    });
-  }
+  if (p.journey?.length) { d.heading("Journey map"); drawJourney(d, p); }
   if (p.quotes.length) {
     d.heading("In their words");
     if (p.quoteNote) d.text(plain(p.quoteNote), { size: 9, color: GREY });
@@ -252,6 +258,22 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
 export function personaPdf(personas: Persona[], avatars: Record<string, PdfAvatar> = {}) {
   const d = new Doc();
   for (const p of personas) addPersona(d, p, avatars[p.id]);
+  return d.build();
+}
+
+/** Journeys only: a short persona summary followed by its journey map, one persona per section. */
+export function journeyPdf(personas: Persona[], avatars: Record<string, PdfAvatar> = {}) {
+  const d = new Doc();
+  for (const p of personas) {
+    drawHeader(d, p, avatars[p.id], "journeys");
+    d.heading("Summary");
+    for (const t of p.intro) { d.text(plain(t)); d.gap(4); }
+    const goals = p.blocks.filter((b) => b.group === "Goals").flatMap((b) => b.items);
+    if (goals.length) { d.text("Main goals", { bold: true, size: 9.5 }); d.bullets(goals.slice(0, 3).map(plain)); }
+    if (p.success) { const t = plain(p.success); d.text("Success looks like", { bold: true, size: 9.5 }); d.text(t.charAt(0).toUpperCase() + t.slice(1)); }
+    d.heading("Journey map");
+    drawJourney(d, p);
+  }
   return d.build();
 }
 
