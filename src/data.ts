@@ -5,6 +5,7 @@ export type DeviceType = "mobile" | "desktop" | "kiosk";
 export interface DeviceUse { type: DeviceType; use: string }
 
 export interface Block { title: string; note: string; items: string[]; paras: string[] }
+export interface Org { city: string; country: string; lat: number; lng: number; site: string }
 export interface Moscow { note: string; must: string[]; should: string[]; could: string[]; wont: string[] }
 
 export interface Persona {
@@ -25,6 +26,8 @@ export interface Persona {
   success: string;
   interpretation: string;
   moscow: Moscow | null;
+  /** Site shown on the globe (HellermannTyton locations; the pairing with personas is an assumption). */
+  org: Org;
   /** Only where a source names the device. */
   devices?: DeviceUse[];
 }
@@ -40,6 +43,7 @@ export interface DocSection { title: string; blocks: DocBlock[] }
 export const PERSONAS: Persona[] = [
   {
     "id": "product-searcher",
+    "org": {"city": "Tornesch", "country": "DE", "lat": 53.7, "lng": 9.72, "site": "HellermannTyton GmbH & Co. KG"},
     "initials": "P",
     "short": "Product searcher",
     "title": "Product & Technical Information Searcher",
@@ -123,6 +127,7 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "dept-rep",
+    "org": {"city": "Milwaukee", "country": "US", "lat": 43.04, "lng": -87.91, "site": "HellermannTyton – North American Headquarters"},
     "initials": "D",
     "short": "Department rep",
     "title": "Department Representative",
@@ -205,6 +210,7 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "frontline",
+    "org": {"city": "Wuxi", "country": "CN", "lat": 31.49, "lng": 120.31, "site": "HellermannTyton (Wuxi) Electrical Accessories Co. Ltd"},
     "initials": "F",
     "short": "Frontline employee",
     "title": "Frontline / Non-Desk Employee",
@@ -295,6 +301,7 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "new-joiner",
+    "org": {"city": "Noida", "country": "IN", "lat": 28.57, "lng": 77.39, "site": "HellermannTyton Private Limited – Corporate Office"},
     "initials": "N",
     "short": "New joiner",
     "title": "New Joiner",
@@ -360,6 +367,7 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "remote-hybrid",
+    "org": {"city": "Amersfoort", "country": "NL", "lat": 52.16, "lng": 5.39, "site": "HellermannTyton B.V."},
     "initials": "R",
     "short": "Remote / hybrid",
     "title": "Remote / Hybrid Worker",
@@ -429,6 +437,7 @@ export const PERSONAS: Persona[] = [
   },
   {
     "id": "site-communicator",
+    "org": {"city": "Taren Point", "country": "AU", "lat": -34.01, "lng": 151.12, "site": "HellermannTyton Australia"},
     "initials": "S",
     "short": "Site communicator",
     "title": "Local Site Communicator / HR Lead",

@@ -3,6 +3,7 @@ import productSearcherPhoto from "@/assets/persona-product-searcher.jpg";
 import newJoinerPhoto from "@/assets/persona-new-joiner.jpg";
 import siteCommunicatorPhoto from "@/assets/persona-site-communicator.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
+import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
 import { stripSources } from "@/lib/text";
@@ -150,6 +151,15 @@ export default function App() {
     [],
   );
 
+  const globeItems: GlobeTestimonial[] = PERSONAS.map((p, i) => {
+    const q = p.quotes[0] ? stripSources(p.quotes[0]).replace(/^["“]|["”]$/g, "") : blurb(p.intro[0] ?? "");
+    return {
+      id: p.id, quote: q, name: p.short, role: p.segment, company: p.org.site,
+      city: p.org.city, country: p.org.country, lat: p.org.lat, lng: p.org.lng,
+      image: imageFor(p, i), tone: ((i % 5) + 1) as 1 | 2 | 3 | 4 | 5,
+    };
+  });
+
   const dimCss = PERSONAS.map((_, i) => `.picker[data-sel="${i}"] [data-lanyard]:not([data-lanyard="${i}"]){opacity:.3}`).join("\n");
 
   const makeAvatars = async () => {
@@ -238,6 +248,18 @@ export default function App() {
           <div className="panel" aria-live="polite">
             {persona.intro.map((t, i) => <p key={i} className="doc-p"><Rich text={t} /></p>)}
             <p className="doc-p caption-p"><b>Evidence rating:</b> <Rich text={persona.evidence} /></p>
+
+            <section className="globe-box">
+              <h3>Location</h3>
+              <TestimonialGlobe
+                items={globeItems}
+                autoRotate={false}
+                size={380}
+                active={pIndex}
+                onActiveChange={(i) => { if (i !== null) setPIndex(i); }}
+                labels={{ previous: "Previous persona", next: "Next persona", pin: "Show persona" }}
+              />
+            </section>
 
             <div className="pgrid">
               {persona.blocks.map((b) => (

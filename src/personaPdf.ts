@@ -189,6 +189,7 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   d.text(p.title, { size: 20, bold: true, lead: 24, indent: ind });
   d.text(p.segment, { size: 12, color: GREY, indent: ind });
   d.text(`Evidence: ${p.rating}`, { size: 10, bold: true, color: BLUE, indent: ind });
+  d.text(`Location: ${p.org.site}, ${p.org.city}`, { size: 9.5, color: GREY, indent: ind });
   d.y = Math.min(d.y, top - 2 * r - 14);
   d.gap(8);
   for (const t of p.intro) { d.text(plain(t)); d.gap(4); }

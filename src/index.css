@@ -350,3 +350,8 @@ ol.doc-list { list-style: decimal; }
 /* picker title above the badges: hidden visually, kept for screen readers */
 [data-slot="team-lanyard-rail"] > header { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 [data-slot="team-lanyard-rail"] [data-stage] { margin-top: 12px; }
+[data-slot="testimonial-globe"] [data-pin="5"] [data-pin-face] { --tw-ring-color: var(--p5); }
+[data-slot="testimonial-globe"] [data-pin="5"] [data-ping] { border-color: var(--p5); }
+[data-slot="testimonial-globe"] [data-quote-card][data-index="5"] figcaption > span:first-child { --tw-ring-color: var(--p5); }
+.globe-box { border-radius: 14px; overflow: hidden; }
+.globe-box > h3 { margin-bottom: 4px; }
