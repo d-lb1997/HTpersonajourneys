@@ -343,3 +343,6 @@ ol.doc-list { list-style: decimal; }
 /* the caption below the badges is kept for screen readers but not shown */
 [data-caption-area] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 [data-slot="team-lanyard-rail"] { padding-bottom: 8px; }
+
+/* persona panel text spans the full container width */
+.doc-p, .caption-p, .panel li, .doc-list li, .pquote, .callout { max-width: none; }
