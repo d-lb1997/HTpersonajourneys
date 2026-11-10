@@ -32,7 +32,8 @@ export interface Persona {
 export type DocBlock =
   | { t: "p"; text: string }
   | { t: "h3"; text: string }
-  | { t: "ul" | "ol"; items: string[] }
+  | { t: "ul"; items: string[] }
+  | { t: "ol"; items: string[] }
   | { t: "table"; head: string[]; rows: string[][] };
 export interface DocSection { title: string; blocks: DocBlock[] }
 
