@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import productSearcherPhoto from "@/assets/persona-product-searcher.jpg";
 import deptRepPhoto from "@/assets/persona-dept-rep.jpg";
+import newJoinerPhoto from "@/assets/persona-new-joiner.jpg";
 import frontlinePhoto from "@/assets/persona-frontline.jpg";
 import siteCommunicatorPhoto from "@/assets/persona-site-communicator.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
@@ -28,6 +29,7 @@ const PHOTOS: Record<string, string> = {
   "product-searcher": productSearcherPhoto,
   "dept-rep": deptRepPhoto,
   frontline: frontlinePhoto,
+  "new-joiner": newJoinerPhoto,
   "site-communicator": siteCommunicatorPhoto,
   ...Object.fromEntries(Object.entries(photoFiles).map(([path, url]) => [path.replace(/^.*persona-/, "").replace(/\.\w+$/, ""), url])),
 };
