@@ -44,6 +44,13 @@ function Rich({ text }: { text: string }) {
   );
 }
 
+/** One short clause from the first sentence, for the back of a badge. */
+function blurb(text: string) {
+  const first = text.replace(/\s*\[S\d[^\]]*\]/g, "").split(/(?<=\.)\s/)[0] ?? text;
+  const clause = first.split(/:|, and |, so |, locally/)[0]!.replace(/^This (persona|is) /, "").replace(/\.$/, "");
+  return clause.charAt(0).toUpperCase() + clause.slice(1);
+}
+
 function Bullets({ items }: { items: string[] }) {
   return <ul>{items.map((x, i) => <li key={i}><Rich text={x} /></li>)}</ul>;
 }
@@ -139,7 +146,7 @@ export default function App() {
       team: `Evidence: ${p.rating}`,
       tone: ((i % 5) + 1) as 1 | 2 | 3 | 4 | 5,
       image: imageFor(p, i),
-      bio: p.intro[0] ?? "",
+      bio: blurb(p.intro[0] ?? ""),
     })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
