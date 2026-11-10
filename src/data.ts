@@ -4,7 +4,8 @@ export type Rating = "Strong" | "Moderate" | "Thin";
 export type DeviceType = "mobile" | "desktop" | "kiosk";
 export interface DeviceUse { type: DeviceType; status: "today" | "future"; use: string }
 
-export interface Block { title: string; note: string; items: string[]; paras: string[] }
+export type Group = "Behaviour" | "Goals" | "Pain points" | "Needs and wishes" | "More context";
+export interface Block { title: string; group: Group; note: string; items: string[]; paras: string[] }
 export interface Org { city: string; country: string; lat: number; lng: number; site: string }
 export interface Moscow { note: string; must: string[]; should: string[]; could: string[]; wont: string[] }
 
@@ -73,7 +74,8 @@ export const PERSONAS: Persona[] = [
           "Work across STEP, SAP, CRM and eQMS, and want Windchill (CAD and engineering data) integrated [S7, \"essential for your role\" and \"systems you wish were integrated\"].",
           "Fall back on asking colleagues, product managers or back-office teams when the intranet does not answer [S7, \"how do you usually find information\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Behaviour"
       },
       {
         "title": "Goals",
@@ -83,7 +85,8 @@ export const PERSONAS: Persona[] = [
           "Serve customers with quick access to inventory status and lead times [S6, slide 4].",
           "Have all product information in one place, reducing reliance on email [S6, slide 4]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Goals"
       },
       {
         "title": "Pain points",
@@ -95,7 +98,8 @@ export const PERSONAS: Persona[] = [
           "Poor keyword tagging makes image and content searches unreliable [S7, \"How easy is it to find what you need?\"].",
           "One positive: product information is relatively easy to find via article numbers or UNS [S7, \"How easy is it to find what you need?\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Pain points"
       },
       {
         "title": "What they wish they could do",
@@ -108,7 +112,8 @@ export const PERSONAS: Persona[] = [
           "Reach commercial contacts, not just product managers [S7, \"wish you could do\"].",
           "Standardise parts to support logistics calculations and international communication, with a clearer category structure and attached certifications and material data sheets [S6, slide 4]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       }
     ],
     "quotes": [
@@ -168,7 +173,8 @@ export const PERSONAS: Persona[] = [
           "Share updates through Teams, email, Monday.com, SharePoint and OneDrive, plus team briefs, morning meetings and local newsletters [S7, \"share updates or collaborate\"].",
           "Use the intranet mainly for general information, not team-specific updates [S7, \"share updates or collaborate\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Behaviour"
       },
       {
         "title": "Goals",
@@ -179,7 +185,8 @@ export const PERSONAS: Persona[] = [
           "Collaborate across functions, for example between sales, marketing and product teams, with centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7, \"business processes that could be improved\"].",
           "Keep their own content current. Respondents most often named the owning department, subject-matter experts or functional owners, with a central intranet or communications team for governance [S7, \"who should be responsible\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Goals"
       },
       {
         "title": "Pain points",
@@ -191,7 +198,8 @@ export const PERSONAS: Persona[] = [
           "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"].",
           "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Pain points"
       },
       {
         "title": "What they wish they could do",
@@ -203,7 +211,8 @@ export const PERSONAS: Persona[] = [
           "Get a dedicated project area for visibility across business units, integrated with Teams [S7, \"support your team's productivity\"].",
           "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7, \"more useful for your department\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       }
     ],
     "quotes": [
@@ -261,7 +270,8 @@ export const PERSONAS: Persona[] = [
         "items": [
           "They cannot access it."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Pain points"
       },
       {
         "title": "How they are reached today",
@@ -270,7 +280,8 @@ export const PERSONAS: Persona[] = [
           "Internal display systems for production staff without email [S7, \"share updates or collaborate\"].",
           "Team briefs and morning meetings appear among the ways people stay informed. [S7, \"stay informed\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Behaviour"
       },
       {
         "title": "What the research asks for",
@@ -282,7 +293,8 @@ export const PERSONAS: Persona[] = [
           "An intranet available to all employees on their mobile phones, \"so that it is truly accessible to all\" [S1, \"Mobile friendly\"].",
           "Global messages in multiple languages [S1, \"Consistent Multi-lingual communication\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       },
       {
         "title": "Signals that may relate to this group (assignment is an inference)",
@@ -292,7 +304,8 @@ export const PERSONAS: Persona[] = [
           "Alerts for site closures, IT issues and key updates, and one-click HR and IT services such as sick notes and vacation requests [S7, \"redesign the homepage\"].",
           "Local site information on benefits, events and wellbeing initiatives [S7, \"wish you could do\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "More context"
       },
       {
         "title": "What the concept designs show (not research findings)",
@@ -300,7 +313,8 @@ export const PERSONAS: Persona[] = [
         "items": [],
         "paras": [
           "The production-perspective mock-ups in [S4] show a desktop, a phone and a rugged tablet with tiles for downtime alerts, safety alerts, HSE info, report an incident, equipment status, work instructions, scan QR code, request leave and maintenance ticket. These are illustrative designs, not evidence that employees asked for these items."
-        ]
+        ],
+        "group": "More context"
       },
       {
         "title": "Where this lands in the options and MoSCoW",
@@ -309,7 +323,8 @@ export const PERSONAS: Persona[] = [
           "Option B, the recommended starting point, is Microsoft 365, AI and mobile-first. Option C (Physical & Digital Solutions) is described as the add-on for the non-desk workforce, and B enables phased growth toward C or D.",
           "Must have: Language & Accessibility (fully mobile-optimised) and Local & Global Communication [S4]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "More context"
       }
     ],
     "quotes": [],
@@ -354,13 +369,22 @@ export const PERSONAS: Persona[] = [
         "title": "What is known about onboarding",
         "note": "",
         "items": [
-          "There is no onboarding or \"how-to\" guide for new users [S7, \"frustrates you\"].",
+          "There is no onboarding or \"how-to\" guide for new users [S7, \"frustrates you\"]."
+        ],
+        "paras": [],
+        "group": "Pain points"
+      },
+      {
+        "title": "What is known about onboarding",
+        "note": "",
+        "items": [
           "Respondents want how-to guides and onboarding support, short videos or tutorials on navigating the intranet, and guidance videos on the homepage [S7, \"wish you could do\", \"anything else\" and \"redesign the homepage\"].",
           "Onboarding resources and onboarding and compliance training appear among content to prioritise and processes to improve [S7, \"types of content\" and \"business processes\"].",
           "Success includes supporting onboarding and training for new hires [S7, \"What would success look like\"].",
           "Respondents want clear guidance on how to use the intranet and where to find things [S7, \"encourage you to visit the intranet more regularly\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       },
       {
         "title": "What the organisation plans for them",
@@ -370,7 +394,8 @@ export const PERSONAS: Persona[] = [
           "HR and onboarding information \"to help colleagues feel confident from day one\" [S5, FAQ 7].",
           "Central HR policies they can search and see localised to them [S1, \"HR Policies\"], and a training repository showing what is available and how to request or book it [S1, \"Training repository\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "More context"
       },
       {
         "title": "Needs likely to matter to them (assigned by topic, not by who said it)",
@@ -380,7 +405,8 @@ export const PERSONAS: Persona[] = [
           "Today's users check profile pictures before meetings and look up who does what and where they are located [S7, \"most often\"].",
           "Awareness that the intranet exists and how to reach it, which many employees currently lack [S6, slide 4]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       }
     ],
     "quotes": [],
@@ -436,7 +462,8 @@ export const PERSONAS: Persona[] = [
           "Success means the intranet is accessible on all devices, \"especially for remote and hybrid workers\" [S7, \"What would success look like\"].",
           "Remote workers were deliberately included in the workshops [S3, slide 2; S6, slide 3]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       },
       {
         "title": "Needs likely to matter to them (assigned by topic, not by who said it)",
@@ -449,7 +476,8 @@ export const PERSONAS: Persona[] = [
           "Self-service for HR requests and IT tickets, and single sign-on to avoid multiple log-ins [S7, \"encourage you to visit the intranet more regularly\"; S6, slide 4].",
           "Knowing which colleagues are online, which some respondents look for first on opening the intranet [S7, \"first thing you look for\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       },
       {
         "title": "Pain points that apply to anyone working away from the office",
@@ -459,7 +487,8 @@ export const PERSONAS: Persona[] = [
           "Information is scattered across Teams, SharePoint, drives and the intranet [S7, \"How easy is it to find what you need?\"].",
           "Today's collaboration in Teams is inconsistent and varies by individual [S7, \"share updates or collaborate\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Pain points"
       }
     ],
     "quotes": [],
@@ -519,10 +548,11 @@ export const PERSONAS: Persona[] = [
           "In the 2025 Global Employee Survey, \"Communication / management communication\" drew 418 responses and \"Interdepartmental / Global Communication\" 257, within a top ten led by pay and benefits (753) [S4, 2025 survey slide].",
           "The business case lists communication silos, inconsistent messaging and a lack of analytics as problems [S2, slide 2]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "More context"
       },
       {
-        "title": "Goals: reach",
+        "title": "Reach",
         "note": "",
         "items": [
           "Give everyone the same landing page each morning, so important information reaches all employees in the same way at the same time [S1, \"Global Communication\"].",
@@ -530,20 +560,22 @@ export const PERSONAS: Persona[] = [
           "Publish global messages in multiple languages [S1, \"Consistent Multi-lingual communication\"].",
           "Consider the audience whenever loading items, and let individuals switch notifications on or off [S1, \"Smart notifications\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Goals"
       },
       {
-        "title": "Goals: welcome and recognise",
+        "title": "Welcome and recognise",
         "note": "",
         "items": [
           "Announce new employees with a photo as part of onboarding [S1, \"Global / Loc NEW employee announcements\"].",
           "Communicate promotions, with an option to filter the audience, and recognise employees including long service [S1, \"Promotions & Employee Recognition\"].",
           "Let every site communicate wellbeing and focus-day activities such as International Women's Day, and promote corporate culture periodically [S1, \"Group focus activities (wellbeing)\" and \"Corporate culture\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Goals"
       },
       {
-        "title": "Goals: run HR processes",
+        "title": "Run HR processes",
         "note": "",
         "items": [
           "Run local and global employee surveys through the intranet and share the results [S1, \"Employee Surveys\"].",
@@ -551,7 +583,8 @@ export const PERSONAS: Persona[] = [
           "House HR policies centrally with local adaptations for local employment laws, and update them with everyone informed in a timely way [S1, \"HR Policies\"].",
           "Make the intranet the gateway to self-service such as annual leave booking and holiday balances [S1, \"Employee self service\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Goals"
       },
       {
         "title": "Pain points",
@@ -562,7 +595,8 @@ export const PERSONAS: Persona[] = [
           "Ownership and content governance are unclear [S5, FAQ 3].",
           "Views on who should keep content current and how often to review it vary widely, from daily to quarterly or as needed [S7, \"Content & Governance\" questions]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Pain points"
       },
       {
         "title": "Needs for knowing it works",
@@ -570,7 +604,8 @@ export const PERSONAS: Persona[] = [
         "items": [
           "Respondents suggest measuring visits, active users, top search terms and failed searches, plus follow-up surveys and engagement on posts [S7, \"How should we measure\"]."
         ],
-        "paras": []
+        "paras": [],
+        "group": "Needs and wishes"
       }
     ],
     "quotes": [

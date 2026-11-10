@@ -372,3 +372,6 @@ ol.doc-list { list-style: decimal; }
 .comment-form { display: flex; flex-direction: column; gap: 6px; max-width: 640px; }
 .comment-input { font: inherit; font-size: var(--fs-body); padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
 .comment-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+
+.block + .block { margin-top: 14px; }
+.block-title { margin: 0 0 6px; font-size: var(--fs-caption); font-weight: 600; color: var(--foreground); }

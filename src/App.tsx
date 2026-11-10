@@ -9,7 +9,7 @@ import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimo
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
 import { stripSources } from "@/lib/text";
-import { PERSONAS, type DeviceType, type Persona } from "@/data";
+import { PERSONAS, type Block, type DeviceType, type Persona } from "@/data";
 
 const COMMENTS_KEY = "persona-comments-v1";
 const NAME_KEY = "persona-commenter-name";
@@ -61,6 +61,20 @@ function blurb(text: string) {
   const first = text.replace(/\s*\[S\d[^\]]*\]/g, "").split(/(?<=\.)\s/)[0] ?? text;
   const clause = first.split(/:|, and |, so |, locally/)[0]!.replace(/^This (persona|is) /, "").replace(/\.$/, "");
   return clause.charAt(0).toUpperCase() + clause.slice(1);
+}
+
+const CORE_GROUPS = ["Behaviour", "Goals", "Pain points", "Needs and wishes"] as const;
+const PLAIN_TITLES = new Set(["What they do today", "Goals", "Pain points", "What they wish they could do"]);
+
+function BlockView({ b, alwaysTitle }: { b: Block; alwaysTitle?: boolean }) {
+  return (
+    <div className="block">
+      {(alwaysTitle || !PLAIN_TITLES.has(b.title)) && <h4 className="block-title">{b.title}</h4>}
+      {stripSources(b.note) && <p className="caption-p"><Rich text={b.note} /></p>}
+      {b.items.length > 0 && <Bullets items={b.items} />}
+      {b.paras.map((t, i) => <p key={i} className="doc-p"><Rich text={t} /></p>)}
+    </div>
+  );
 }
 
 function Bullets({ items }: { items: string[] }) {
@@ -277,15 +291,24 @@ export default function App() {
             </section>
 
             <div className="pgrid">
-              {persona.blocks.map((b) => (
-                <section key={b.title}>
-                  <h3>{b.title}</h3>
-                  {stripSources(b.note) && <p className="caption-p"><Rich text={b.note} /></p>}
-                  {b.items.length > 0 && <Bullets items={b.items} />}
-                  {b.paras.map((t, i) => <p key={i} className="doc-p"><Rich text={t} /></p>)}
-                </section>
-              ))}
+              {CORE_GROUPS.map((g) => {
+                const bs = persona.blocks.filter((b) => b.group === g);
+                return (
+                  <section key={g}>
+                    <h3>{g}</h3>
+                    {bs.length === 0 && <p className="caption-p">Not yet documented.</p>}
+                    {bs.map((b, i) => <BlockView key={i} b={b} />)}
+                  </section>
+                );
+              })}
             </div>
+
+            {persona.blocks.some((b) => b.group === "More context") && (
+              <section>
+                <h3>More context</h3>
+                {persona.blocks.filter((b) => b.group === "More context").map((b, i) => <BlockView key={i} b={b} alwaysTitle />)}
+              </section>
+            )}
 
             {persona.quotes.length > 0 && (
               <section>

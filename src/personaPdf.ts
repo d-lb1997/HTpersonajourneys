@@ -194,12 +194,21 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   d.gap(8);
   for (const t of p.intro) { d.text(plain(t)); d.gap(4); }
   d.text(`Evidence rating: ${plain(p.evidence)}`, { size: 9.5, color: GREY });
-  for (const b of p.blocks) {
-    d.heading(b.title);
+  const plainTitles = ["What they do today", "Goals", "Pain points", "What they wish they could do"];
+  const drawBlock = (b: Persona["blocks"][number], always: boolean) => {
+    if (always || !plainTitles.includes(b.title)) d.text(b.title, { bold: true, size: 10, indent: 4 });
     if (plain(b.note)) d.text(plain(b.note), { size: 9, color: GREY });
     if (b.items.length) d.bullets(b.items.map(plain));
     for (const t of b.paras) d.text(plain(t));
+  };
+  for (const g of ["Behaviour", "Goals", "Pain points", "Needs and wishes"] as const) {
+    d.heading(g);
+    const bs = p.blocks.filter((b) => b.group === g);
+    if (!bs.length) d.text("Not yet documented.", { color: GREY });
+    for (const b of bs) drawBlock(b, false);
   }
+  const more = p.blocks.filter((b) => b.group === "More context");
+  if (more.length) { d.heading("More context"); for (const b of more) drawBlock(b, true); }
   if (p.quotes.length) {
     d.heading("In their words");
     if (p.quoteNote) d.text(plain(p.quoteNote), { size: 9, color: GREY });
