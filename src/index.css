@@ -363,3 +363,4 @@ ol.doc-list { list-style: decimal; }
 .devfig[data-status="future"] .device { opacity: .45; }
 .devstatus { font-size: var(--fs-label); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--primary); }
 .devfig[data-status="future"] .devstatus { color: var(--accent-brand); }
+.headline-avatar { margin-bottom: 14px; }
