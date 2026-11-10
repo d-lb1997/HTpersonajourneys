@@ -355,3 +355,6 @@ ol.doc-list { list-style: decimal; }
 [data-slot="testimonial-globe"] [data-quote-card][data-index="5"] figcaption > span:first-child { --tw-ring-color: var(--p5); }
 .globe-box { border-radius: 14px; overflow: hidden; }
 .globe-box > h3 { margin-bottom: 4px; }
+
+/* room under the badges so their drop shadows are not cut off */
+[data-slot="team-lanyard-rail"] { padding-bottom: 36px; }
