@@ -358,3 +358,4 @@ ol.doc-list { list-style: decimal; }
 
 /* room under the badges so their drop shadows are not cut off */
 [data-slot="team-lanyard-rail"] { padding-bottom: 36px; }
+.globe-box { overflow: visible; border-radius: 0; }
