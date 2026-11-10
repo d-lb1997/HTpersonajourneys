@@ -375,3 +375,7 @@ ol.doc-list { list-style: decimal; }
 
 .pblock + .pblock { margin-top: 14px; }
 .block-title { margin: 0 0 6px; font-size: var(--fs-caption); font-weight: 600; color: var(--foreground); }
+
+/* generous room under the badges: a flipped badge grows and lifts, and its shadow reaches further down */
+[data-slot="team-lanyard-rail"] { padding-bottom: 88px; }
+.picker-body { padding-top: 12px; }
