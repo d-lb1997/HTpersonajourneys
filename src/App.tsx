@@ -1,22 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import currentUserPhoto from "@/assets/persona-current-user.jpg";
-import deptRepPhoto from "@/assets/persona-dept-rep.jpg";
-import newEmployeePhoto from "@/assets/persona-new-employee.jpg";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import productSearcherPhoto from "@/assets/persona-product-searcher.jpg";
+import newJoinerPhoto from "@/assets/persona-new-joiner.jpg";
+import siteCommunicatorPhoto from "@/assets/persona-site-communicator.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
-import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
-import { PERSONAS, STAGES, STAGE_NAMES, type DeviceType, type Persona, type Status } from "@/data";
+import { DOC, PERSONAS, type DeviceType, type DocBlock, type Persona } from "@/data";
 
-const LAYERS = [["emotion", "Emotion"], ["actions", "Actions"], ["touchpoints", "Touchpoints"], ["pains", "Pain points"], ["opps", "Opportunities"]] as const;
-type LayerKey = (typeof LAYERS)[number][0];
-const STATUSES: Status[] = ["Assumption", "Emerging", "Confirmed"];
-const STORAGE_KEY = "persona-journeys-placeholder-v1";
+const NOTES_KEY = "persona-notes-v1";
 
-type Saved = Record<string, { status?: Status; note?: string }>;
-
-function loadSaved(): Saved {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") as Saved; } catch { return {}; }
+function loadNotes(): Record<string, string> {
+  try { return JSON.parse(localStorage.getItem(NOTES_KEY) || "{}") as Record<string, string>; } catch { return {}; }
 }
 
 function avatar(initials: string, bg: string) {
@@ -25,13 +19,55 @@ function avatar(initials: string, bg: string) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-/** Portraits are picked up automatically: put src/assets/persona-<id>.jpg (id as in src/data.ts, e.g. persona-current-user.jpg). Personas without a file get a colored initials avatar. */
+/** Portraits: src/assets/persona-<id>.jpg. Personas without a file get a colored initials avatar. */
 const photoFiles = import.meta.glob("/src/assets/persona-*.{jpg,jpeg,png,webp}", { eager: true, query: "?url", import: "default" }) as Record<string, string>;
-const PHOTOS: Record<string, string> = { "current-user": currentUserPhoto, "dept-rep": deptRepPhoto, "new-employee": newEmployeePhoto, ...Object.fromEntries(
-  Object.entries(photoFiles).map(([path, url]) => [path.replace(/^.*persona-/, "").replace(/\.\w+$/, ""), url]),
-) };
+const PHOTOS: Record<string, string> = {
+  "product-searcher": productSearcherPhoto,
+  "new-joiner": newJoinerPhoto,
+  "site-communicator": siteCommunicatorPhoto,
+  ...Object.fromEntries(Object.entries(photoFiles).map(([path, url]) => [path.replace(/^.*persona-/, "").replace(/\.\w+$/, ""), url])),
+};
 
-const AVATAR_BG = ["#234F9A", "#628FDB", "#C20012", "#ADC7EA", "#8A8A89"];
+const AVATAR_BG = ["#234F9A", "#628FDB", "#C20012", "#ADC7EA", "#8A8A89", "#000000"];
+
+/** Renders **bold** and dims [S3, slide 8] style source tags. */
+function Rich({ text }: { text: string }) {
+  const parts = text.split(/(\*\*[^*]+\*\*|\[S\d[^\]]*\])/g).filter(Boolean);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith("**") ? <strong key={i}>{part.slice(2, -2)}</strong>
+        : /^\[S\d/.test(part) ? <span key={i} className="src">{part}</span>
+        : <span key={i}>{part}</span>,
+      )}
+    </>
+  );
+}
+
+function Bullets({ items }: { items: string[] }) {
+  return <ul>{items.map((x, i) => <li key={i}><Rich text={x} /></li>)}</ul>;
+}
+
+function DocBlocks({ blocks }: { blocks: DocBlock[] }) {
+  return (
+    <>
+      {blocks.map((b, i) => {
+        if (b.t === "p") return <p key={i} className="doc-p"><Rich text={b.text} /></p>;
+        if (b.t === "h3") return <h3 key={i} className="doc-h3">{b.text}</h3>;
+        if (b.t === "ul") return <div key={i} className="doc-list"><Bullets items={b.items} /></div>;
+        if (b.t === "ol") return <ol key={i} className="doc-list">{b.items.map((x, k) => <li key={k}><Rich text={x} /></li>)}</ol>;
+        return (
+          <div key={i} className="tablewrap">
+            <table className="doc-table">
+              <thead><tr>{b.head.map((h, k) => <th key={k}>{h}</th>)}</tr></thead>
+              <tbody>{b.rows.map((r, k) => <tr key={k}>{r.map((c, m) => <td key={m}><Rich text={c} /></td>)}</tr>)}</tbody>
+            </table>
+          </div>
+        );
+      })}
+    </>
+  );
+}
 
 function Device({ type, screen }: { type: DeviceType; screen: string }) {
   const stroke = "var(--foreground)";
@@ -75,49 +111,21 @@ function Device({ type, screen }: { type: DeviceType; screen: string }) {
   );
 }
 
-function List({ items }: { items: string[] }) {
-  if (!items.length) return <span className="t-caption">None noted</span>;
-  return <ul>{items.map((x) => <li key={x}>{x}</li>)}</ul>;
-}
-
-function Curve({ emotion, selected, hover, onHover, onSelect }: { emotion: number[]; selected: number; hover: number | null; onHover: (i: number | null) => void; onSelect: (i: number) => void }) {
-  const n = emotion.length, w = 1000, h = 150, pad = 24;
-  const x = (i: number) => ((i + 0.5) * w) / n;
-  const y = (v: number) => h - pad - ((v - 1) * (h - 2 * pad)) / 4;
-  return (
-    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" role="img" aria-label="Emotion curve across stages, scale 1 low to 5 high" onMouseLeave={() => onHover(null)}>
-      {emotion.map((_, i) => (
-        <rect key={`c${i}`} x={(i * w) / n} y="0" width={w / n} height={h} className="emo-col" data-on={i === hover || i === selected ? (i === selected ? "sel" : "hov") : undefined} onMouseEnter={() => onHover(i)} onClick={() => onSelect(i)} />
-      ))}
-      {[1, 2, 3, 4, 5].map((k) => <line key={k} x1="0" x2={w} y1={y(k)} y2={y(k)} stroke="var(--line)" strokeDasharray="4 6" pointerEvents="none" />)}
-      <polyline points={emotion.map((v, i) => `${x(i)},${y(v)}`).join(" ")} fill="none" stroke="var(--accent)" strokeWidth="3" vectorEffect="non-scaling-stroke" pointerEvents="none" />
-      {emotion.map((v, i) => (
-        <circle key={i} cx={x(i)} cy={y(v)} r={i === selected || i === hover ? 9 : 6} fill={i === selected ? "var(--accent)" : "var(--surface)"} stroke="var(--accent)" strokeWidth="3" vectorEffect="non-scaling-stroke" pointerEvents="none" style={{ transition: "r .15s" }} />
-      ))}
-    </svg>
-  );
-}
+const RATING_CLASS: Record<string, string> = { Strong: "ok", Moderate: "mid", Thin: "" };
 
 export default function App() {
   const [pIndex, setPIndex] = useState<number | null>(null);
-  const [sIndex, setSIndex] = useState(0);
   const railRef = useRef<HTMLDivElement>(null);
   const [railVisible, setRailVisible] = useState(true);
-  const [hS, setHS] = useState<number | null>(null);
-  const [layers] = useState<Record<LayerKey, boolean>>({ emotion: true, actions: true, touchpoints: true, pains: true, opps: true });
-  const [saved, setSaved] = useState<Saved>(loadSaved);
+  const [notes, setNotes] = useState<Record<string, string>>(loadNotes);
 
   const selected = pIndex !== null;
   const persona: Persona = PERSONAS[pIndex ?? 0]!;
-  const j = persona.journey;
-  const n = STAGES.length;
-  const statusOf = (p: Persona): Status => saved[p.id]?.status ?? p.status;
-  const badgeClass = (s: Status) => (s === "Confirmed" ? "ok" : s === "Emerging" ? "mid" : "");
 
-  const update = (key: string, patch: { status?: Status; note?: string }) =>
-    setSaved((old) => {
-      const next = { ...old, [key]: { ...old[key], ...patch } };
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch { /* storage unavailable */ }
+  const setNote = (id: string, value: string) =>
+    setNotes((old) => {
+      const next = { ...old, [id]: value };
+      try { localStorage.setItem(NOTES_KEY, JSON.stringify(next)); } catch { /* storage unavailable */ }
       return next;
     });
 
@@ -126,42 +134,18 @@ export default function App() {
   const lanyardItems: LanyardMember[] = useMemo(
     () => PERSONAS.map((p, i) => ({
       id: p.id,
-      name: p.name.replace(" (placeholder)", ""),
-      role: p.role,
-      team: statusOf(p),
-      tone: ((i % 3) + 1) as 1 | 2 | 3,
+      name: p.short,
+      role: p.segment,
+      team: `Evidence: ${p.rating}`,
+      tone: ((i % 5) + 1) as 1 | 2 | 3 | 4 | 5,
       image: imageFor(p, i),
-      bio: p.quote.replace(/[“”]/g, ""),
-      tags: p.channels.slice(0, 2),
+      bio: p.intro[0] ?? "",
     })),
-    // status shows on the badge; re-derive when saved statuses change
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [saved],
+    [],
   );
 
-  const globeItems: GlobeTestimonial[] = PERSONAS.map((p, i) => ({
-    id: p.id,
-    quote: p.quote.replace(/[“”]/g, ""),
-    name: p.name.replace(" (placeholder)", ""),
-    role: p.org.level,
-    company: p.org.department,
-    city: p.org.city,
-    country: p.org.country,
-    lat: p.org.lat,
-    lng: p.org.lng,
-    image: imageFor(p, i),
-    tone: ((i % 3) + 1) as 1 | 2 | 3,
-  }));
-
   const dimCss = PERSONAS.map((_, i) => `.picker[data-sel="${i}"] [data-lanyard]:not([data-lanyard="${i}"]){opacity:.3}`).join("\n");
-
-  useEffect(() => {
-    const el = railRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => setRailVisible(e?.isIntersecting ?? true), { threshold: 0 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
   const makeAvatars = async () => {
     const out: Record<string, PdfAvatar> = {};
@@ -174,28 +158,21 @@ export default function App() {
     return out;
   };
 
-  const pick = (i: number) => { setPIndex(i); setSIndex(0); };
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setRailVisible(e?.isIntersecting ?? true), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const toggleTheme = () => {
     const r = document.documentElement;
     r.dataset.theme = r.dataset.theme === "dark" ? "light" : "dark";
   };
 
-  const note = saved[`${persona.id}:${sIndex}`]?.note ?? "";
-  const emo = j.emotion[sIndex] ?? 1;
-
-  function row(key: Exclude<LayerKey, "emotion">, label: string, cls?: string) {
-    return (
-      <>
-        <div className={`rl${layers[key] ? "" : " hidden"}`}>{label}</div>
-        {j[key].map((c, i) => (
-          <div key={i} className={`cell${i === sIndex ? " sel" : ""}${i === hS ? " hov" : ""}${layers[key] ? "" : " hidden"}`} onMouseEnter={() => setHS(i)} onClick={() => setSIndex(i)}>
-            <span className={cls}><List items={c} /></span>
-          </div>
-        ))}
-      </>
-    );
-  }
+  const devLabel = { desktop: "PC / Desktop", mobile: "Mobile", kiosk: "Kiosk" } as const;
+  const m = persona.moscow;
 
   return (
     <>
@@ -209,11 +186,11 @@ export default function App() {
           <div className="btn-row">
             <button type="button" className="hbtn hbtn-primary" disabled={!selected}
               title={selected ? undefined : "Select a persona first"}
-              onClick={async () => downloadPdf(`persona-${persona.id}.pdf`, personaPdf([persona], (x) => statusOf(x), await makeAvatars()))}>
+              onClick={async () => downloadPdf(`persona-${persona.id}.pdf`, personaPdf([persona], await makeAvatars()))}>
               Download PDF
             </button>
             <button type="button" className="hbtn hbtn-secondary"
-              onClick={async () => downloadPdf("personas-all.pdf", personaPdf(PERSONAS, (x) => statusOf(x), await makeAvatars()))}>
+              onClick={async () => downloadPdf("personas-all.pdf", personaPdf(PERSONAS, await makeAvatars()))}>
               Download all PDFs
             </button>
             <button type="button" className="hbtn hbtn-secondary" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
@@ -226,9 +203,9 @@ export default function App() {
       <nav className="glass-nav" data-show={!railVisible} aria-label="Switch persona" inert={railVisible}>
         <div className="glass-nav-inner">
           {PERSONAS.map((p, i) => (
-            <button key={p.id} type="button" className="glass-chip" aria-pressed={pIndex === i} onClick={() => pick(i)}>
+            <button key={p.id} type="button" className="glass-chip" aria-pressed={pIndex === i} onClick={() => setPIndex(i)}>
               <i aria-hidden="true" style={{ background: `var(--p${i})` }} />
-              {p.name.replace(" (placeholder)", "")}
+              {p.short}
             </button>
           ))}
         </div>
@@ -242,106 +219,100 @@ export default function App() {
           eyebrow="Persona picker"
           heading="Who are we designing for?"
           caption="Hover along the rail, then click a badge to select a persona."
-          onFlippedChange={(i) => { if (i !== null) { setPIndex(i); setSIndex(0); } }}
-          action={<span className="picker-action"><i aria-hidden="true" />{selected ? `Selected: ${persona.name.replace(" (placeholder)", "")}` : "No persona selected"}</span>}
+          onFlippedChange={(i) => { if (i !== null) setPIndex(i); }}
+          action={<span className="picker-action"><i aria-hidden="true" />{selected ? `Selected: ${persona.short}` : "No persona selected"}</span>}
         />
         </div>
       {selected && (
         <div className="picker-body">
           <div className="headline">
             <div className="headline-avatar"><img src={imageFor(persona, pIndex ?? 0)} alt="" width={96} height={96} /></div>
-            <h2 className="t-h1" id="persona-headline">{persona.name.replace(" (placeholder)", "")}</h2>
-            <p className="headline-role">{persona.role}</p>
-            <span className={`badge ${badgeClass(statusOf(persona))}`}>{statusOf(persona)}</span>
+            <h2 className="t-h1" id="persona-headline">{persona.title}</h2>
+            <p className="headline-role">{persona.segment}</p>
+            <span className={`badge ${RATING_CLASS[persona.rating] ?? ""}`}>Evidence: {persona.rating}</span>
           </div>
-      <div className="pdetail nobox" aria-live="polite">
-        <div className="quote">{persona.quote}</div>
-        <div><h3>Goals</h3><List items={persona.goals} /></div>
-        <div><h3>Frustrations</h3><List items={persona.frustrations} /></div>
-        <div><h3>Channels</h3><List items={persona.channels} /></div>
-        <div><h3>Facts</h3><List items={persona.facts} /></div>
-        <div className="conf">
-          <label htmlFor="pstatus"><b>How confident are we?</b></label>
-          <select id="pstatus" value={statusOf(persona)} onChange={(e) => update(persona.id, { status: e.target.value as Status })}>
-            {STATUSES.map((s) => <option key={s}>{s}</option>)}
-          </select>
-          <small>Assumption, emerging from evidence, or confirmed with the client.</small>
-        </div>
-      </div>
 
-      <h2 className="sec">Location and profile in the company</h2>
-      <div className="subbox">
-        <TestimonialGlobe
-          items={globeItems}
-          eyebrow="Where they work"
-          heading={`${persona.name.replace(" (placeholder)", "")} · ${persona.org.city}`}
-          autoRotate={false}
-          size={380}
-          active={selected ? pIndex : null}
-          onActiveChange={(i) => { if (i !== null) { setPIndex(i); setSIndex(0); } }}
-          labels={{ previous: "Previous persona", next: "Next persona", pin: "Show persona" }}
-        />
-      </div>
-      <dl className="pdetail nobox" aria-live="polite">
-        {([["Site", persona.org.site], ["City", `${persona.org.city}, ${persona.org.country}`], ["Department", persona.org.department], ["Level", persona.org.level], ["Reports to", persona.org.reportsTo]] as const).map(([k, v]) => (
-          <div key={k}><dt className="t-label">{k}</dt><dd style={{ margin: 0 }}>{v}</dd></div>
-        ))}
-      </dl>
+          <div className="panel" aria-live="polite">
+            {persona.intro.map((t, i) => <p key={i} className="doc-p"><Rich text={t} /></p>)}
+            <p className="doc-p caption-p"><b>Evidence rating:</b> <Rich text={persona.evidence} /></p>
 
-      <h2 className="sec">Journey</h2>
-      <div className="journey">
-        <div className="jgrid" data-hover={hS ?? undefined} onMouseLeave={() => setHS(null)} style={{ ["--n" as string]: n, ["--cols" as string]: n + 1 }}>
-          <div className="rl">Stage</div>
-          {STAGES.map((s, i) => (
-            <div key={s} className={`sh${i === hS ? " hov" : ""}`} onMouseEnter={() => setHS(i)}>
-              <button type="button" aria-pressed={i === sIndex} onFocus={() => setHS(i)} onBlur={() => setHS(null)} onClick={() => setSIndex(i)}>{s}<small>{STAGE_NAMES[i]}</small></button>
+            <div className="pgrid">
+              {persona.blocks.map((b) => (
+                <section key={b.title}>
+                  <h3>{b.title}</h3>
+                  {b.note && <p className="caption-p"><Rich text={b.note} /></p>}
+                  {b.items.length > 0 && <Bullets items={b.items} />}
+                  {b.paras.map((t, i) => <p key={i} className="doc-p"><Rich text={t} /></p>)}
+                </section>
+              ))}
             </div>
-          ))}
-          <div className={`rl${layers.emotion ? "" : " hidden"}`}>Emotion</div>
-          <div className={`emo${layers.emotion ? "" : " hidden"}`}><Curve emotion={j.emotion} selected={sIndex} hover={hS} onHover={setHS} onSelect={setSIndex} /></div>
-          {row("actions", "Actions")}
-          {row("touchpoints", "Touchpoints")}
-          {row("pains", "Pain points", "pain")}
-          {row("opps", "Opportunities", "opp")}
-        </div>
-      </div>
 
-      <h2 className="sec">Devices</h2>
-      <div className="devices">
-        {persona.devices.map((d) => (
-          <figure key={d.type} className="devfig">
-            <Device type={d.type} screen={persona.initials} />
-            <figcaption><b>{d.type === "desktop" ? "PC / Desktop" : d.type === "mobile" ? "Mobile" : "Kiosk"}</b><small>{d.use}</small></figcaption>
-          </figure>
-        ))}
-      </div>
+            {persona.quotes.length > 0 && (
+              <section>
+                <h3>In their words</h3>
+                {persona.quoteNote && <p className="caption-p">{persona.quoteNote}</p>}
+                {persona.quotes.map((q, i) => <blockquote key={i} className="pquote"><Rich text={q} /></blockquote>)}
+              </section>
+            )}
 
-      <div className="stage" aria-live="polite">
-        <div className="full">
-          <h3>{persona.name} · {STAGES[sIndex]}</h3>
-          <b className="t-h2">{STAGE_NAMES[sIndex]}</b>{" "}
-          <span className="meter" aria-label={`Emotion ${emo} out of 5`}>{[1, 2, 3, 4, 5].map((v) => <i key={v} className={v <= emo ? "on" : ""} />)}</span>
-        </div>
-        <div><h3>Actions</h3><List items={j.actions[sIndex] ?? []} /></div>
-        <div><h3>Touchpoints</h3><List items={j.touchpoints[sIndex] ?? []} /></div>
-        <div><h3>Pain points</h3><span className="pain"><List items={j.pains[sIndex] ?? []} /></span></div>
-        <div><h3>Opportunities</h3><span className="opp"><List items={j.opps[sIndex] ?? []} /></span></div>
-        <div className="full">
-          <h3><label htmlFor="note">Your notes for this stage</label></h3>
-          <textarea id="note" placeholder="What did you hear? What is still an assumption?" value={note} onChange={(e) => update(`${persona.id}:${sIndex}`, { note: e.target.value })} />
-        </div>
-        <div className="nav">
-          <button type="button" disabled={sIndex === 0} onClick={() => setSIndex((s) => Math.max(0, s - 1))}>Previous stage</button>
-          <button type="button" disabled={sIndex === n - 1} onClick={() => setSIndex((s) => Math.min(n - 1, s + 1))}>Next stage</button>
-        </div>
-      </div>
+            {persona.success && (
+              <section>
+                <h3>Success looks like</h3>
+                <p className="doc-p"><Rich text={persona.success} /></p>
+              </section>
+            )}
+
+            {m && (
+              <section>
+                <h3>Where this lands in the MoSCoW prioritisation <span className="src">{m.note}</span></h3>
+                <div className="moscow">
+                  {([["Must have", m.must], ["Should have", m.should], ["Could have", m.could], ["Won't have", m.wont]] as const).map(([label, items]) => (
+                    <div key={label} className="moscow-col" data-kind={label.split(" ")[0]!.toLowerCase()}>
+                      <b>{label}</b>
+                      {items.length ? <Bullets items={[...items]} /> : <span className="t-caption">Nothing listed</span>}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {persona.interpretation && (
+              <p className="callout"><b>Interpretation:</b> <Rich text={persona.interpretation} /></p>
+            )}
+
+            {persona.devices && persona.devices.length > 0 && (
+              <section>
+                <h3>Devices named in the sources</h3>
+                <div className="devices">
+                  {persona.devices.map((d) => (
+                    <figure key={d.type} className="devfig">
+                      <Device type={d.type} screen={persona.initials} />
+                      <figcaption><b>{devLabel[d.type]}</b><small><Rich text={d.use} /></small></figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <section>
+              <h3><label htmlFor="note">Your notes on this persona</label></h3>
+              <textarea id="note" className="notes" placeholder="What did you hear? What is still an assumption?" value={notes[persona.id] ?? ""} onChange={(e) => setNote(persona.id, e.target.value)} />
+            </section>
+          </div>
 
           <button type="button" className="chip" onClick={() => setPIndex(null)}>Clear selection</button>
         </div>
       )}
       </div>
 
-      <footer className="page-footer">Notes and confidence settings are saved in this browser only. Content is placeholder text: replace it in <code>src/data.ts</code>.</footer>
+      {DOC.map((s) => (
+        <section key={s.title} className="doc-section">
+          <h2 className="sec">{s.title}</h2>
+          <DocBlocks blocks={s.blocks} />
+        </section>
+      ))}
+
+      <footer className="page-footer">Source: User Personas – Revised Global Intranet (HellermannTyton). Notes are saved in this browser only.</footer>
     </div>
     </>
   );

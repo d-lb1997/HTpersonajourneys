@@ -1,5 +1,4 @@
 import type { Persona } from "./data";
-import { STAGES, STAGE_NAMES } from "./data";
 
 export interface PdfPhoto { bytes: Uint8Array; width: number; height: number; components: number }
 export interface PdfAvatar { hex: string; initials: string; photo?: PdfPhoto }
@@ -174,7 +173,9 @@ class Doc {
   }
 }
 
-function addPersona(d: Doc, p: Persona, status: string, avatar?: PdfAvatar) {
+const plain = (t: string) => t.replace(/\*\*/g, "");
+
+function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
   d.newPage(true);
   d.run(M, d.y, "Intranet", 12, "F2", BLUE);
   d.run(M + width("Intranet ", 12, true), d.y, "persona", 12, "F2", RED);
@@ -183,37 +184,47 @@ function addPersona(d: Doc, p: Persona, status: string, avatar?: PdfAvatar) {
   const r = 38;
   d.avatar(M + r + 2, top - r - 4, r, avatar);
   d.gap(20);
-  d.text(p.name.replace(" (placeholder)", ""), { size: 24, bold: true, lead: 28, indent: 2 * r + 20 });
-  d.text(p.role, { size: 12, color: GREY, indent: 2 * r + 20 });
-  d.text(`Status: ${status}`, { size: 10, bold: true, color: BLUE, indent: 2 * r + 20 });
+  const ind = 2 * r + 20;
+  d.text(p.title, { size: 20, bold: true, lead: 24, indent: ind });
+  d.text(p.segment, { size: 12, color: GREY, indent: ind });
+  d.text(`Evidence: ${p.rating}`, { size: 10, bold: true, color: BLUE, indent: ind });
   d.y = Math.min(d.y, top - 2 * r - 14);
   d.gap(8);
-  d.text(p.quote, { size: 12, italic: true, indent: 10 });
-  d.heading("Goals"); d.bullets(p.goals);
-  d.heading("Frustrations"); d.bullets(p.frustrations);
-  d.heading("Channels"); d.bullets(p.channels);
-  d.heading("Facts"); d.bullets(p.facts);
-  d.heading("Location and profile in the company");
-  for (const [k, v] of [["Site", p.org.site], ["City", `${p.org.city}, ${p.org.country}`], ["Department", p.org.department], ["Level", p.org.level], ["Reports to", p.org.reportsTo]]) d.text(`${k}: ${v}`);
-  d.heading("Devices");
-  const label = { desktop: "PC / Desktop", mobile: "Mobile", kiosk: "Kiosk" } as const;
-  for (const dev of p.devices) d.text(`${label[dev.type]}: ${dev.use}`);
-  d.heading("Journey");
-  STAGES.forEach((s, i) => {
-    d.ensure(70);
-    d.gap(6);
-    d.text(`${s} · ${STAGE_NAMES[i]}   (emotion ${p.journey.emotion[i]}/5)`, { bold: true, color: BLUE });
-    const row = (label: string, items: string[] | undefined) => d.text(`${label}: ${items && items.length ? items.join("; ") : "none noted"}`, { indent: 10, size: 10 });
-    row("Actions", p.journey.actions[i]);
-    row("Touchpoints", p.journey.touchpoints[i]);
-    row("Pain points", p.journey.pains[i]);
-    row("Opportunities", p.journey.opps[i]);
-  });
+  for (const t of p.intro) { d.text(plain(t)); d.gap(4); }
+  d.text(`Evidence rating: ${plain(p.evidence)}`, { size: 9.5, color: GREY });
+  for (const b of p.blocks) {
+    d.heading(b.title);
+    if (b.note) d.text(plain(b.note), { size: 9, color: GREY });
+    if (b.items.length) d.bullets(b.items.map(plain));
+    for (const t of b.paras) d.text(plain(t));
+  }
+  if (p.quotes.length) {
+    d.heading("In their words");
+    if (p.quoteNote) d.text(plain(p.quoteNote), { size: 9, color: GREY });
+    for (const q of p.quotes) { d.gap(3); d.text(plain(q), { italic: true, indent: 10 }); }
+  }
+  if (p.success) { d.heading("Success looks like"); d.text(plain(p.success)); }
+  const m = p.moscow;
+  if (m) {
+    d.heading(`Where this lands in the MoSCoW prioritisation ${m.note}`);
+    for (const [label, items] of [["Must have", m.must], ["Should have", m.should], ["Could have", m.could], ["Won't have", m.wont]] as const) {
+      if (!items.length) continue;
+      d.gap(2);
+      d.text(label, { bold: true, color: BLUE });
+      d.bullets(items.map(plain));
+    }
+  }
+  if (p.interpretation) { d.heading("Interpretation"); d.text(plain(p.interpretation)); }
+  if (p.devices?.length) {
+    d.heading("Devices named in the sources");
+    const label = { desktop: "PC / Desktop", mobile: "Mobile", kiosk: "Kiosk" } as const;
+    for (const dev of p.devices) d.text(`${label[dev.type]}: ${plain(dev.use)}`);
+  }
 }
 
-export function personaPdf(personas: Persona[], statusOf: (p: Persona) => string, avatars: Record<string, PdfAvatar> = {}) {
+export function personaPdf(personas: Persona[], avatars: Record<string, PdfAvatar> = {}) {
   const d = new Doc();
-  for (const p of personas) addPersona(d, p, statusOf(p), avatars[p.id]);
+  for (const p of personas) addPersona(d, p, avatars[p.id]);
   return d.build();
 }
 
