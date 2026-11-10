@@ -221,7 +221,7 @@ function addPersona(d: Doc, p: Persona, avatar?: PdfAvatar) {
     d.heading("Devices");
     if (p.deviceNote) d.text(p.deviceNote, { bold: true });
     const label = { desktop: "PC / Desktop", mobile: "Mobile", kiosk: "Kiosk" } as const;
-    for (const dev of p.devices) d.text(`${label[dev.type]} (${dev.status === "today" ? "today" : "future vision"}): ${plain(dev.use)}`);
+    for (const dev of p.devices) d.text(`${label[dev.type]} (${dev.status === "today" ? "today" : "future"}): ${plain(dev.use)}`);
   }
 }
 

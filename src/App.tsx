@@ -297,7 +297,7 @@ export default function App() {
                       <Device type={d.type} screen={persona.initials} />
                       <figcaption>
                         <b>{devLabel[d.type]}</b>
-                        <span className="devstatus">{d.status === "today" ? "Today" : "Future vision"}</span>
+                        <span className="devstatus">{d.status === "today" ? "Today" : "Future"}</span>
                         <small><Rich text={d.use} /></small>
                       </figcaption>
                     </figure>
