@@ -4,7 +4,6 @@ import deptRepPhoto from "@/assets/persona-dept-rep.jpg";
 import newJoinerPhoto from "@/assets/persona-new-joiner.jpg";
 import remoteHybridPhoto from "@/assets/persona-remote-hybrid.jpg";
 import frontlinePhoto from "@/assets/persona-frontline.jpg";
-import siteCommunicatorPhoto from "@/assets/persona-site-communicator.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
@@ -26,7 +25,6 @@ const PHOTOS: Record<string, string> = {
   frontline: frontlinePhoto,
   "new-joiner": newJoinerPhoto,
   "remote-hybrid": remoteHybridPhoto,
-  "site-communicator": siteCommunicatorPhoto,
   ...Object.fromEntries(Object.entries(photoFiles).map(([path, url]) => [path.replace(/^.*persona-/, "").replace(/\.\w+$/, ""), url])),
 };
 
@@ -193,7 +191,7 @@ export default function App() {
   const lanyardItems: LanyardMember[] = useMemo(
     () => PERSONAS.map((p, i) => ({
       id: p.id,
-      name: p.short,
+      name: p.name,
       role: p.segment,
       team: `Evidence: ${p.rating}`,
       tone: ((i % 5) + 1) as 1 | 2 | 3 | 4 | 5,
@@ -207,7 +205,7 @@ export default function App() {
   const globeItems: GlobeTestimonial[] = PERSONAS.map((p, i) => {
     const q = p.quotes[0] ? stripSources(p.quotes[0]).replace(/^["“]|["”]$/g, "") : blurb(p.intro[0] ?? "");
     return {
-      id: p.id, quote: q, name: p.short, role: p.segment, company: p.org.site,
+      id: p.id, quote: q, name: p.name, role: p.segment, company: p.org.site,
       city: p.org.city, country: p.org.country, lat: p.org.lat, lng: p.org.lng,
       image: imageFor(p, i), tone: ((i % 5) + 1) as 1 | 2 | 3 | 4 | 5,
     };
@@ -277,7 +275,7 @@ export default function App() {
           {PERSONAS.map((p, i) => (
             <button key={p.id} type="button" className="glass-chip" aria-pressed={pIndex === i} onClick={() => setPIndex(i)}>
               <i aria-hidden="true" style={{ background: `var(--p${i})` }} />
-              {p.short}
+              {p.name}
             </button>
           ))}
         </div>
@@ -297,8 +295,8 @@ export default function App() {
         <div className="picker-body">
           <div className="headline">
             <div className="headline-avatar"><img src={imageFor(persona, pIndex ?? 0)} alt="" width={96} height={96} /></div>
-            <h2 className="t-h1" id="persona-headline">{persona.title}</h2>
-            <p className="headline-role">{persona.segment}</p>
+            <h2 className="t-h1" id="persona-headline">{persona.name}</h2>
+            <p className="headline-role"><b>{persona.segment}</b> · {persona.title}</p>
             <span className={`badge ${RATING_CLASS[persona.rating] ?? ""}`}>Evidence: {persona.rating}</span>
           </div>
 

@@ -186,8 +186,8 @@ function drawHeader(d: Doc, p: Persona, avatar: PdfAvatar | undefined, kicker: s
   d.avatar(M + r + 2, top - r - 4, r, avatar);
   d.gap(20);
   const ind = 2 * r + 20;
-  d.text(p.title, { size: 20, bold: true, lead: 24, indent: ind });
-  d.text(p.segment, { size: 12, color: GREY, indent: ind });
+  d.text(p.name, { size: 20, bold: true, lead: 24, indent: ind });
+  d.text(`${p.segment} · ${p.title}`, { size: 12, color: GREY, indent: ind });
   d.text(`Evidence: ${p.rating}`, { size: 10, bold: true, color: BLUE, indent: ind });
   d.text(`Location: ${p.org.site}, ${p.org.city}`, { size: 9.5, color: GREY, indent: ind });
   d.y = Math.min(d.y, top - 2 * r - 14);

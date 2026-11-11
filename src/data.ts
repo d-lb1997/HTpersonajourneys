@@ -13,7 +13,9 @@ export interface Moscow { note: string; must: string[]; should: string[]; could:
 export interface Persona {
   id: string;
   initials: string;
-  /** Short label for badges and navigation. */
+  /** Persona name. */
+  name: string;
+  /** Short label for navigation. */
   short: string;
   title: string;
   /** Participant group the persona maps to. */
@@ -56,8 +58,8 @@ export const PERSONAS: Persona[] = [
       "lng": 9.72,
       "site": "HellermannTyton GmbH & Co. KG"
     },
-    "initials": "P",
-    "short": "Product searcher",
+    "initials": "JB",
+    "short": "Jonas",
     "title": "Product & Technical Information Searcher",
     "segment": "Current user",
     "intro": [
@@ -239,178 +241,8 @@ export const PERSONAS: Persona[] = [
         ],
         "works": []
       }
-    ]
-  },
-  {
-    "id": "dept-rep",
-    "org": {
-      "city": "Milwaukee",
-      "country": "US",
-      "lat": 43.04,
-      "lng": -87.91,
-      "site": "HellermannTyton – North American Headquarters"
-    },
-    "initials": "D",
-    "short": "Department rep",
-    "title": "Department Representative",
-    "segment": "Department representative",
-    "intro": [
-      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]."
     ],
-    "rating": "Moderate",
-    "evidence": "Moderate. The needs are well documented, but are assigned to this persona by topic.",
-    "blocks": [
-      {
-        "title": "What they do today",
-        "note": "",
-        "items": [
-          "Work in Microsoft 365 (Outlook, Teams, SharePoint, OneDrive, OneNote, Copilot), Monday.com, Dayforce (HRIS, LMS, performance management), eQMS, SAP, STEP, CRM and ServiceNow [S7, \"tools or content are essential for your role\"].",
-          "Rely on documents such as policies, procedures, template letters, SOPs, risk assessments and single point lessons [S7, same question].",
-          "Share updates through Teams, email, Monday.com, SharePoint and OneDrive, plus team briefs, morning meetings and local newsletters [S7, \"share updates or collaborate\"].",
-          "Use the intranet mainly for general information, not team-specific updates [S7, \"share updates or collaborate\"]."
-        ],
-        "paras": [],
-        "group": "Behaviour"
-      },
-      {
-        "title": "Goals",
-        "note": "",
-        "items": [
-          "Hold all department content (policies, resources, updates) in a dedicated department area [S6, slide 4].",
-          "Find one clear landing page with a consistent structure across departments [S7, \"more useful for your department\"].",
-          "Collaborate across functions, for example between sales, marketing and product teams, with centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7, \"business processes that could be improved\"].",
-          "Keep their own content current. Respondents most often named the owning department, subject-matter experts or functional owners, with a central intranet or communications team for governance [S7, \"who should be responsible\"]."
-        ],
-        "paras": [],
-        "group": "Goals"
-      },
-      {
-        "title": "Pain points",
-        "note": "",
-        "items": [
-          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach across departments [S7, \"share updates or collaborate\"].",
-          "Too many platforms (email, drives, Teams, intranet) create confusion, and information is scattered across them [S7, \"frustrates you\" and \"How easy is it to find what you need?\"].",
-          "There is no department-specific news [S7, \"frustrates you\"].",
-          "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"].",
-          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]."
-        ],
-        "paras": [],
-        "group": "Pain points"
-      },
-      {
-        "title": "What they wish they could do",
-        "note": "",
-        "items": [
-          "Centralise SOPs, risk assessments, single point lessons and department-specific documents, with file collaboration and version control [S7, \"more useful for your department\"].",
-          "Offer a knowledge base with FAQs and video tutorials, and a best-practices page [S7, \"more useful for your department\"].",
-          "Use chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4].",
-          "Get a dedicated project area for visibility across business units, integrated with Teams [S7, \"support your team's productivity\"].",
-          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7, \"more useful for your department\"]."
-        ],
-        "paras": [],
-        "group": "Needs and wishes"
-      }
-    ],
-    "quotes": [
-      "\"to have a unique space for dept collaboration (now split in hundreds of different ms team groups/chat)\" [S3, slide 9, truncated in source]",
-      "\"Easy access for all employees and holding all the needed information for each department.\" [S3, slide 10]"
-    ],
-    "quoteNote": "(verbatim workshop responses, not attributed to a participant group)",
-    "success": "all departments know where to find key information, and policies, procedures, templates, FAQs and HR documents sit in one central repository [S7, \"What would success look like\"].",
-    "interpretation": "the unified department space is a Must Have, yet collaboration features that overlap with Teams are a Won't Have. The HR Lead raises the same doubt: \"maybe the Teams environment handles this better\" [S1, \"Teams/Project work\"]. The boundary between intranet and Teams needs a decision before this persona's needs can be scoped.",
-    "moscow": {
-      "note": "[S4]",
-      "must": [
-        "Navigation & Structure (unified space for department collaboration and project overview), Content Quality & Relevance, social intranet features (communities, chat, working out loud), Knowledge Sharing hub."
-      ],
-      "should": [
-        "Tools & Resources (templates, branding materials, document management tools)."
-      ],
-      "could": [
-        "Knowledge Management base with version control, Teams/Project Work, Advanced Collaboration Tools."
-      ],
-      "wont": [
-        "features that duplicate existing tools, with project collaboration already handled by Teams as the example."
-      ]
-    },
-    "devices": [
-      {
-        "type": "desktop",
-        "status": "today",
-        "use": "Assumed: works in Microsoft 365, Dayforce, SAP and other desktop tools"
-      }
-    ],
-    "journey": [
-      {
-        "name": "Maintain department documents",
-        "actions": [
-          "Rely on policies, procedures, template letters, SOPs, risk assessments and single point lessons [S7]"
-        ],
-        "touchpoints": [
-          "Microsoft 365, Monday.com, Dayforce, eQMS, SAP, STEP, CRM, ServiceNow [S7]"
-        ],
-        "pains": [
-          "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"]"
-        ],
-        "opps": [
-          "Centralise SOPs, risk assessments, single point lessons and department documents, with file collaboration and version control [S7]",
-          "Keep their own content current, owned by the department [S7, \"who should be responsible\"]"
-        ],
-        "works": []
-      },
-      {
-        "name": "Share updates",
-        "actions": [
-          "Share updates through Teams, email, Monday.com, SharePoint and OneDrive, plus team briefs, morning meetings and local newsletters [S7]"
-        ],
-        "touchpoints": [
-          "Teams, email, Monday.com, SharePoint, OneDrive, team briefs, morning meetings, local newsletters [S7]"
-        ],
-        "pains": [
-          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]",
-          "There is no department-specific news [S7, \"frustrates you\"]"
-        ],
-        "opps": [
-          "Hold all department content in a dedicated department area [S6, slide 4]",
-          "One clear landing page with a consistent structure across departments [S7]"
-        ],
-        "works": []
-      },
-      {
-        "name": "Collaborate across teams",
-        "actions": [
-          "Use the intranet mainly for general information, not team-specific updates [S7]"
-        ],
-        "touchpoints": [
-          "Teams [S7]"
-        ],
-        "pains": [
-          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach [S7]",
-          "Too many platforms create confusion, and information is scattered across them [S7]"
-        ],
-        "opps": [
-          "Centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7]",
-          "Chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4]",
-          "A dedicated project area integrated with Teams [S7]",
-          "Won't have: features that duplicate Teams [S4]"
-        ],
-        "works": []
-      },
-      {
-        "name": "Help colleagues find things",
-        "actions": [],
-        "touchpoints": [],
-        "pains": [
-          "Information is scattered across email, drives, Teams and the intranet [S7]"
-        ],
-        "opps": [
-          "A knowledge base with FAQs and video tutorials, and a best-practices page [S7]",
-          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7]",
-          "Success: all departments know where to find key information [S7, \"What would success look like\"]"
-        ],
-        "works": []
-      }
-    ]
+    "name": "Jonas Becker"
   },
   {
     "id": "frontline",
@@ -421,10 +253,10 @@ export const PERSONAS: Persona[] = [
       "lng": -1.9,
       "site": "HellermannTyton UK"
     },
-    "initials": "F",
-    "short": "Frontline employee",
+    "initials": "MH",
+    "short": "Mark",
     "title": "Frontline / Non-Desk Employee",
-    "segment": "Non-user",
+    "segment": "Non-user / frontline employee",
     "intro": [
       "This is the largest group the current intranet fails to reach: over 2,000 frontline employees who are non-email users [S2, slide 2]. The project defines \"Non-Users\" as employees without direct access to the intranet or a dedicated PC, naming production and manufacturing [S2, slide 3]."
     ],
@@ -555,7 +387,303 @@ export const PERSONAS: Persona[] = [
         ],
         "works": []
       }
-    ]
+    ],
+    "name": "Mark Hughes"
+  },
+  {
+    "id": "dept-rep",
+    "org": {
+      "city": "Milwaukee",
+      "country": "US",
+      "lat": 43.04,
+      "lng": -87.91,
+      "site": "HellermannTyton – North American Headquarters"
+    },
+    "initials": "LM",
+    "short": "Laura",
+    "title": "Department Representative & HR Lead",
+    "segment": "Department representative",
+    "intro": [
+      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]. For HR and communications, they also need to reach exactly the right audience, locally and globally, without overloading anyone."
+    ],
+    "rating": "Moderate",
+    "evidence": "Moderate. The needs are well documented, but are assigned to this persona by topic.",
+    "blocks": [
+      {
+        "title": "What they do today",
+        "note": "",
+        "items": [
+          "Work in Microsoft 365 (Outlook, Teams, SharePoint, OneDrive, OneNote, Copilot), Monday.com, Dayforce (HRIS, LMS, performance management), eQMS, SAP, STEP, CRM and ServiceNow [S7, \"tools or content are essential for your role\"].",
+          "Rely on documents such as policies, procedures, template letters, SOPs, risk assessments and single point lessons [S7, same question].",
+          "Share updates through Teams, email, Monday.com, SharePoint and OneDrive, plus team briefs, morning meetings and local newsletters [S7, \"share updates or collaborate\"].",
+          "Use the intranet mainly for general information, not team-specific updates [S7, \"share updates or collaborate\"]."
+        ],
+        "paras": [],
+        "group": "Behaviour"
+      },
+      {
+        "title": "Goals",
+        "note": "",
+        "items": [
+          "Hold all department content (policies, resources, updates) in a dedicated department area [S6, slide 4].",
+          "Find one clear landing page with a consistent structure across departments [S7, \"more useful for your department\"].",
+          "Collaborate across functions, for example between sales, marketing and product teams, with centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7, \"business processes that could be improved\"].",
+          "Keep their own content current. Respondents most often named the owning department, subject-matter experts or functional owners, with a central intranet or communications team for governance [S7, \"who should be responsible\"]."
+        ],
+        "paras": [],
+        "group": "Goals"
+      },
+      {
+        "title": "Pain points",
+        "note": "",
+        "items": [
+          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach across departments [S7, \"share updates or collaborate\"].",
+          "Too many platforms (email, drives, Teams, intranet) create confusion, and information is scattered across them [S7, \"frustrates you\" and \"How easy is it to find what you need?\"].",
+          "There is no department-specific news [S7, \"frustrates you\"].",
+          "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"].",
+          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]."
+        ],
+        "paras": [],
+        "group": "Pain points"
+      },
+      {
+        "title": "What they wish they could do",
+        "note": "",
+        "items": [
+          "Centralise SOPs, risk assessments, single point lessons and department-specific documents, with file collaboration and version control [S7, \"more useful for your department\"].",
+          "Offer a knowledge base with FAQs and video tutorials, and a best-practices page [S7, \"more useful for your department\"].",
+          "Use chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4].",
+          "Get a dedicated project area for visibility across business units, integrated with Teams [S7, \"support your team's productivity\"].",
+          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7, \"more useful for your department\"]."
+        ],
+        "paras": [],
+        "group": "Needs and wishes"
+      },
+      {
+        "title": "Why communication matters for HR",
+        "note": "",
+        "items": [
+          "Employees told HR they want better communication and more clarity. The reality today is a decentralised organisation that is strong locally and harder to connect globally [S4, \"Communication + The Intranet\"].",
+          "In the 2025 Global Employee Survey, \"Communication / management communication\" drew 418 responses and \"Interdepartmental / Global Communication\" 257, within a top ten led by pay and benefits (753) [S4, 2025 survey slide].",
+          "The business case lists communication silos, inconsistent messaging and a lack of analytics as problems [S2, slide 2]."
+        ],
+        "paras": [],
+        "group": "More context"
+      },
+      {
+        "title": "HR and communications: reach",
+        "note": "",
+        "items": [
+          "Give everyone the same landing page each morning, so important information reaches all employees in the same way at the same time [S1, \"Global Communication\"].",
+          "Push local leadership communication automatically to the relevant business units, and let a business unit push it out to global or regional sites [S1, \"Local Communication\"].",
+          "Publish global messages in multiple languages [S1, \"Consistent Multi-lingual communication\"].",
+          "Consider the audience whenever loading items, and let individuals switch notifications on or off [S1, \"Smart notifications\"]."
+        ],
+        "paras": [],
+        "group": "Goals"
+      },
+      {
+        "title": "HR and communications: welcome and recognise",
+        "note": "",
+        "items": [
+          "Announce new employees with a photo as part of onboarding [S1, \"Global / Loc NEW employee announcements\"].",
+          "Communicate promotions, with an option to filter the audience, and recognise employees including long service [S1, \"Promotions & Employee Recognition\"].",
+          "Let every site communicate wellbeing and focus-day activities such as International Women's Day, and promote corporate culture periodically [S1, \"Group focus activities (wellbeing)\" and \"Corporate culture\"]."
+        ],
+        "paras": [],
+        "group": "Goals"
+      },
+      {
+        "title": "HR and communications: run HR processes",
+        "note": "",
+        "items": [
+          "Run local and global employee surveys through the intranet and share the results [S1, \"Employee Surveys\"].",
+          "Advertise open roles, filterable by business unit, country, region or global [S1, \"Recruitment\"].",
+          "House HR policies centrally with local adaptations for local employment laws, and update them with everyone informed in a timely way [S1, \"HR Policies\"].",
+          "Make the intranet the gateway to self-service such as annual leave booking and holiday balances [S1, \"Employee self service\"]."
+        ],
+        "paras": [],
+        "group": "Goals"
+      },
+      {
+        "title": "HR and communications",
+        "note": "",
+        "items": [
+          "Announcements go out by email, there is no global digital newsletter, and nobody maintains or deletes old content [S7, \"frustrates you\"].",
+          "HR and people-related content is lacking [S7, \"frustrates you\"].",
+          "Ownership and content governance are unclear [S5, FAQ 3].",
+          "Views on who should keep content current and how often to review it vary widely, from daily to quarterly or as needed [S7, \"Content & Governance\" questions]."
+        ],
+        "paras": [],
+        "group": "Pain points"
+      },
+      {
+        "title": "HR and communications: knowing it works",
+        "note": "",
+        "items": [
+          "Respondents suggest measuring visits, active users, top search terms and failed searches, plus follow-up surveys and engagement on posts [S7, \"How should we measure\"]."
+        ],
+        "paras": [],
+        "group": "Needs and wishes"
+      }
+    ],
+    "quotes": [
+      "\"to have a unique space for dept collaboration (now split in hundreds of different ms team groups/chat)\" [S3, slide 9, truncated in source]",
+      "\"Easy access for all employees and holding all the needed information for each department.\" [S3, slide 10]",
+      "\"So that people are not bombarded with information that doesn't concern them which can lead to intranet fatigue.\" [S1, \"Smart notifications\"]"
+    ],
+    "quoteNote": "(verbatim workshop responses, not attributed to a participant group)",
+    "success": "all departments know where to find key information, and policies, procedures, templates, FAQs and HR documents sit in one central repository [S7, \"What would success look like\"].",
+    "interpretation": "the unified department space is a Must Have, yet collaboration features that overlap with Teams are a Won't Have. The HR Lead raises the same doubt: \"maybe the Teams environment handles this better\" [S1, \"Teams/Project work\"]. The boundary between intranet and Teams needs a decision before this persona's needs can be scoped. For HR and communications: most of the HR Lead's stories for welcoming, recognising and surveying land at Should Have, so a first release would deliver reach and policies but not these engagement features. The need to see whether communication works (analytics) sits at Won't Have.",
+    "moscow": {
+      "note": "[S4]",
+      "must": [
+        "Navigation & Structure (unified space for department collaboration and project overview), Content Quality & Relevance, social intranet features (communities, chat, working out loud), Knowledge Sharing hub.",
+        "Local & Global Communication (automatic push with escalation, multi-language), Smart Notifications, HR Policies & Self Service, Employee Directory, Knowledge Sharing & Training."
+      ],
+      "should": [
+        "Tools & Resources (templates, branding materials, document management tools).",
+        "Employee Announcements, Surveys, Promotions & Recognition, Recruitment, Wellbeing & Focus Activities, Leadership Forum."
+      ],
+      "could": [
+        "Knowledge Management base with version control, Teams/Project Work, Advanced Collaboration Tools.",
+        "Global digital newsletter, department news and culture campaigns."
+      ],
+      "wont": [
+        "features that duplicate existing tools, with project collaboration already handled by Teams as the example.",
+        "complex integrations such as advanced analytics, which \"are not immediately needed\"."
+      ]
+    },
+    "devices": [
+      {
+        "type": "desktop",
+        "status": "today",
+        "use": "Assumed: works in Microsoft 365, Dayforce, SAP and other desktop tools"
+      },
+      {
+        "type": "mobile",
+        "status": "future",
+        "use": "Wished for: the intranet on mobile phones for all employees"
+      }
+    ],
+    "journey": [
+      {
+        "name": "Maintain department documents",
+        "actions": [
+          "Rely on policies, procedures, template letters, SOPs, risk assessments and single point lessons [S7]"
+        ],
+        "touchpoints": [
+          "Microsoft 365, Monday.com, Dayforce, eQMS, SAP, STEP, CRM, ServiceNow [S7]"
+        ],
+        "pains": [
+          "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"]",
+          "Nobody maintains or deletes old content [S7, \"frustrates you\"]",
+          "Views on who keeps content current and how often to review it vary widely [S7]"
+        ],
+        "opps": [
+          "Centralise SOPs, risk assessments, single point lessons and department documents, with file collaboration and version control [S7]",
+          "Keep their own content current, owned by the department [S7, \"who should be responsible\"]",
+          "Measure visits, active users, top and failed searches, follow-up surveys and engagement [S7, \"How should we measure\"]",
+          "Won't have: advanced analytics [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Share updates",
+        "actions": [
+          "Share updates through Teams, email, Monday.com, SharePoint and OneDrive, plus team briefs, morning meetings and local newsletters [S7]",
+          "Consider the audience whenever loading items [S1, \"Smart notifications\"]",
+          "Push local leadership communication to the relevant business units, or out to global or regional sites [S1, \"Local Communication\"]",
+          "Publish global messages in multiple languages [S1]"
+        ],
+        "touchpoints": [
+          "Teams, email, Monday.com, SharePoint, OneDrive, team briefs, morning meetings, local newsletters [S7]",
+          "Email today; the intranet landing page in future [S7; S1]"
+        ],
+        "pains": [
+          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]",
+          "There is no department-specific news [S7, \"frustrates you\"]",
+          "Ownership and content governance are unclear [S5, FAQ 3]",
+          "Announcements go out by email and there is no global digital newsletter [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Hold all department content in a dedicated department area [S6, slide 4]",
+          "One clear landing page with a consistent structure across departments [S7]",
+          "Let individuals switch notifications on or off [S1]",
+          "Must have: Smart Notifications [S4]",
+          "The same landing page each morning, so important information reaches everyone at the same time [S1, \"Global Communication\"]",
+          "Must have: Local & Global Communication [S4]",
+          "Could have: Global digital newsletter [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Collaborate across teams",
+        "actions": [
+          "Use the intranet mainly for general information, not team-specific updates [S7]"
+        ],
+        "touchpoints": [
+          "Teams [S7]"
+        ],
+        "pains": [
+          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach [S7]",
+          "Too many platforms create confusion, and information is scattered across them [S7]"
+        ],
+        "opps": [
+          "Centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7]",
+          "Chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4]",
+          "A dedicated project area integrated with Teams [S7]",
+          "Won't have: features that duplicate Teams [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Help colleagues find things",
+        "actions": [],
+        "touchpoints": [],
+        "pains": [
+          "Information is scattered across email, drives, Teams and the intranet [S7]"
+        ],
+        "opps": [
+          "A knowledge base with FAQs and video tutorials, and a best-practices page [S7]",
+          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7]",
+          "Success: all departments know where to find key information [S7, \"What would success look like\"]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Welcome and recognise",
+        "actions": [
+          "Announce new employees with a photo, communicate promotions and recognise long service [S1]",
+          "Communicate wellbeing and focus-day activities, and promote corporate culture [S1]"
+        ],
+        "touchpoints": [],
+        "pains": [
+          "HR and people-related content is lacking [S7, \"frustrates you\"]"
+        ],
+        "opps": [
+          "Should have: Employee Announcements, Promotions & Recognition, Wellbeing & Focus Activities [S4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Run HR processes",
+        "actions": [
+          "Run local and global employee surveys and share the results [S1]",
+          "Advertise open roles, filterable by business unit, country, region or global [S1]",
+          "House HR policies centrally with local adaptations [S1]"
+        ],
+        "touchpoints": [],
+        "pains": [],
+        "opps": [
+          "Make the intranet the gateway to self-service such as leave booking and holiday balances [S1]",
+          "Must have: HR Policies & Self Service [S4]",
+          "Should have: Surveys, Recruitment [S4]"
+        ],
+        "works": []
+      }
+    ],
+    "name": "Laura Mitchell"
   },
   {
     "id": "new-joiner",
@@ -566,8 +694,8 @@ export const PERSONAS: Persona[] = [
       "lng": 77.39,
       "site": "HellermannTyton Private Limited – Corporate Office"
     },
-    "initials": "N",
-    "short": "New joiner",
+    "initials": "AC",
+    "short": "Alex",
     "title": "New Joiner",
     "segment": "New employee",
     "intro": [
@@ -701,7 +829,8 @@ export const PERSONAS: Persona[] = [
         ],
         "works": []
       }
-    ]
+    ],
+    "name": "Alex Chen"
   },
   {
     "id": "remote-hybrid",
@@ -712,8 +841,8 @@ export const PERSONAS: Persona[] = [
       "lng": 5.39,
       "site": "HellermannTyton B.V."
     },
-    "initials": "R",
-    "short": "Remote / hybrid",
+    "initials": "TV",
+    "short": "Thomas",
     "title": "Remote / Hybrid Worker",
     "segment": "Remote worker",
     "intro": [
@@ -847,209 +976,8 @@ export const PERSONAS: Persona[] = [
         ],
         "works": []
       }
-    ]
-  },
-  {
-    "id": "site-communicator",
-    "org": {
-      "city": "Taren Point",
-      "country": "AU",
-      "lat": -34.01,
-      "lng": 151.12,
-      "site": "HellermannTyton Australia"
-    },
-    "initials": "S",
-    "short": "Site communicator",
-    "title": "Local Site Communicator / HR Lead",
-    "segment": "Publisher (HR Lead)",
-    "intro": [
-      "This persona publishes to the intranet and needs to reach exactly the right audience, locally and globally, without overloading anyone."
     ],
-    "rating": "Moderate",
-    "evidence": "Moderate. Detailed and consistent, but it is one stakeholder's view.",
-    "blocks": [
-      {
-        "title": "Context: why communication matters to this role",
-        "note": "",
-        "items": [
-          "Employees told HR they want better communication and more clarity. The reality today is a decentralised organisation that is strong locally and harder to connect globally [S4, \"Communication + The Intranet\"].",
-          "In the 2025 Global Employee Survey, \"Communication / management communication\" drew 418 responses and \"Interdepartmental / Global Communication\" 257, within a top ten led by pay and benefits (753) [S4, 2025 survey slide].",
-          "The business case lists communication silos, inconsistent messaging and a lack of analytics as problems [S2, slide 2]."
-        ],
-        "paras": [],
-        "group": "More context"
-      },
-      {
-        "title": "Reach",
-        "note": "",
-        "items": [
-          "Give everyone the same landing page each morning, so important information reaches all employees in the same way at the same time [S1, \"Global Communication\"].",
-          "Push local leadership communication automatically to the relevant business units, and let a business unit push it out to global or regional sites [S1, \"Local Communication\"].",
-          "Publish global messages in multiple languages [S1, \"Consistent Multi-lingual communication\"].",
-          "Consider the audience whenever loading items, and let individuals switch notifications on or off [S1, \"Smart notifications\"]."
-        ],
-        "paras": [],
-        "group": "Goals"
-      },
-      {
-        "title": "Welcome and recognise",
-        "note": "",
-        "items": [
-          "Announce new employees with a photo as part of onboarding [S1, \"Global / Loc NEW employee announcements\"].",
-          "Communicate promotions, with an option to filter the audience, and recognise employees including long service [S1, \"Promotions & Employee Recognition\"].",
-          "Let every site communicate wellbeing and focus-day activities such as International Women's Day, and promote corporate culture periodically [S1, \"Group focus activities (wellbeing)\" and \"Corporate culture\"]."
-        ],
-        "paras": [],
-        "group": "Goals"
-      },
-      {
-        "title": "Run HR processes",
-        "note": "",
-        "items": [
-          "Run local and global employee surveys through the intranet and share the results [S1, \"Employee Surveys\"].",
-          "Advertise open roles, filterable by business unit, country, region or global [S1, \"Recruitment\"].",
-          "House HR policies centrally with local adaptations for local employment laws, and update them with everyone informed in a timely way [S1, \"HR Policies\"].",
-          "Make the intranet the gateway to self-service such as annual leave booking and holiday balances [S1, \"Employee self service\"]."
-        ],
-        "paras": [],
-        "group": "Goals"
-      },
-      {
-        "title": "Pain points",
-        "note": "",
-        "items": [
-          "Announcements go out by email, there is no global digital newsletter, and nobody maintains or deletes old content [S7, \"frustrates you\"].",
-          "HR and people-related content is lacking [S7, \"frustrates you\"].",
-          "Ownership and content governance are unclear [S5, FAQ 3].",
-          "Views on who should keep content current and how often to review it vary widely, from daily to quarterly or as needed [S7, \"Content & Governance\" questions]."
-        ],
-        "paras": [],
-        "group": "Pain points"
-      },
-      {
-        "title": "Needs for knowing it works",
-        "note": "",
-        "items": [
-          "Respondents suggest measuring visits, active users, top search terms and failed searches, plus follow-up surveys and engagement on posts [S7, \"How should we measure\"]."
-        ],
-        "paras": [],
-        "group": "Needs and wishes"
-      }
-    ],
-    "quotes": [
-      "\"So that people are not bombarded with information that doesn't concern them which can lead to intranet fatigue.\" [S1, \"Smart notifications\"]"
-    ],
-    "quoteNote": "(HR Lead user story)",
-    "success": "",
-    "interpretation": "most of the HR Lead's stories for welcoming, recognising and surveying land at Should Have, so a first release would deliver reach and policies but not these engagement features. The need to see whether communication works (analytics) sits at Won't Have.",
-    "moscow": {
-      "note": "[S4]",
-      "must": [
-        "Local & Global Communication (automatic push with escalation, multi-language), Smart Notifications, HR Policies & Self Service, Employee Directory, Knowledge Sharing & Training."
-      ],
-      "should": [
-        "Employee Announcements, Surveys, Promotions & Recognition, Recruitment, Wellbeing & Focus Activities, Leadership Forum."
-      ],
-      "could": [
-        "Global digital newsletter, department news and culture campaigns."
-      ],
-      "wont": [
-        "complex integrations such as advanced analytics, which \"are not immediately needed\"."
-      ]
-    },
-    "devices": [
-      {
-        "type": "desktop",
-        "status": "today",
-        "use": "Assumed: daily computer login to publish and read"
-      },
-      {
-        "type": "mobile",
-        "status": "future",
-        "use": "Wished for: the intranet on mobile phones for all employees"
-      }
-    ],
-    "journey": [
-      {
-        "name": "Plan a message",
-        "actions": [
-          "Consider the audience whenever loading items [S1, \"Smart notifications\"]"
-        ],
-        "touchpoints": [],
-        "pains": [
-          "Ownership and content governance are unclear [S5, FAQ 3]"
-        ],
-        "opps": [
-          "Let individuals switch notifications on or off [S1]",
-          "Must have: Smart Notifications [S4]"
-        ],
-        "works": []
-      },
-      {
-        "name": "Publish and push",
-        "actions": [
-          "Push local leadership communication to the relevant business units, or out to global or regional sites [S1, \"Local Communication\"]",
-          "Publish global messages in multiple languages [S1]"
-        ],
-        "touchpoints": [
-          "Email today; the intranet landing page in future [S7; S1]"
-        ],
-        "pains": [
-          "Announcements go out by email and there is no global digital newsletter [S7, \"frustrates you\"]"
-        ],
-        "opps": [
-          "The same landing page each morning, so important information reaches everyone at the same time [S1, \"Global Communication\"]",
-          "Must have: Local & Global Communication [S4]",
-          "Could have: Global digital newsletter [S4]"
-        ],
-        "works": []
-      },
-      {
-        "name": "Welcome and recognise",
-        "actions": [
-          "Announce new employees with a photo, communicate promotions and recognise long service [S1]",
-          "Communicate wellbeing and focus-day activities, and promote corporate culture [S1]"
-        ],
-        "touchpoints": [],
-        "pains": [
-          "HR and people-related content is lacking [S7, \"frustrates you\"]"
-        ],
-        "opps": [
-          "Should have: Employee Announcements, Promotions & Recognition, Wellbeing & Focus Activities [S4]"
-        ],
-        "works": []
-      },
-      {
-        "name": "Run HR processes",
-        "actions": [
-          "Run local and global employee surveys and share the results [S1]",
-          "Advertise open roles, filterable by business unit, country, region or global [S1]",
-          "House HR policies centrally with local adaptations [S1]"
-        ],
-        "touchpoints": [],
-        "pains": [],
-        "opps": [
-          "Make the intranet the gateway to self-service such as leave booking and holiday balances [S1]",
-          "Must have: HR Policies & Self Service [S4]",
-          "Should have: Surveys, Recruitment [S4]"
-        ],
-        "works": []
-      },
-      {
-        "name": "Keep it current and measure",
-        "actions": [],
-        "touchpoints": [],
-        "pains": [
-          "Nobody maintains or deletes old content [S7, \"frustrates you\"]",
-          "Views on who keeps content current and how often to review it vary widely [S7]"
-        ],
-        "opps": [
-          "Measure visits, active users, top and failed searches, follow-up surveys and engagement [S7, \"How should we measure\"]",
-          "Won't have: advanced analytics [S4]"
-        ],
-        "works": []
-      }
-    ]
+    "name": "Thomas de Vries"
   }
 ];
 
