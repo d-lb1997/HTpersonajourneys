@@ -242,7 +242,7 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Jonas Becker"
+    "name": "Jonas"
   },
   {
     "id": "frontline",
@@ -388,7 +388,7 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Mark Hughes"
+    "name": "Mark"
   },
   {
     "id": "dept-rep",
@@ -683,7 +683,7 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Laura Mitchell"
+    "name": "Laura"
   },
   {
     "id": "new-joiner",
@@ -830,7 +830,7 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Alex Chen"
+    "name": "Alex"
   },
   {
     "id": "remote-hybrid",
@@ -977,7 +977,7 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Thomas de Vries"
+    "name": "Thomas"
   }
 ];
 
