@@ -58,7 +58,7 @@ export const PERSONAS: Persona[] = [
       "lng": 9.72,
       "site": "HellermannTyton GmbH & Co. KG"
     },
-    "initials": "JB",
+    "initials": "J",
     "short": "Jonas",
     "title": "Product & Technical Information Searcher",
     "segment": "Current user",
@@ -242,7 +242,7 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Jonas"
+    "name": "Julia"
   },
   {
     "id": "frontline",
