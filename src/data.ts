@@ -395,6 +395,209 @@ export const PERSONAS: Persona[] = [
     "globeQuote": "I can't get onto the intranet at all. What I know comes from the morning briefing and the screens on the shop floor."
   },
   {
+    "id": "site-nonuser",
+    "org": {
+      "city": "Jundiaí",
+      "country": "BR",
+      "lat": -23.19,
+      "lng": -46.88,
+      "site": "HellermannTyton Brazil"
+    },
+    "initials": "RS",
+    "short": "Rafael",
+    "name": "Rafael",
+    "title": "Site IT & Operations Coordinator",
+    "segment": "Non-user / site-based employee",
+    "intro": [
+      "Rafael coordinates IT infrastructure and operations at a regional site. He is busy and practical, works mainly in Microsoft 365, and has never been shown the intranet. Unlike frontline employees he has a PC and an account, yet he still does not use it: \"I don't use it and don't know how to access it… Finding it first would be a good start!\"",
+      "For this group the main problem is not usability. It is adoption: access, awareness and relevance."
+    ],
+    "rating": "Moderate",
+    "evidence": "Moderate. Based on non-user responses (12 respondents); the job title and site are representative, not a real person.",
+    "blocks": [
+      {
+        "title": "What they do today",
+        "note": "",
+        "items": [
+          "Finds information in Teams, SharePoint, shared drives or eQMS, or asks a manager or colleague.",
+          "Collaborates through Teams, email and face-to-face briefs.",
+          "Hears company news through town halls, team meetings and the occasional email. Some get no updates at all."
+        ],
+        "paras": [],
+        "group": "Behaviour"
+      },
+      {
+        "title": "Goals",
+        "note": "",
+        "items": [
+          "One place for policies, procedures, SOPs, training and news.",
+          "Who's who and an org chart to see how the company connects.",
+          "Content relevant to their region or site, plus performance data for operational roles."
+        ],
+        "paras": [],
+        "group": "Goals"
+      },
+      {
+        "title": "Barriers",
+        "note": "",
+        "items": [
+          "**Awareness and access:** doesn't know where the intranet is, has no login, or lost access.",
+          "**Unclear value:** can't say what it offers. \"Firstly need to understand what can be provided.\"",
+          "**No need felt yet:** existing tools are \"good enough\", and information is spread across many places.",
+          "**Regional disconnect:** global content doesn't feel relevant to their region or site."
+        ],
+        "paras": [],
+        "group": "Pain points"
+      },
+      {
+        "title": "What would win them over",
+        "note": "",
+        "items": [
+          "**Guaranteed access:** single sign-on, set as the browser home page, a clear launch and onboarding.",
+          "**Current, relevant content:** owned by each function, with governance and monthly reviews.",
+          "**Pushed content:** delivered through Teams and email, so they don't have to remember to visit.",
+          "**A simple, modern homepage:** search, quick links, alerts and help.",
+          "Fast search and one-click links to HR, the IT helpdesk and key systems such as ServiceNow and the HR system.",
+          "Self-service for annual leave and payroll queries."
+        ],
+        "paras": [],
+        "group": "Needs and wishes"
+      },
+      {
+        "title": "Opportunity",
+        "note": "",
+        "items": [
+          "Open to social features (8 of 12 said yes).",
+          "Willing to test a beta (9 of 12 said yes), which makes non-users a good pool for prototype testing."
+        ],
+        "paras": [],
+        "group": "More context"
+      },
+      {
+        "title": "Design implication",
+        "note": "",
+        "items": [],
+        "paras": [
+          "Fixing onboarding and sign-in, and putting relevant content in one place, matters more than redesigning features they have never seen."
+        ],
+        "group": "More context"
+      }
+    ],
+    "quotes": [
+      "I don't use it and don't know how to access it… Finding it first would be a good start!",
+      "Firstly need to understand what can be provided."
+    ],
+    "quoteNote": "",
+    "success": "he can sign in without thinking about it, finds the policies, people and systems he needs from one homepage, and gets relevant site news in Teams and email without having to go looking.",
+    "interpretation": "the barrier is adoption, not usability: access, awareness and relevance come before any feature redesign.",
+    "moscow": null,
+    "devices": [
+      {
+        "type": "desktop",
+        "status": "today",
+        "use": "Has a PC and Microsoft 365, but does not open the intranet"
+      },
+      {
+        "type": "mobile",
+        "status": "future",
+        "use": "Updates pushed through Teams and email"
+      }
+    ],
+    "deviceNote": "Has access to a PC, but not to the intranet in practice.",
+    "journey": [
+      {
+        "name": "Hear about the intranet",
+        "actions": [
+          "Pick up company news through town halls, team meetings and the occasional email"
+        ],
+        "touchpoints": [
+          "Town halls, team meetings, email"
+        ],
+        "pains": [
+          "Doesn't know the intranet exists or where it is",
+          "Some get no updates at all"
+        ],
+        "opps": [
+          "A clear launch and onboarding",
+          "Content pushed through Teams and email"
+        ],
+        "works": []
+      },
+      {
+        "name": "Try to get in",
+        "actions": [
+          "Look for the intranet and try to sign in"
+        ],
+        "touchpoints": [
+          "Browser, Microsoft 365 login"
+        ],
+        "pains": [
+          "No login, or lost access"
+        ],
+        "opps": [
+          "Single sign-on",
+          "Set as the browser home page"
+        ],
+        "works": []
+      },
+      {
+        "name": "Look for information",
+        "actions": [
+          "Find policies, SOPs and training, or ask a manager or colleague"
+        ],
+        "touchpoints": [
+          "Teams, SharePoint, shared drives, eQMS, colleagues"
+        ],
+        "pains": [
+          "Information is spread across many places",
+          "Existing tools feel \"good enough\", so no need is felt"
+        ],
+        "opps": [
+          "One place for policies, procedures, SOPs, training and news",
+          "Fast search and one-click links to HR, the IT helpdesk, ServiceNow and the HR system"
+        ],
+        "works": []
+      },
+      {
+        "name": "Judge if it's worth it",
+        "actions": [
+          "Decide whether the intranet offers anything for their site"
+        ],
+        "touchpoints": [
+          "Intranet homepage"
+        ],
+        "pains": [
+          "Can't say what it offers",
+          "Global content doesn't feel relevant to their region or site"
+        ],
+        "opps": [
+          "Content relevant to their region or site, owned by each function and reviewed monthly",
+          "Who's who and an org chart",
+          "A simple homepage with search, quick links, alerts and help"
+        ],
+        "works": []
+      },
+      {
+        "name": "Get things done",
+        "actions": [
+          "Book annual leave, raise payroll queries, check site performance"
+        ],
+        "touchpoints": [
+          "HR system, ServiceNow, email"
+        ],
+        "pains": [
+          "Has to go to separate systems"
+        ],
+        "opps": [
+          "Self-service for annual leave and payroll queries",
+          "Performance data for operational roles"
+        ],
+        "works": []
+      }
+    ],
+    "globeQuote": "I don't use it and don't know how to access it… Finding it first would be a good start!"
+  },
+  {
     "id": "dept-rep",
     "org": {
       "city": "Milwaukee",
@@ -1354,6 +1557,13 @@ export const JOURNEY_EXTRA: Record<string, StageExtra[]> = {
     { device: "kiosk", emoji: "😐", feeling: "Informed second-hand" },
     { device: "none", emoji: "😞", feeling: "Left out" },
     { device: "mobile", emoji: "🤔", feeling: "Unknown, to validate" },
+  ],
+  "site-nonuser": [
+    { device: "none", emoji: "🤷", feeling: "Unaware" },
+    { device: "desktop", emoji: "😤", feeling: "Locked out" },
+    { device: "desktop", emoji: "😐", feeling: "Getting by with other tools" },
+    { device: "desktop", emoji: "🤔", feeling: "Unconvinced" },
+    { device: "desktop", emoji: "😕", feeling: "Juggling systems" },
   ],
   "dept-rep": [
     { device: "desktop", emoji: "😩", feeling: "Overloaded by scattered tools" },
