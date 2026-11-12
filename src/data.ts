@@ -32,6 +32,8 @@ export interface Persona {
   moscow: Moscow | null;
   /** Site shown on the globe (HellermannTyton locations; the pairing with personas is an assumption). */
   org: Org;
+  /** Illustrative quote for the globe card, written from the research (not verbatim). */
+  globeQuote: string;
   /** Journey map built only from statements in this persona. */
   journey: JourneyStage[];
   /** Only where a source names the device. */
@@ -242,7 +244,8 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Julia"
+    "name": "Julia",
+    "globeQuote": "I search by article number all day, but when a datasheet or certificate is missing I still end up checking SAP or asking a product manager."
   },
   {
     "id": "frontline",
@@ -388,7 +391,8 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Mark"
+    "name": "Mark",
+    "globeQuote": "I can't get onto the intranet at all. What I know comes from the morning briefing and the screens on the shop floor."
   },
   {
     "id": "dept-rep",
@@ -683,7 +687,8 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Laura"
+    "name": "Laura",
+    "globeQuote": "Our policies and updates are spread across Teams, email and drives. I want one place for my department, and to reach the right people without flooding everyone."
   },
   {
     "id": "new-joiner",
@@ -830,7 +835,8 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Alex"
+    "name": "Alex",
+    "globeQuote": "In my first weeks I didn't know where anything was or who to ask. A simple how-to guide and a directory with photos would have helped."
   },
   {
     "id": "remote-hybrid",
@@ -977,7 +983,8 @@ export const PERSONAS: Persona[] = [
         "works": []
       }
     ],
-    "name": "Thomas"
+    "name": "Thomas",
+    "globeQuote": "Away from the office I work in Teams. The intranet isn't mobile-friendly, so I rarely open it. It should work on my phone and link straight into Teams."
   }
 ];
 

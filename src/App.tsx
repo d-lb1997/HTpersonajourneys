@@ -203,7 +203,7 @@ export default function App() {
   );
 
   const globeItems: GlobeTestimonial[] = PERSONAS.map((p, i) => {
-    const q = p.quotes[0] ? stripSources(p.quotes[0]).replace(/^["“]|["”]$/g, "") : blurb(p.intro[0] ?? "");
+    const q = p.globeQuote;
     return {
       id: p.id, quote: q, name: p.name, role: p.segment, company: p.org.site,
       city: p.org.city, country: p.org.country, lat: p.org.lat, lng: p.org.lng,
@@ -306,6 +306,7 @@ export default function App() {
 
             <section className="globe-box">
               <h3>Location</h3>
+              <p className="caption-p">Quotes on the globe are illustrative, written from the research, not verbatim.</p>
               <TestimonialGlobe
                 items={globeItems}
                 autoRotate={false}
