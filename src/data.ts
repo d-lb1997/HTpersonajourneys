@@ -456,13 +456,13 @@ export const PERSONAS: Persona[] = [
       "lng": -46.88,
       "site": "HellermannTyton Brazil"
     },
-    "initials": "RS",
-    "short": "Rafael",
-    "name": "Rafael",
+    "initials": "CS",
+    "short": "Camila",
+    "name": "Camila",
     "title": "Site IT & Operations Coordinator",
     "segment": "Non-user / site-based employee",
     "intro": [
-      "Rafael coordinates IT infrastructure and operations at a regional site. He is busy and practical, works mainly in Microsoft 365, and has never been shown the intranet. Unlike frontline employees he has a PC and an account, yet he still does not use it: \"I don't use it and don't know how to access it… Finding it first would be a good start!\"",
+      "Camila coordinates IT infrastructure and operations at a regional site. She is busy and practical, works mainly in Microsoft 365, and has never been shown the intranet. Unlike frontline employees she has a PC and an account, yet she still does not use it: \"I don't use it and don't know how to access it… Finding it first would be a good start!\"",
       "For this group the main problem is not usability. It is adoption: access, awareness and relevance."
     ],
     "rating": "Moderate",
@@ -541,7 +541,7 @@ export const PERSONAS: Persona[] = [
       "Firstly need to understand what can be provided."
     ],
     "quoteNote": "",
-    "success": "he can sign in without thinking about it, finds the policies, people and systems he needs from one homepage, and gets relevant site news in Teams and email without having to go looking.",
+    "success": "he can sign in without thinking about it, finds the policies, people and systems she needs from one homepage, and gets relevant site news in Teams and email without having to go looking.",
     "interpretation": "the barrier is adoption, not usability: access, awareness and relevance come before any feature redesign.",
     "moscow": null,
     "devices": [
