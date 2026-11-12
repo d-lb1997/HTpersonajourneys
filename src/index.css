@@ -420,3 +420,5 @@ ol.doc-list { list-style: decimal; }
 .jemo { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
 .jemo span { font-size: 2rem; line-height: 1; }
 .jemo small { font-size: .8rem; }
+.glass-seg { font-weight: 400; font-size: .85em; opacity: .75; white-space: nowrap; }
+.glass-nav-inner { flex-wrap: wrap; justify-content: center; }

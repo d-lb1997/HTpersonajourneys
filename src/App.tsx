@@ -290,7 +290,7 @@ export default function App() {
           {PERSONAS.map((p, i) => (
             <button key={p.id} type="button" className="glass-chip" aria-pressed={pIndex === i} onClick={() => setPIndex(i)}>
               <i aria-hidden="true" style={{ background: `var(--p${i})` }} />
-              {p.name}
+              {p.name} <span className="glass-seg">({p.segment})</span>
             </button>
           ))}
         </div>
