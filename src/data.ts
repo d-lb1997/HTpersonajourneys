@@ -664,7 +664,8 @@ export const PERSONAS: Persona[] = [
     "title": "Department Representative",
     "segment": "Department representative",
     "intro": [
-      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]. When they share news, they also need to reach exactly the right audience, locally and globally, without overloading anyone."
+      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]. When they share news, they also need to reach exactly the right audience, locally and globally, without overloading anyone.",
+      "Typically a team lead or function owner, for example in HR, IT, marketing and communications, or product management. She is responsible for her team's information and processes, and often thinks about the whole organisation and its local sites."
     ],
     "rating": "Moderate",
     "evidence": "Moderate. The needs are well documented, but are assigned to this persona by topic.",
@@ -688,7 +689,7 @@ export const PERSONAS: Persona[] = [
           "Hold all department content (policies, resources, updates) in a dedicated department area [S6, slide 4].",
           "Find one clear landing page with a consistent structure across departments [S7, \"more useful for your department\"].",
           "Collaborate across functions, for example between sales, marketing and product teams, with centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7, \"business processes that could be improved\"].",
-          "Keep their own content current. Respondents most often named the owning department, subject-matter experts or functional owners, with a central intranet or communications team for governance [S7, \"who should be responsible\"]."
+          "Keep their own content current. Respondents most often named the owning department, subject-matter experts or functional owners, with a central intranet or communications team for governance [S7, \"who should be responsible\"]. She wants this backed by structure: a clear intranet owner, each function owning its own area, review workflows that prompt owners, and expiry dates on content."
         ],
         "paras": [],
         "group": "Goals"
@@ -697,11 +698,12 @@ export const PERSONAS: Persona[] = [
         "title": "Pain points",
         "note": "",
         "items": [
-          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach across departments [S7, \"share updates or collaborate\"].",
+          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach across departments. It is \"still a 'mess'\".",
           "Too many platforms (email, drives, Teams, intranet) create confusion, and information is scattered across them [S7, \"frustrates you\" and \"How easy is it to find what you need?\"].",
           "There is no department-specific news [S7, \"frustrates you\"].",
           "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"].",
-          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]."
+          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"].",
+          "Production and logistics staff without company email are left out: \"blue collar workers are out of the scope\"."
         ],
         "paras": [],
         "group": "Pain points"
@@ -710,11 +712,15 @@ export const PERSONAS: Persona[] = [
         "title": "What they wish they could do",
         "note": "",
         "items": [
-          "Centralise SOPs, risk assessments, single point lessons and department-specific documents, with file collaboration and version control [S7, \"more useful for your department\"].",
+          "Centralise policies, procedures, SOPs, templates, risk assessments, single point lessons and department-specific documents, with file collaboration, version control and the latest version clearly marked.",
+          "Give the department space a clear shape: who we are, what we do, key links, documentation, FAQ and a knowledge base.",
           "Offer a knowledge base with FAQs and video tutorials, and a best-practices page [S7, \"more useful for your department\"].",
           "Use chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4].",
           "Get a dedicated project area for visibility across business units, integrated with Teams [S7, \"support your team's productivity\"].",
-          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7, \"more useful for your department\"]."
+          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7, \"more useful for your department\"].",
+          "Tailor content to region and site: local news, KPIs, maintenance windows and translation.",
+          "One place for requests and tickets (ServiceNow), onboarding, training and a future learning platform, plus KPI dashboards.",
+          "Make sure everyone has an account, including frontline staff."
         ],
         "paras": [],
         "group": "Needs and wishes"
@@ -785,15 +791,36 @@ export const PERSONAS: Persona[] = [
         ],
         "paras": [],
         "group": "Needs and wishes"
+      },
+      {
+        "title": "Concerns",
+        "note": "",
+        "items": [
+          "Content going stale and turning into \"a data desert\".",
+          "Duplicating what Teams already does.",
+          "Whether colleagues will keep contributing without motivation and clear responsibilities."
+        ],
+        "paras": [],
+        "group": "Pain points"
+      },
+      {
+        "title": "Design implication",
+        "note": "",
+        "items": [],
+        "paras": [
+          "Give her templates for department spaces, simple publishing and review workflows, and integration with Microsoft 365. She is the key partner for content governance and a good choice to recruit as a \"super user\" or champion."
+        ],
+        "group": "More context"
       }
     ],
     "quotes": [
+      "\"We do not need just a new intranet, we need an information culture.\"",
       "\"to have a unique space for dept collaboration (now split in hundreds of different ms team groups/chat)\" [S3, slide 9, truncated in source]",
       "\"Easy access for all employees and holding all the needed information for each department.\" [S3, slide 10]",
       "\"So that people are not bombarded with information that doesn't concern them which can lead to intranet fatigue.\" [S1, \"Smart notifications\"]"
     ],
     "quoteNote": "(verbatim workshop responses, not attributed to a participant group)",
-    "success": "all departments know where to find key information, and policies, procedures, templates, FAQs and HR documents sit in one central repository [S7, \"What would success look like\"].",
+    "success": "all departments know where to find key information, and policies, procedures, templates, FAQs and HR documents sit in one central repository [S7, \"What would success look like\"], and the intranet is \"the only source of information\". Usage across departments can be measured with analytics plus surveys.",
     "interpretation": "the unified department space is a Must Have, yet collaboration features that overlap with Teams are a Won't Have. The HR Lead raises the same doubt: \"maybe the Teams environment handles this better\" [S1, \"Teams/Project work\"]. The boundary between intranet and Teams needs a decision before this persona's needs can be scoped. For HR and communications: most of the HR Lead's stories for welcoming, recognising and surveying land at Should Have, so a first release would deliver reach and policies but not these engagement features. The need to see whether communication works (analytics) sits at Won't Have.",
     "moscow": {
       "note": "[S4]",
@@ -838,10 +865,13 @@ export const PERSONAS: Persona[] = [
         "pains": [
           "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"]",
           "Nobody maintains or deletes old content [S7, \"frustrates you\"]",
-          "Views on who keeps content current and how often to review it vary widely [S7]"
+          "Views on who keeps content current and how often to review it vary widely [S7]",
+          "Worry that content goes stale and becomes \"a data desert\", and that colleagues stop contributing without clear responsibilities"
         ],
         "opps": [
           "Centralise SOPs, risk assessments, single point lessons and department documents, with file collaboration and version control [S7]",
+          "Templates for department spaces and simple publishing and review workflows, with expiry dates and a clear owner per area",
+          "The latest version of each document clearly marked",
           "Keep their own content current, owned by the department [S7, \"who should be responsible\"]",
           "Measure visits, active users, top and failed searches, follow-up surveys and engagement [S7, \"How should we measure\"]",
           "Won't have: advanced analytics [S4]"
@@ -864,7 +894,8 @@ export const PERSONAS: Persona[] = [
           "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"]",
           "There is no department-specific news [S7, \"frustrates you\"]",
           "Ownership and content governance are unclear [S5, FAQ 3]",
-          "Announcements go out by email and there is no global digital newsletter [S7, \"frustrates you\"]"
+          "Announcements go out by email and there is no global digital newsletter [S7, \"frustrates you\"]",
+          "Production and logistics staff without company email are left out"
         ],
         "opps": [
           "Hold all department content in a dedicated department area [S6, slide 4]",
@@ -873,7 +904,8 @@ export const PERSONAS: Persona[] = [
           "Must have: Smart Notifications [S4]",
           "The same landing page each morning, so important information reaches everyone at the same time [S1, \"Global Communication\"]",
           "Must have: Local & Global Communication [S4]",
-          "Could have: Global digital newsletter [S4]"
+          "Could have: Global digital newsletter [S4]",
+          "Content tailored to region and site: local news, KPIs, maintenance windows and translation"
         ],
         "works": []
       },
@@ -886,14 +918,15 @@ export const PERSONAS: Persona[] = [
           "Teams [S7]"
         ],
         "pains": [
-          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach [S7]",
+          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach [S7]. It is \"still a 'mess'\"",
           "Too many platforms create confusion, and information is scattered across them [S7]"
         ],
         "opps": [
           "Centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7]",
           "Chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4]",
           "A dedicated project area integrated with Teams [S7]",
-          "Won't have: features that duplicate Teams [S4]"
+          "Won't have: features that duplicate Teams [S4]",
+          "Integration with Microsoft 365"
         ],
         "works": []
       },
@@ -937,6 +970,7 @@ export const PERSONAS: Persona[] = [
         "pains": [],
         "opps": [
           "Make the intranet the gateway to self-service such as leave booking and holiday balances [S1]",
+          "One place for requests and tickets (ServiceNow), onboarding and training, plus KPI dashboards",
           "Must have: HR Policies & Self Service [S4]",
           "Should have: Surveys, Recruitment [S4]"
         ],
