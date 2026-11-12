@@ -64,12 +64,11 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "J",
     "short": "Julia",
-    "bio": "Works in sales, customer service, product management or marketing support. Visits daily or several times a week, often has SAP or STEP open next to it, and works across countries.",
+    "bio": "Julia represents the persona of the current user: she works in sales, customer service, product management or marketing support, visits the intranet daily or several times a week, often has SAP or STEP open next to it, and works across countries.",
     "title": "Product & Technical Information Searcher",
     "segment": "Current user",
     "intro": [
-      "This persona uses today's intranet mainly as a product database, and the product data is the one part they find valuable. The segment is the \"current user\": employees who regularly use the existing intranet for daily tasks [S2, slide 3].",
-      "Practical and focused on getting the job done."
+      "Julia uses today's intranet mainly as a product database, and the product data is the one part she finds valuable. She stands for employees who regularly use the existing intranet for daily tasks [S2, slide 3]. She is practical and focused on getting the job done."
     ],
     "rating": "Strong",
     "evidence": "Strong on what they do and want; Moderate on who exactly they are.",
@@ -314,10 +313,11 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "MH",
     "short": "Mark",
+    "bio": "Mark represents the persona of the frontline, non-desk employee: he works in production or manufacturing, has no company email or dedicated PC, and cannot access the intranet today.",
     "title": "Frontline / Non-Desk Employee",
     "segment": "Non-user / frontline employee",
     "intro": [
-      "This is the largest group the current intranet fails to reach: over 2,000 frontline employees who are non-email users [S2, slide 2]. The project defines \"Non-Users\" as employees without direct access to the intranet or a dedicated PC, naming production and manufacturing [S2, slide 3]."
+      "Mark stands for the largest group the current intranet fails to reach: over 2,000 frontline employees who are non-email users [S2, slide 2]. The project defines \"Non-Users\" as employees without direct access to the intranet or a dedicated PC [S2, slide 3]."
     ],
     "rating": "Thin",
     "evidence": "Thin on their own needs; Strong on the size and nature of the access gap.",
@@ -461,12 +461,13 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "CS",
     "short": "Camila",
+    "bio": "Camila represents the persona of the site-based non-user: she coordinates IT infrastructure and operations at a regional site, works mainly in Microsoft 365, and has never been shown the intranet.",
     "name": "Camila",
     "title": "Site IT & Operations Coordinator",
     "segment": "Non-user / site-based employee",
     "intro": [
-      "Camila coordinates IT infrastructure and operations at a regional site. She is busy and practical, works mainly in Microsoft 365, and has never been shown the intranet. Unlike frontline employees she has a PC and an account, yet she still does not use it: \"I don't use it and don't know how to access it… Finding it first would be a good start!\"",
-      "For this group the main problem is not usability. It is adoption: access, awareness and relevance."
+      "Camila is busy and practical. Unlike frontline employees she has a PC and an account, yet she still does not use the intranet: \"I don't use it and don't know how to access it… Finding it first would be a good start!\"",
+      "For Camila the main problem is not usability. It is adoption: access, awareness and relevance."
     ],
     "rating": "Moderate",
     "evidence": "Moderate. Based on non-user responses (12 respondents); the job title and site are representative, not a real person.",
@@ -664,11 +665,12 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "LM",
     "short": "Laura",
+    "bio": "Laura represents the persona of the department representative: she is a team lead or function owner, for example in HR, IT, marketing and communications, or product management, responsible for her team's information and processes.",
     "title": "Department Representative",
     "segment": "Department representative",
     "intro": [
-      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]. When they share news, they also need to reach exactly the right audience, locally and globally, without overloading anyone.",
-      "Typically a team lead or function owner, for example in HR, IT, marketing and communications, or product management. She is responsible for her team's information and processes, and often thinks about the whole organisation and its local sites."
+      "Laura needs one place to run her department's documents, news and collaboration, and today's intranet does not give her that. She stands for individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]; Finance and Sales also want dedicated spaces or chat [S6, slide 4].",
+      "She often thinks about the whole organisation and its local sites. When she shares news, she needs to reach exactly the right audience, locally and globally, without overloading anyone."
     ],
     "rating": "Moderate",
     "evidence": "Moderate. The needs are well documented, but are assigned to this persona by topic.",
@@ -994,10 +996,11 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "AC",
     "short": "Alex",
+    "bio": "Alex represents the persona of the new employee: he joined the company recently and is still finding his way around its people, processes and tools.",
     "title": "New Joiner",
     "segment": "New employee",
     "intro": [
-      "This persona needs the intranet to explain itself and the company from day one, and today it offers no onboarding path. The segment is \"New Employees\": recent hires who can highlight onboarding challenges [S2, slide 3]."
+      "Alex needs the intranet to explain itself and the company from day one, and today it offers no onboarding path. He stands for recent hires who can highlight onboarding challenges [S2, slide 3]."
     ],
     "rating": "Thin",
     "evidence": "Thin. Needs are assigned by topic, not by who said it.",
@@ -1142,10 +1145,11 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "TV",
     "short": "Thomas",
+    "bio": "Thomas represents the persona of the remote or hybrid worker: he works away from the office for much of the week and relies on digital channels to communicate and collaborate.",
     "title": "Remote / Hybrid Worker",
     "segment": "Remote worker",
     "intro": [
-      "This persona depends on digital channels for communication and collaboration, so device access and Microsoft 365 integration matter most. The segment is \"Remote Workers\": staff who work remotely and rely heavily on means of communication and collaboration [S2, slide 3]."
+      "Thomas depends on Teams and other digital channels, so device access and Microsoft 365 integration matter most to him. He stands for staff who work remotely and rely heavily on means of communication and collaboration [S2, slide 3]."
     ],
     "rating": "Thin",
     "evidence": "Thin. One success statement names remote and hybrid workers directly; the rest is inferred from mobile, collaboration and integration answers.",
