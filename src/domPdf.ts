@@ -63,8 +63,27 @@ export class ShotPdf {
     let scale = (W - 2 * m) / c.width;
     if (fitOnePage) scale = Math.min(scale, (H - 2 * m) / c.height);
     const sliceH = Math.floor((H - 2 * m) / scale);
-    for (let y = 0; y < c.height; y += sliceH) {
-      const h = Math.min(sliceH, c.height - y);
+    const src = c.getContext("2d")!;
+    /** Finds the lowest fully blank pixel row in the bottom 45% of a slice, so no text or box is cut. */
+    const cutAt = (y: number) => {
+      const end = y + sliceH;
+      if (end >= c.height) return c.height;
+      const from = y + Math.floor(sliceH * 0.55);
+      const data = src.getImageData(0, from, c.width, end - from).data;
+      for (let row = end - from - 1; row >= 0; row--) {
+        let blank = true;
+        const b0 = row * c.width * 4;
+        const ref = [data[b0]!, data[b0 + 1]!, data[b0 + 2]!];
+        for (let x = 0, o = b0; x < c.width; x += 2, o += 8) {
+          if (Math.abs(data[o]! - ref[0]!) + Math.abs(data[o + 1]! - ref[1]!) + Math.abs(data[o + 2]! - ref[2]!) > 24) { blank = false; break; }
+        }
+        if (blank) return from + row;
+      }
+      return end;
+    };
+    for (let y = 0; y < c.height;) {
+      const next = cutAt(y);
+      const h = next - y;
       const s = document.createElement("canvas");
       s.width = c.width; s.height = h;
       const ctx = s.getContext("2d")!;
@@ -72,6 +91,8 @@ export class ShotPdf {
       ctx.drawImage(c, 0, y, c.width, h, 0, 0, c.width, h);
       const jpeg = atob(s.toDataURL("image/jpeg", 0.9).split(",")[1]!);
       this.pages.push({ w: W, h: H, jpeg, iw: s.width, ih: h, dx: m, dy: H - m - h * scale, dw: c.width * scale, dh: h * scale });
+      y = next;
+      while (y < c.height && next < c.height && y < next + 4) y++; // skip the blank cut row
     }
   }
   build() {
