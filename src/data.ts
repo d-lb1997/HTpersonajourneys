@@ -65,7 +65,8 @@ export const PERSONAS: Persona[] = [
     "title": "Product & Technical Information Searcher",
     "segment": "Current user",
     "intro": [
-      "This persona uses today's intranet mainly as a product database, and the product data is the one part they find valuable. The segment is the \"current user\": employees who regularly use the existing intranet for daily tasks [S2, slide 3]."
+      "This persona uses today's intranet mainly as a product database, and the product data is the one part they find valuable. The segment is the \"current user\": employees who regularly use the existing intranet for daily tasks [S2, slide 3].",
+      "Typically they work in sales, customer service, product management or marketing support, visit daily or several times a week, often have SAP or STEP open alongside, and work across countries. They are practical and focused on getting the job done."
     ],
     "rating": "Strong",
     "evidence": "Strong on what they do and want; Moderate on who exactly they are.",
@@ -79,7 +80,10 @@ export const PERSONAS: Persona[] = [
           "Start with the search bar, the most commonly mentioned first action, then product codes, names, specifications and new product launches [S7, \"first thing you look for\"].",
           "Search by article number, product name or UNS number [S7, \"how do you usually find information\"].",
           "Work across STEP, SAP, CRM and eQMS, and want Windchill (CAD and engineering data) integrated [S7, \"essential for your role\" and \"systems you wish were integrated\"].",
-          "Fall back on asking colleagues, product managers or back-office teams when the intranet does not answer [S7, \"how do you usually find information\"]."
+          "Fall back on asking colleagues, product managers or back-office teams when the intranet does not answer [S7, \"how do you usually find information\"].",
+          "Download branding material alongside images and drawings.",
+          "Look up contacts and product managers.",
+          "Skim the latest posts and birthdays on the start page."
         ],
         "paras": [],
         "group": "Behaviour"
@@ -88,9 +92,10 @@ export const PERSONAS: Persona[] = [
         "title": "Goals",
         "note": "",
         "items": [
-          "Find accurate, complete product data quickly. \"Time-consuming to find accurate information\" is a listed frustration [S7, \"frustrates you\"].",
+          "Find accurate, complete, current product data quickly, ideally \"in 1 minute\". \"Time-consuming to find accurate information\" is a listed frustration.",
           "Serve customers with quick access to inventory status and lead times [S6, slide 4].",
-          "Have all product information in one place, reducing reliance on email [S6, slide 4]."
+          "Have all product information in one place, reducing reliance on email [S6, slide 4].",
+          "See what matters to them: a personalised dashboard, topics they can subscribe to, and pinned news such as product manager updates."
         ],
         "paras": [],
         "group": "Goals"
@@ -103,7 +108,10 @@ export const PERSONAS: Persona[] = [
           "Product information is missing or incomplete (technical sheets, packaging), and no CAD files or complete certificates are available [S7, \"frustrates you\"].",
           "Product comparison tools do not work, and long lists of alternatives need manual SAP checks [S7, \"frustrates you\"].",
           "Poor keyword tagging makes image and content searches unreliable [S7, \"How easy is it to find what you need?\"].",
-          "One positive: product information is relatively easy to find via article numbers or UNS [S7, \"How easy is it to find what you need?\"]."
+          "One positive: product information is relatively easy to find via article numbers or UNS [S7, \"How easy is it to find what you need?\"].",
+          "Product manager details are no longer correct, so documents and contacts can't be trusted.",
+          "A dated design with no clear structure. The news feed can't be personalised and isn't available on mobile.",
+          "Information is spread across the intranet, drives, Teams and email."
         ],
         "paras": [],
         "group": "Pain points"
@@ -121,12 +129,33 @@ export const PERSONAS: Persona[] = [
         ],
         "paras": [],
         "group": "Needs and wishes"
+      },
+      {
+        "title": "Attitude",
+        "note": "",
+        "items": [
+          "Lukewarm on social features, because there are already too many channels.",
+          "Very willing to test a beta (32 of 35 said yes or maybe)."
+        ],
+        "paras": [],
+        "group": "More context"
+      },
+      {
+        "title": "Design implication",
+        "note": "",
+        "items": [],
+        "paras": [
+          "Make product search excellent, with filters and integrated live data. Keep posts current with content owners and expiry dates. Let them personalise what they see."
+        ],
+        "group": "More context"
       }
     ],
     "quotes": [
+      "\"Products I can always find via the UNS. Everything else is difficult.\"",
       "\"To view technical product information and see what's new in contributions.\" [S3, slide 7, truncated in source]",
       "\"excep for the product database, i can't find other information very useful\" [S3, slide 8]",
-      "\"View the following information for each HellermannTyton: product stock by location. Provide commercial contact information, not just product manager\" [S3, slide 9]"
+      "\"View the following information for each HellermannTyton: product stock by location. Provide commercial contact information, not just product manager\" [S3, slide 9]",
+      "\"I have to enter them 1 by 1 in SAP\""
     ],
     "quoteNote": "(verbatim workshop responses, not attributed to a participant group)",
     "success": "finding what they need within a few clicks, with fast and intelligent search [S7, \"What would success look like\"].",
@@ -180,11 +209,13 @@ export const PERSONAS: Persona[] = [
           "Search results, product database [S7]"
         ],
         "pains": [
-          "Results include duplicates, irrelevant items and outdated or misleading entries [S7, \"frustrates you\"]"
+          "Results include duplicates, irrelevant items and outdated or misleading entries [S7, \"frustrates you\"]",
+          "Outdated documents and incorrect product manager details make results hard to trust"
         ],
         "opps": [
           "See key product attributes in search results, and find similar products, product groups and alternatives [S7, \"wish you could do\"]",
-          "Could have: Enhanced Search Capabilities [S4]"
+          "Could have: Enhanced Search Capabilities [S4]",
+          "Content owners and expiry dates keep posts and documents current"
         ],
         "works": [
           "Product information is relatively easy to find via article numbers or UNS [S7]"
@@ -218,7 +249,9 @@ export const PERSONAS: Persona[] = [
         "touchpoints": [
           "STEP, SAP, CRM, eQMS [S7]"
         ],
-        "pains": [],
+        "pains": [
+          "Each alternative article must be entered in SAP one by one to check stock"
+        ],
         "opps": [
           "View stock by country or location [S7, \"wish you could do\"]",
           "Windchill (CAD and engineering data) integrated [S7, \"systems you wish were integrated\"]",
@@ -229,17 +262,37 @@ export const PERSONAS: Persona[] = [
       {
         "name": "Fall back on people",
         "actions": [
-          "Ask colleagues, product managers or back-office teams when the intranet does not answer [S7, \"how do you usually find information\"]"
+          "Ask colleagues, product managers or back-office teams when the intranet does not answer [S7, \"how do you usually find information\"]",
+          "Look up contacts and product managers"
         ],
         "touchpoints": [
           "Colleagues, product managers, back-office teams, email [S7; S6, slide 4]"
         ],
         "pains": [
-          "Time-consuming to find accurate information [S7, \"frustrates you\"]"
+          "Time-consuming to find accurate information [S7, \"frustrates you\"]",
+          "Information is spread across the intranet, drives, Teams and email"
         ],
         "opps": [
           "Reach commercial contacts, not just product managers [S7, \"wish you could do\"]",
           "Have all product information in one place, reducing reliance on email [S6, slide 4]"
+        ],
+        "works": []
+      },
+      {
+        "name": "Stay up to date",
+        "actions": [
+          "Skim the latest posts and birthdays on the start page"
+        ],
+        "touchpoints": [
+          "Intranet start page, news feed"
+        ],
+        "pains": [
+          "The news feed can't be personalised and isn't available on mobile",
+          "Dated design with no clear structure"
+        ],
+        "opps": [
+          "A personalised dashboard and topics to subscribe to",
+          "Pinned news such as product manager updates"
         ],
         "works": []
       }
@@ -1552,6 +1605,7 @@ export const JOURNEY_EXTRA: Record<string, StageExtra[]> = {
     { device: "desktop", emoji: "😣", feeling: "Annoyed when documents are missing" },
     { device: "desktop", emoji: "😐", feeling: "Routine, but juggling many systems" },
     { device: "desktop", emoji: "😕", feeling: "Dependent on others" },
+    { device: "desktop", emoji: "😐", feeling: "Skimming, but it isn't tailored" },
   ],
   frontline: [
     { device: "kiosk", emoji: "😐", feeling: "Informed second-hand" },
