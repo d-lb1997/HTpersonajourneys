@@ -15,6 +15,8 @@ export interface Persona {
   initials: string;
   /** Persona name. */
   name: string;
+  /** Optional text for the back of the badge. */
+  bio?: string;
   /** Short label for navigation. */
   short: string;
   title: string;
@@ -66,7 +68,7 @@ export const PERSONAS: Persona[] = [
     "segment": "Current user",
     "intro": [
       "This persona uses today's intranet mainly as a product database, and the product data is the one part they find valuable. The segment is the \"current user\": employees who regularly use the existing intranet for daily tasks [S2, slide 3].",
-      "Typically they work in sales, customer service, product management or marketing support, visit daily or several times a week, often have SAP or STEP open alongside, and work across countries. They are practical and focused on getting the job done."
+      "Works in sales, customer service, product management or marketing support. Visits daily or several times a week, often has SAP or STEP open next to it, and works across countries. Practical and focused on getting the job done."
     ],
     "rating": "Strong",
     "evidence": "Strong on what they do and want; Moderate on who exactly they are.",

@@ -356,7 +356,7 @@ const BadgeFaces = React.memo(function BadgeFaces({ item, tone, logo }: { item: 
         </span>
         {item.bio && (
           <span className="absolute inset-x-[0.85em] top-[5.1em] block">
-            <span data-bio className="line-clamp-4 block text-[0.74em] leading-[1.4]">{item.bio}</span>
+            <span data-bio className="line-clamp-6 block text-[0.74em] leading-[1.4]">{item.bio}</span>
           </span>
         )}
         {tags.length > 0 && (

@@ -211,7 +211,7 @@ export default function App() {
       team: `Evidence: ${p.rating}`,
       tone: ((i % 5) + 1) as 1 | 2 | 3 | 4 | 5,
       image: imageFor(p, i),
-      bio: blurb(p.intro[0] ?? ""),
+      bio: p.bio ?? blurb(p.intro[0] ?? ""),
     })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
