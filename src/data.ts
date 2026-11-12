@@ -665,12 +665,11 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "LM",
     "short": "Laura",
-    "bio": "Laura represents the persona of the department representative: she is a team lead or function owner, for example in HR, IT, marketing and communications, or product management, responsible for her team's information and processes.",
+    "bio": "Laura represents the persona of the department representative: a team lead or function owner (for example HR, IT, marketing and communications, or product management) responsible for her team's information and processes.",
     "title": "Department Representative",
     "segment": "Department representative",
     "intro": [
-      "Laura needs one place to run her department's documents, news and collaboration, and today's intranet does not give her that. She stands for individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]; Finance and Sales also want dedicated spaces or chat [S6, slide 4].",
-      "She often thinks about the whole organisation and its local sites. When she shares news, she needs to reach exactly the right audience, locally and globally, without overloading anyone."
+      "Laura needs one place for her department's documents, news and collaboration, and today's intranet does not give her that. She thinks about the whole organisation and its local sites, and needs to reach exactly the right audience without overloading anyone. Finance and Sales want dedicated spaces too."
     ],
     "rating": "Moderate",
     "evidence": "Moderate. The needs are well documented, but are assigned to this persona by topic.",
@@ -679,10 +678,9 @@ export const PERSONAS: Persona[] = [
         "title": "What they do today",
         "note": "",
         "items": [
-          "Work in Microsoft 365 (Outlook, Teams, SharePoint, OneDrive, OneNote, Copilot), Monday.com, Dayforce (HRIS, LMS, performance management), eQMS, SAP, STEP, CRM and ServiceNow [S7, \"tools or content are essential for your role\"].",
-          "Rely on documents such as policies, procedures, template letters, SOPs, risk assessments and single point lessons [S7, same question].",
-          "Share updates through Teams, email, Monday.com, SharePoint and OneDrive, plus team briefs, morning meetings and local newsletters [S7, \"share updates or collaborate\"].",
-          "Use the intranet mainly for general information, not team-specific updates [S7, \"share updates or collaborate\"]."
+          "Works across Microsoft 365, Monday.com, Dayforce (HRIS, LMS), eQMS, SAP, STEP, CRM and ServiceNow.",
+          "Relies on policies, procedures, SOPs, templates, risk assessments and single point lessons.",
+          "Shares updates through Teams, email, SharePoint, Monday.com, team briefs and local newsletters; uses the intranet only for general information."
         ],
         "paras": [],
         "group": "Behaviour"
@@ -691,10 +689,22 @@ export const PERSONAS: Persona[] = [
         "title": "Goals",
         "note": "",
         "items": [
-          "Hold all department content (policies, resources, updates) in a dedicated department area [S6, slide 4].",
-          "Find one clear landing page with a consistent structure across departments [S7, \"more useful for your department\"].",
-          "Collaborate across functions, for example between sales, marketing and product teams, with centralised project tracking, handovers, shared decision logs and market-specific playbooks [S7, \"business processes that could be improved\"].",
-          "Keep their own content current. Respondents most often named the owning department, subject-matter experts or functional owners, with a central intranet or communications team for governance [S7, \"who should be responsible\"]. She wants this backed by structure: a clear intranet owner, each function owning its own area, review workflows that prompt owners, and expiry dates on content."
+          "A dedicated department space: who we are, what we do, key links, documents, FAQ and knowledge base.",
+          "One clear landing page with a consistent structure across departments.",
+          "Cross-functional collaboration: project tracking, handovers, decision logs and market playbooks.",
+          "Clear governance: an intranet owner, each function owning its area, review workflows and expiry dates."
+        ],
+        "paras": [],
+        "group": "Goals"
+      },
+      {
+        "title": "Communication and HR goals",
+        "note": "",
+        "items": [
+          "The same landing page for everyone each morning, with local leadership news pushed to the right business units and global messages in several languages.",
+          "Targeted content and notifications people can switch on or off, so nobody is flooded.",
+          "Welcome new joiners with a photo, recognise promotions and long service, and share wellbeing and culture activities.",
+          "Run surveys, advertise open roles, and house HR policies centrally with local adaptations, as the gateway to self-service."
         ],
         "paras": [],
         "group": "Goals"
@@ -703,12 +713,23 @@ export const PERSONAS: Persona[] = [
         "title": "Pain points",
         "note": "",
         "items": [
-          "Collaboration in Teams is inconsistent, varies by individual, and there is no standard approach across departments. It is \"still a 'mess'\".",
-          "Too many platforms (email, drives, Teams, intranet) create confusion, and information is scattered across them [S7, \"frustrates you\" and \"How easy is it to find what you need?\"].",
-          "There is no department-specific news [S7, \"frustrates you\"].",
-          "Outdated contributions remain visible and nobody maintains or deletes old content [S7, \"frustrates you\"].",
-          "Important announcements go out by email, which reduces the intranet's relevance [S7, \"frustrates you\"].",
-          "Production and logistics staff without company email are left out: \"blue collar workers are out of the scope\"."
+          "Collaboration is \"still a 'mess'\": every team uses Teams differently.",
+          "Information is scattered across too many drives and platforms.",
+          "No department news; announcements go out by email and there is no global newsletter.",
+          "Outdated content stays visible, and ownership and review cycles are unclear.",
+          "HR and people content is lacking.",
+          "Frontline staff without email are left out: \"blue collar workers are out of the scope\"."
+        ],
+        "paras": [],
+        "group": "Pain points"
+      },
+      {
+        "title": "Concerns",
+        "note": "",
+        "items": [
+          "Content going stale into \"a data desert\".",
+          "Duplicating what Teams already does.",
+          "Colleagues not contributing without motivation and clear responsibilities."
         ],
         "paras": [],
         "group": "Pain points"
@@ -717,15 +738,12 @@ export const PERSONAS: Persona[] = [
         "title": "What they wish they could do",
         "note": "",
         "items": [
-          "Centralise policies, procedures, SOPs, templates, risk assessments, single point lessons and department-specific documents, with file collaboration, version control and the latest version clearly marked.",
-          "Give the department space a clear shape: who we are, what we do, key links, documentation, FAQ and a knowledge base.",
-          "Offer a knowledge base with FAQs and video tutorials, and a best-practices page [S7, \"more useful for your department\"].",
-          "Use chat similar to Salesforce Chatter, particularly across Sales and Marketing [S6, slide 4].",
-          "Get a dedicated project area for visibility across business units, integrated with Teams [S7, \"support your team's productivity\"].",
-          "Sign in once for all platforms, with integration to HRIS, LMS and other business tools [S7, \"more useful for your department\"].",
-          "Tailor content to region and site: local news, KPIs, maintenance windows and translation.",
-          "One place for requests and tickets (ServiceNow), onboarding, training and a future learning platform, plus KPI dashboards.",
-          "Make sure everyone has an account, including frontline staff."
+          "A central library for policies, SOPs and templates with version control and the latest version clearly marked.",
+          "A knowledge base with FAQs, video tutorials and best practices; chat for Sales and Marketing; a project area integrated with Teams.",
+          "Content tailored to region and site: local news, KPIs, maintenance windows and translation.",
+          "One place for requests and tickets (ServiceNow), onboarding, training and KPI dashboards, with single sign-on to HRIS, LMS and other tools.",
+          "An account for everyone, including frontline staff.",
+          "Measure what works: visits, active users, search terms, failed searches and follow-up surveys."
         ],
         "paras": [],
         "group": "Needs and wishes"
@@ -734,86 +752,19 @@ export const PERSONAS: Persona[] = [
         "title": "Why communication matters",
         "note": "",
         "items": [
-          "Employees told HR they want better communication and more clarity. The reality today is a decentralised organisation that is strong locally and harder to connect globally [S4, \"Communication + The Intranet\"].",
-          "In the 2025 Global Employee Survey, \"Communication / management communication\" drew 418 responses and \"Interdepartmental / Global Communication\" 257, within a top ten led by pay and benefits (753) [S4, 2025 survey slide].",
-          "The business case lists communication silos, inconsistent messaging and a lack of analytics as problems [S2, slide 2]."
+          "Employees want better communication and clarity; the company is strong locally but harder to connect globally.",
+          "In the 2025 Global Employee Survey, communication drew 418 responses and interdepartmental/global communication 257 (top ten, led by pay and benefits at 753).",
+          "The business case names communication silos, inconsistent messaging and missing analytics."
         ],
         "paras": [],
         "group": "More context"
-      },
-      {
-        "title": "Communications: reach",
-        "note": "",
-        "items": [
-          "Give everyone the same landing page each morning, so important information reaches all employees in the same way at the same time [S1, \"Global Communication\"].",
-          "Push local leadership communication automatically to the relevant business units, and let a business unit push it out to global or regional sites [S1, \"Local Communication\"].",
-          "Publish global messages in multiple languages [S1, \"Consistent Multi-lingual communication\"].",
-          "Consider the audience whenever loading items, and let individuals switch notifications on or off [S1, \"Smart notifications\"]."
-        ],
-        "paras": [],
-        "group": "Goals"
-      },
-      {
-        "title": "Communications: welcome and recognise",
-        "note": "",
-        "items": [
-          "Announce new employees with a photo as part of onboarding [S1, \"Global / Loc NEW employee announcements\"].",
-          "Communicate promotions, with an option to filter the audience, and recognise employees including long service [S1, \"Promotions & Employee Recognition\"].",
-          "Let every site communicate wellbeing and focus-day activities such as International Women's Day, and promote corporate culture periodically [S1, \"Group focus activities (wellbeing)\" and \"Corporate culture\"]."
-        ],
-        "paras": [],
-        "group": "Goals"
-      },
-      {
-        "title": "Department processes and policies",
-        "note": "",
-        "items": [
-          "Run local and global employee surveys through the intranet and share the results [S1, \"Employee Surveys\"].",
-          "Advertise open roles, filterable by business unit, country, region or global [S1, \"Recruitment\"].",
-          "House HR policies centrally with local adaptations for local employment laws, and update them with everyone informed in a timely way [S1, \"HR Policies\"].",
-          "Make the intranet the gateway to self-service such as annual leave booking and holiday balances [S1, \"Employee self service\"]."
-        ],
-        "paras": [],
-        "group": "Goals"
-      },
-      {
-        "title": "Communications",
-        "note": "",
-        "items": [
-          "Announcements go out by email, there is no global digital newsletter, and nobody maintains or deletes old content [S7, \"frustrates you\"].",
-          "HR and people-related content is lacking [S7, \"frustrates you\"].",
-          "Ownership and content governance are unclear [S5, FAQ 3].",
-          "Views on who should keep content current and how often to review it vary widely, from daily to quarterly or as needed [S7, \"Content & Governance\" questions]."
-        ],
-        "paras": [],
-        "group": "Pain points"
-      },
-      {
-        "title": "Communications: knowing it works",
-        "note": "",
-        "items": [
-          "Respondents suggest measuring visits, active users, top search terms and failed searches, plus follow-up surveys and engagement on posts [S7, \"How should we measure\"]."
-        ],
-        "paras": [],
-        "group": "Needs and wishes"
-      },
-      {
-        "title": "Concerns",
-        "note": "",
-        "items": [
-          "Content going stale and turning into \"a data desert\".",
-          "Duplicating what Teams already does.",
-          "Whether colleagues will keep contributing without motivation and clear responsibilities."
-        ],
-        "paras": [],
-        "group": "Pain points"
       },
       {
         "title": "Design implication",
         "note": "",
         "items": [],
         "paras": [
-          "Give her templates for department spaces, simple publishing and review workflows, and integration with Microsoft 365. She is the key partner for content governance and a good choice to recruit as a \"super user\" or champion."
+          "Give her department-space templates, simple publishing and review workflows, and Microsoft 365 integration. She is the key partner for content governance and a natural \"super user\" or champion."
         ],
         "group": "More context"
       }
@@ -821,12 +772,11 @@ export const PERSONAS: Persona[] = [
     "quotes": [
       "\"We do not need just a new intranet, we need an information culture.\"",
       "\"to have a unique space for dept collaboration (now split in hundreds of different ms team groups/chat)\" [S3, slide 9, truncated in source]",
-      "\"Easy access for all employees and holding all the needed information for each department.\" [S3, slide 10]",
       "\"So that people are not bombarded with information that doesn't concern them which can lead to intranet fatigue.\" [S1, \"Smart notifications\"]"
     ],
     "quoteNote": "(verbatim workshop responses, not attributed to a participant group)",
-    "success": "all departments know where to find key information, and policies, procedures, templates, FAQs and HR documents sit in one central repository [S7, \"What would success look like\"], and the intranet is \"the only source of information\". Usage across departments can be measured with analytics plus surveys.",
-    "interpretation": "the unified department space is a Must Have, yet collaboration features that overlap with Teams are a Won't Have. The HR Lead raises the same doubt: \"maybe the Teams environment handles this better\" [S1, \"Teams/Project work\"]. The boundary between intranet and Teams needs a decision before this persona's needs can be scoped. For HR and communications: most of the HR Lead's stories for welcoming, recognising and surveying land at Should Have, so a first release would deliver reach and policies but not these engagement features. The need to see whether communication works (analytics) sits at Won't Have.",
+    "success": "every department knows where to find key information, policies, templates and FAQs sit in one central repository, and the intranet is \"the only source of information\", measured through analytics and surveys.",
+    "interpretation": "the department space is a Must Have, but collaboration that overlaps with Teams is a Won't Have, so the intranet/Teams boundary needs a decision first. Most welcome, recognition and survey features are Should Have, and analytics is a Won't Have, so a first release delivers reach and policies, not engagement.",
     "moscow": {
       "note": "[S4]",
       "must": [
