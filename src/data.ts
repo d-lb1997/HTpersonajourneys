@@ -69,7 +69,7 @@ export const PERSONAS: Persona[] = [
     "segment": "Current user",
     "intro": [
       "This persona uses today's intranet mainly as a product database, and the product data is the one part they find valuable. The segment is the \"current user\": employees who regularly use the existing intranet for daily tasks [S2, slide 3].",
-      "Works in sales, customer service, product management or marketing support. Visits daily or several times a week, often has SAP or STEP open next to it, and works across countries. Practical and focused on getting the job done."
+      "Practical and focused on getting the job done."
     ],
     "rating": "Strong",
     "evidence": "Strong on what they do and want; Moderate on who exactly they are.",
