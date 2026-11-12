@@ -7,7 +7,8 @@ import frontlinePhoto from "@/assets/persona-frontline.jpg";
 import logo from "@/assets/hellermanntyton-logo.svg";
 import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimonial-globe";
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
-import { downloadPdf, journeyPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
+import { downloadPdf } from "@/personaPdf";
+import { ShotPdf, snap, stack } from "@/domPdf";
 import { stripSources } from "@/lib/text";
 import { JOURNEY_EXTRA, PERSONAS, type Block, type StageExtra, type DeviceType, type JourneyStage, type Persona } from "@/data";
 
@@ -86,10 +87,10 @@ function StageDevice({ x, initials }: { x?: StageExtra; initials: string }) {
 
 /** Journey map: stage, activity, touchpoints (with device), needs, pain points, emotions. */
 function JourneyMap({ stages, extra, initials }: { stages: JourneyStage[]; extra: StageExtra[]; initials: string }) {
-  const [sel, setSel] = useState(0);
+  const [sel, setSel] = useState<number | null>(null);
   const [hov, setHov] = useState<number | null>(null);
   const n = stages.length;
-  const cur = stages[sel]!;
+  const cur = sel === null ? null : stages[sel]!;
   const cellList = (items: string[]) => (items.length ? <Bullets items={items} /> : <span className="t-caption">Not documented</span>);
   const cls = (i: number) => `${i === sel ? " sel" : ""}${i === hov ? " hov" : ""}`;
   const label = (t: string, q: string) => <div className="rl">{t}<small>{q}</small></div>;
@@ -101,7 +102,7 @@ function JourneyMap({ stages, extra, initials }: { stages: JourneyStage[]; extra
           {label("Journey stage", "Where are they in their journey?")}
           {stages.map((st, i) => (
             <div key={st.name} className={`sh${i === hov ? " hov" : ""}`} onMouseEnter={() => setHov(i)}>
-              <button type="button" aria-pressed={i === sel} onFocus={() => setHov(i)} onBlur={() => setHov(null)} onClick={() => setSel(i)}>
+              <button type="button" aria-pressed={i === sel} onFocus={() => setHov(i)} onBlur={() => setHov(null)} onClick={() => setSel(sel === i ? null : i)}>
                 <small>Stage {i + 1}</small>{st.name}
               </button>
             </div>
@@ -123,6 +124,7 @@ function JourneyMap({ stages, extra, initials }: { stages: JourneyStage[]; extra
           ))}
         </div>
       </div>
+      {cur && sel !== null && (
       <div className="stage" aria-live="polite">
         <div className="full">
           <span className="t-label">Stage {sel + 1} of {n}</span>
@@ -140,10 +142,11 @@ function JourneyMap({ stages, extra, initials }: { stages: JourneyStage[]; extra
           {emo(extra[sel])}
         </div>
         <div className="nav">
-          <button type="button" disabled={sel === 0} onClick={() => setSel((v) => Math.max(0, v - 1))}>Previous stage</button>
-          <button type="button" disabled={sel === n - 1} onClick={() => setSel((v) => Math.min(n - 1, v + 1))}>Next stage</button>
+          <button type="button" disabled={sel === 0} onClick={() => setSel(Math.max(0, sel - 1))}>Previous stage</button>
+          <button type="button" disabled={sel === n - 1} onClick={() => setSel(Math.min(n - 1, sel + 1))}>Next stage</button>
         </div>
       </div>
+      )}
     </>
   );
 }
@@ -228,15 +231,35 @@ export default function App() {
 
   const dimCss = PERSONAS.map((_, i) => `.picker[data-sel="${i}"] [data-lanyard]:not([data-lanyard="${i}"]){opacity:.3}`).join("\n");
 
-  const makeAvatars = async () => {
-    const out: Record<string, PdfAvatar> = {};
-    await Promise.all(PERSONAS.map(async (p, i) => {
-      const url = PHOTOS[p.id];
-      let photo;
-      try { photo = url ? await loadJpeg(url) : undefined; } catch { photo = undefined; }
-      out[p.id] = { hex: AVATAR_BG[i % AVATAR_BG.length]!, initials: p.initials, photo };
-    }));
-    return out;
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [busy, setBusy] = useState(false);
+  const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+  /** Captures what the page shows (persona tab or journey tab) for each persona into one PDF. */
+  const exportPdf = async (kind: "persona" | "journey", indices: number[], file: string) => {
+    const prev = { pIndex, tab };
+    setBusy(true);
+    try {
+      const pdf = new ShotPdf();
+      for (const i of indices) {
+        setPIndex(i); setTab(kind);
+        await wait(1400);
+        const body = bodyRef.current;
+        if (!body) continue;
+        if (kind === "persona") {
+          pdf.add(await snap(body, { exclude: ".ptabs, .chip, .stage" }), "portrait");
+        } else {
+          const head = body.querySelector<HTMLElement>(".headline")!;
+          const grid = body.querySelector<HTMLElement>(".jgrid")!;
+          const h = await snap(head, { width: grid.scrollWidth });
+          const g = await snap(grid);
+          pdf.add(stack([h, g]), "landscape", true);
+        }
+      }
+      downloadPdf(file, pdf.build());
+    } finally {
+      setPIndex(prev.pIndex); setTab(prev.tab); setBusy(false);
+    }
   };
 
   useEffect(() => {
@@ -265,17 +288,17 @@ export default function App() {
         </div>
         <div className="controls">
           <div className="btn-row">
-            <button type="button" className="hbtn hbtn-primary" disabled={!selected}
+            <button type="button" className="hbtn hbtn-primary" disabled={!selected || busy}
               title={selected ? undefined : "Select a persona first"}
-              onClick={async () => downloadPdf(`persona-${persona.id}.pdf`, personaPdf([persona], await makeAvatars()))}>
-              Download PDF
+              onClick={() => exportPdf(tab, [pIndex!], `${tab}-${persona.id}.pdf`)}>
+              {busy ? "Preparing…" : "Download PDF"}
             </button>
             <button type="button" className="hbtn hbtn-secondary"
-              onClick={async () => downloadPdf("personas-all.pdf", personaPdf(PERSONAS, await makeAvatars()))}>
+              disabled={busy} onClick={() => exportPdf("persona", PERSONAS.map((_, i) => i), "personas-all.pdf")}>
               Download all PDFs
             </button>
             <button type="button" className="hbtn hbtn-secondary"
-              onClick={async () => downloadPdf("persona-journeys.pdf", journeyPdf(PERSONAS, await makeAvatars()))}>
+              disabled={busy} onClick={() => exportPdf("journey", PERSONAS.map((_, i) => i), "persona-journeys.pdf")}>
               Download journeys PDF
             </button>
             <button type="button" className="hbtn hbtn-secondary" aria-label="Toggle light or dark theme" onClick={toggleTheme}>Theme</button>
@@ -307,11 +330,12 @@ export default function App() {
         />
         </div>
       {selected && (
-        <div className="picker-body">
+        <div className="picker-body" ref={bodyRef}>
           <div className="headline">
             <div className="headline-avatar"><img src={imageFor(persona, pIndex ?? 0)} alt="" width={96} height={96} /></div>
             <h2 className="t-h1" id="persona-headline">{persona.name}</h2>
             <p className="headline-role"><b>{persona.segment}</b> · {persona.title}</p>
+            <p className="headline-bio">{persona.bio ?? blurb(persona.intro[0] ?? "")}</p>
             <span className={`badge ${RATING_CLASS[persona.rating] ?? ""}`}>Evidence: {persona.rating}</span>
           </div>
 
