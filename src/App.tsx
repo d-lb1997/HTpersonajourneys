@@ -72,7 +72,7 @@ const JOURNEY_ROWS = [
   ["pains", "Pain points", "What isn't working?", "pain"],
 ] as const;
 
-const DEVICE_NAME: Record<string, string> = { desktop: "Desktop", mobile: "Mobile", kiosk: "Kiosk", none: "No device access" };
+const DEVICE_NAME: Record<string, string> = { desktop: "PC/Desktop", mobile: "Mobile", kiosk: "Kiosk", none: "No device access" };
 
 function StageDevice({ x, initials }: { x?: StageExtra; initials: string }) {
   if (!x) return null;
