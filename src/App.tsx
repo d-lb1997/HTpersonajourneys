@@ -48,6 +48,14 @@ function blurb(text: string) {
   return clause.charAt(0).toUpperCase() + clause.slice(1);
 }
 
+const GROUP_HINT: Record<string, string> = {
+  Behaviour: "what they do today and how they work",
+  Goals: "what they want to achieve",
+  "Pain points": "what gets in their way or frustrates them",
+  "Needs and wishes": "what they need or wish they could do",
+  "More context": "background that helps understand them",
+};
+
 const CORE_GROUPS = ["Behaviour", "Goals", "Pain points", "Needs and wishes"] as const;
 const PLAIN_TITLES = new Set(["What they do today", "Goals", "Pain points", "What they wish they could do"]);
 
@@ -379,7 +387,7 @@ export default function App() {
                 return (
                   <section key={g}>
                     <h3>{g}</h3>
-                    {bs.length === 0 && <div className="undoc undoc-lg">Not yet documented</div>}
+                    {bs.length === 0 && <div className="undoc undoc-lg">Not yet documented ({GROUP_HINT[g]})</div>}
                     {bs.map((b, i) => <BlockView key={i} b={b} />)}
                   </section>
                 );
