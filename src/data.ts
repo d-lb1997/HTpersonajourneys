@@ -541,7 +541,7 @@ export const PERSONAS: Persona[] = [
       "Firstly need to understand what can be provided."
     ],
     "quoteNote": "",
-    "success": "he can sign in without thinking about it, finds the policies, people and systems she needs from one homepage, and gets relevant site news in Teams and email without having to go looking.",
+    "success": "she can sign in without thinking about it, finds the policies, people and systems she needs from one homepage, and gets relevant site news in Teams and email without having to go looking.",
     "interpretation": "the barrier is adoption, not usability: access, awareness and relevance come before any feature redesign.",
     "moscow": null,
     "devices": [
