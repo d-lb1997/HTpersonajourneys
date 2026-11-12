@@ -437,3 +437,5 @@ ol.doc-list { list-style: decimal; }
   color: var(--muted-foreground); font-size: var(--fs-caption); font-style: italic;
 }
 .undoc-lg { min-height: 160px; }
+.jgrid .sh button small, .jgrid .sh button { color: #FFFFFF; }
+.jgrid .sh button small { color: #E2ECF9; opacity: 1; }
