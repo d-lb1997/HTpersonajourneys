@@ -63,7 +63,8 @@ export const PERSONAS: Persona[] = [
       "site": "HellermannTyton GmbH & Co. KG"
     },
     "initials": "J",
-    "short": "Jonas",
+    "short": "Julia",
+    "bio": "Works in sales, customer service, product management or marketing support. Visits daily or several times a week, often has SAP or STEP open next to it, and works across countries.",
     "title": "Product & Technical Information Searcher",
     "segment": "Current user",
     "intro": [
