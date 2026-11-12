@@ -450,10 +450,10 @@ export const PERSONAS: Persona[] = [
   {
     "id": "site-nonuser",
     "org": {
-      "city": "Jundiaí",
+      "city": "São Paulo",
       "country": "BR",
-      "lat": -23.19,
-      "lng": -46.88,
+      "lat": -23.55,
+      "lng": -46.63,
       "site": "HellermannTyton Brazil"
     },
     "initials": "CS",
