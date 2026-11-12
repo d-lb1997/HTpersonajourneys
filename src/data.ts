@@ -405,10 +405,10 @@ export const PERSONAS: Persona[] = [
     },
     "initials": "LM",
     "short": "Laura",
-    "title": "Department Representative & HR Lead",
+    "title": "Department Representative",
     "segment": "Department representative",
     "intro": [
-      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]. For HR and communications, they also need to reach exactly the right audience, locally and globally, without overloading anyone."
+      "This persona needs one place to run their department's documents, news and collaboration, and today's intranet does not give them that. The segment is \"Department Representatives\": individuals from departments such as HR, IT, Marketing and Operations who can speak to their department's needs [S2, slide 3]. Finance and Sales also want dedicated spaces or chat [S6, slide 4]. When they share news, they also need to reach exactly the right audience, locally and globally, without overloading anyone."
     ],
     "rating": "Moderate",
     "evidence": "Moderate. The needs are well documented, but are assigned to this persona by topic.",
@@ -464,7 +464,7 @@ export const PERSONAS: Persona[] = [
         "group": "Needs and wishes"
       },
       {
-        "title": "Why communication matters for HR",
+        "title": "Why communication matters",
         "note": "",
         "items": [
           "Employees told HR they want better communication and more clarity. The reality today is a decentralised organisation that is strong locally and harder to connect globally [S4, \"Communication + The Intranet\"].",
@@ -475,7 +475,7 @@ export const PERSONAS: Persona[] = [
         "group": "More context"
       },
       {
-        "title": "HR and communications: reach",
+        "title": "Communications: reach",
         "note": "",
         "items": [
           "Give everyone the same landing page each morning, so important information reaches all employees in the same way at the same time [S1, \"Global Communication\"].",
@@ -487,7 +487,7 @@ export const PERSONAS: Persona[] = [
         "group": "Goals"
       },
       {
-        "title": "HR and communications: welcome and recognise",
+        "title": "Communications: welcome and recognise",
         "note": "",
         "items": [
           "Announce new employees with a photo as part of onboarding [S1, \"Global / Loc NEW employee announcements\"].",
@@ -498,7 +498,7 @@ export const PERSONAS: Persona[] = [
         "group": "Goals"
       },
       {
-        "title": "HR and communications: run HR processes",
+        "title": "Department processes and policies",
         "note": "",
         "items": [
           "Run local and global employee surveys through the intranet and share the results [S1, \"Employee Surveys\"].",
@@ -510,7 +510,7 @@ export const PERSONAS: Persona[] = [
         "group": "Goals"
       },
       {
-        "title": "HR and communications",
+        "title": "Communications",
         "note": "",
         "items": [
           "Announcements go out by email, there is no global digital newsletter, and nobody maintains or deletes old content [S7, \"frustrates you\"].",
@@ -522,7 +522,7 @@ export const PERSONAS: Persona[] = [
         "group": "Pain points"
       },
       {
-        "title": "HR and communications: knowing it works",
+        "title": "Communications: knowing it works",
         "note": "",
         "items": [
           "Respondents suggest measuring visits, active users, top search terms and failed searches, plus follow-up surveys and engagement on posts [S7, \"How should we measure\"]."
@@ -671,7 +671,7 @@ export const PERSONAS: Persona[] = [
         "works": []
       },
       {
-        "name": "Run HR processes",
+        "name": "Run department processes",
         "actions": [
           "Run local and global employee surveys and share the results [S1]",
           "Advertise open roles, filterable by business unit, country, region or global [S1]",
