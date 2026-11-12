@@ -1339,3 +1339,40 @@ export const DOC: DocSection[] = [
     ]
   }
 ];
+
+export interface StageExtra { device: DeviceType | "none"; emoji: string; feeling: string }
+/** Per-stage device and inferred emotion for the journey map (interpretation of the documented pain points). */
+export const JOURNEY_EXTRA: Record<string, StageExtra[]> = {
+  "product-searcher": [
+    { device: "desktop", emoji: "😤", feeling: "Frustrated by the search" },
+    { device: "desktop", emoji: "😐", feeling: "Mixed: finds it, but must filter noise" },
+    { device: "desktop", emoji: "😣", feeling: "Annoyed when documents are missing" },
+    { device: "desktop", emoji: "😐", feeling: "Routine, but juggling many systems" },
+    { device: "desktop", emoji: "😕", feeling: "Dependent on others" },
+  ],
+  frontline: [
+    { device: "kiosk", emoji: "😐", feeling: "Informed second-hand" },
+    { device: "none", emoji: "😞", feeling: "Left out" },
+    { device: "mobile", emoji: "🤔", feeling: "Unknown, to validate" },
+  ],
+  "dept-rep": [
+    { device: "desktop", emoji: "😩", feeling: "Overloaded by scattered tools" },
+    { device: "desktop", emoji: "😤", feeling: "Frustrated that updates don't land" },
+    { device: "desktop", emoji: "😕", feeling: "Stretched across channels" },
+    { device: "desktop", emoji: "😕", feeling: "Repeating the same answers" },
+    { device: "desktop", emoji: "🙂", feeling: "Keen, but short on tools" },
+    { device: "desktop", emoji: "😐", feeling: "Routine" },
+  ],
+  "new-joiner": [
+    { device: "desktop", emoji: "🙂", feeling: "Welcomed" },
+    { device: "desktop", emoji: "😟", feeling: "Lost" },
+    { device: "desktop", emoji: "🤔", feeling: "Unsure where to start" },
+    { device: "desktop", emoji: "😐", feeling: "Searching for people" },
+  ],
+  "remote-hybrid": [
+    { device: "mobile", emoji: "😕", feeling: "Out of the loop" },
+    { device: "desktop", emoji: "😐", feeling: "Scattered" },
+    { device: "desktop", emoji: "🙂", feeling: "At home in Teams" },
+    { device: "mobile", emoji: "😐", feeling: "Neutral" },
+  ],
+};

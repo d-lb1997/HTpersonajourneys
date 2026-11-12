@@ -9,7 +9,7 @@ import TestimonialGlobe, { type GlobeTestimonial } from "@/components/ui/testimo
 import TeamLanyardRail, { type LanyardMember } from "@/components/ui/team-lanyard-rail";
 import { downloadPdf, journeyPdf, loadJpeg, personaPdf, type PdfAvatar } from "@/personaPdf";
 import { stripSources } from "@/lib/text";
-import { PERSONAS, type Block, type DeviceType, type JourneyStage, type Persona } from "@/data";
+import { JOURNEY_EXTRA, PERSONAS, type Block, type StageExtra, type DeviceType, type JourneyStage, type Persona } from "@/data";
 
 function avatar(initials: string, bg: string) {
   const fg = bg === "#ADC7EA" ? "#234F9A" : "#FFFFFF";
@@ -66,27 +66,39 @@ function Bullets({ items }: { items: string[] }) {
 }
 
 const JOURNEY_ROWS = [
-  ["actions", "Actions & goals", ""],
-  ["touchpoints", "Touchpoints", ""],
-  ["pains", "Pain points", "pain"],
-  ["opps", "Opportunities", "opp"],
-  ["works", "What works", ""],
+  ["actions", "User activity", "What are they trying to do?", ""],
+  ["touchpoints", "Touchpoints", "Where/how do they interact?", ""],
+  ["opps", "User needs", "What do they need at this point?", "opp"],
+  ["pains", "Pain points", "What isn't working?", "pain"],
 ] as const;
 
-/** Interactive journey map: hover a stage to highlight it, click to see its full detail. */
-function JourneyMap({ stages }: { stages: JourneyStage[] }) {
+const DEVICE_NAME: Record<string, string> = { desktop: "Desktop", mobile: "Mobile", kiosk: "Kiosk", none: "No device access" };
+
+function StageDevice({ x, initials }: { x?: StageExtra; initials: string }) {
+  if (!x) return null;
+  return (
+    <div className="jdev">
+      {x.device === "none" ? <span className="jdev-none" aria-hidden>⊘</span> : <Device type={x.device} screen={initials} />}
+      <small>{DEVICE_NAME[x.device]}</small>
+    </div>
+  );
+}
+
+/** Journey map: stage, activity, touchpoints (with device), needs, pain points, emotions. */
+function JourneyMap({ stages, extra, initials }: { stages: JourneyStage[]; extra: StageExtra[]; initials: string }) {
   const [sel, setSel] = useState(0);
   const [hov, setHov] = useState<number | null>(null);
   const n = stages.length;
-  const rows = JOURNEY_ROWS.filter(([k]) => k !== "works" || stages.some((st) => st.works.length > 0));
-  const maxPain = Math.max(1, ...stages.map((st) => st.pains.length));
   const cur = stages[sel]!;
   const cellList = (items: string[]) => (items.length ? <Bullets items={items} /> : <span className="t-caption">Not documented</span>);
+  const cls = (i: number) => `${i === sel ? " sel" : ""}${i === hov ? " hov" : ""}`;
+  const label = (t: string, q: string) => <div className="rl">{t}<small>{q}</small></div>;
+  const emo = (x?: StageExtra) => x && <div className="jemo"><span aria-hidden>{x.emoji}</span><small>{x.feeling}</small></div>;
   return (
     <>
       <div className="journey">
         <div className="jgrid" data-hover={hov ?? undefined} onMouseLeave={() => setHov(null)} style={{ ["--n" as string]: n }}>
-          <div className="rl">Stage</div>
+          {label("Journey stage", "Where are they in their journey?")}
           {stages.map((st, i) => (
             <div key={st.name} className={`sh${i === hov ? " hov" : ""}`} onMouseEnter={() => setHov(i)}>
               <button type="button" aria-pressed={i === sel} onFocus={() => setHov(i)} onBlur={() => setHov(null)} onClick={() => setSel(i)}>
@@ -94,23 +106,20 @@ function JourneyMap({ stages }: { stages: JourneyStage[] }) {
               </button>
             </div>
           ))}
-          <div className="rl">Friction</div>
-          {stages.map((st, i) => (
-            <div key={`f${i}`} className={`cell friction${i === sel ? " sel" : ""}${i === hov ? " hov" : ""}`} onMouseEnter={() => setHov(i)} onClick={() => setSel(i)}
-              aria-label={`${st.pains.length} documented pain points`}>
-              <span className="friction-bar" style={{ width: `${(st.pains.length / maxPain) * 100}%` }} />
-              <span className="t-caption">{st.pains.length} pain point{st.pains.length === 1 ? "" : "s"}</span>
-            </div>
-          ))}
-          {rows.map(([key, label, cls]) => (
+          {JOURNEY_ROWS.map(([key, t, q, c]) => (
             <Fragment key={key}>
-              <div className="rl">{label}</div>
+              {label(t, q)}
               {stages.map((st, i) => (
-                <div key={i} className={`cell ${cls}${i === sel ? " sel" : ""}${i === hov ? " hov" : ""}`} onMouseEnter={() => setHov(i)} onClick={() => setSel(i)}>
+                <div key={i} className={`cell ${c}${cls(i)}`} onMouseEnter={() => setHov(i)} onClick={() => setSel(i)}>
+                  {key === "touchpoints" && <StageDevice x={extra[i]} initials={initials} />}
                   {cellList(st[key])}
                 </div>
               ))}
             </Fragment>
+          ))}
+          {label("Emotions", "How do they feel?")}
+          {stages.map((_, i) => (
+            <div key={`e${i}`} className={`cell${cls(i)}`} onMouseEnter={() => setHov(i)} onClick={() => setSel(i)}>{emo(extra[i])}</div>
           ))}
         </div>
       </div>
@@ -119,12 +128,17 @@ function JourneyMap({ stages }: { stages: JourneyStage[] }) {
           <span className="t-label">Stage {sel + 1} of {n}</span>
           <h4 className="t-h2" style={{ margin: "2px 0 0" }}>{cur.name}</h4>
         </div>
-        {rows.map(([key, label, cls]) => (
+        {JOURNEY_ROWS.map(([key, t, , c]) => (
           <div key={key}>
-            <h3>{label}</h3>
-            <span className={cls}>{cellList(cur[key])}</span>
+            <h3>{t}</h3>
+            {key === "touchpoints" && <StageDevice x={extra[sel]} initials={initials} />}
+            <span className={c}>{cellList(cur[key])}</span>
           </div>
         ))}
+        <div>
+          <h3>Emotions</h3>
+          {emo(extra[sel])}
+        </div>
         <div className="nav">
           <button type="button" disabled={sel === 0} onClick={() => setSel((v) => Math.max(0, v - 1))}>Previous stage</button>
           <button type="button" disabled={sel === n - 1} onClick={() => setSel((v) => Math.min(n - 1, v + 1))}>Next stage</button>
@@ -182,6 +196,7 @@ export default function App() {
   const [pIndex, setPIndex] = useState<number | null>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const [railVisible, setRailVisible] = useState(true);
+  const [tab, setTab] = useState<"persona" | "journey">("persona");
 
   const selected = pIndex !== null;
   const persona: Persona = PERSONAS[pIndex ?? 0]!;
@@ -300,7 +315,24 @@ export default function App() {
             <span className={`badge ${RATING_CLASS[persona.rating] ?? ""}`}>Evidence: {persona.rating}</span>
           </div>
 
-          <div className="panel" aria-live="polite">
+          <div className="ptabs" role="tablist" aria-label="Persona views">
+            {(["persona", "journey"] as const).map((t) => (
+              <button key={t} type="button" role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>
+                {t === "persona" ? "Persona" : "Journey Map"}
+              </button>
+            ))}
+          </div>
+
+          {tab === "journey" ? (
+          <div className="panel" role="tabpanel">
+            <section>
+              <h3>Journey map</h3>
+              <p className="caption-p">Built only from what is known about this persona. Hover a stage to follow it, click to see the detail. Empty cells are not yet documented. Emotions are inferred from the documented pain points.</p>
+              <JourneyMap key={persona.id} stages={persona.journey} extra={JOURNEY_EXTRA[persona.id] ?? []} initials={persona.initials} />
+            </section>
+          </div>
+          ) : (
+          <div className="panel" role="tabpanel" aria-live="polite">
             {persona.intro.map((t, i) => <p key={i} className="doc-p"><Rich text={t} /></p>)}
             <p className="doc-p caption-p"><b>Evidence rating:</b> <Rich text={persona.evidence} /></p>
 
@@ -336,12 +368,6 @@ export default function App() {
                 {persona.blocks.filter((b) => b.group === "More context").map((b, i) => <BlockView key={i} b={b} alwaysTitle />)}
               </section>
             )}
-
-            <section>
-              <h3>Journey map</h3>
-              <p className="caption-p">Built only from what is known about this persona. Hover a stage to follow it, click to see the detail. Empty cells are not yet documented.</p>
-              <JourneyMap key={persona.id} stages={persona.journey} />
-            </section>
 
             {persona.quotes.length > 0 && (
               <section>
@@ -396,6 +422,7 @@ export default function App() {
             )}
 
           </div>
+          )}
 
           <button type="button" className="chip" onClick={() => setPIndex(null)}>Clear selection</button>
         </div>
