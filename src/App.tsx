@@ -91,7 +91,7 @@ function JourneyMap({ stages, extra, initials }: { stages: JourneyStage[]; extra
   const [hov, setHov] = useState<number | null>(null);
   const n = stages.length;
   const cur = sel === null ? null : stages[sel]!;
-  const cellList = (items: string[]) => (items.length ? <Bullets items={items} /> : <span className="t-caption">Not documented</span>);
+  const cellList = (items: string[]) => (items.length ? <Bullets items={items} /> : <div className="undoc">Not documented</div>);
   const cls = (i: number) => `${i === sel ? " sel" : ""}${i === hov ? " hov" : ""}`;
   const label = (t: string, q: string) => <div className="rl">{t}<small>{q}</small></div>;
   const emo = (x?: StageExtra) => x && <div className="jemo"><span aria-hidden>{x.emoji}</span><small>{x.feeling}</small></div>;
@@ -379,7 +379,7 @@ export default function App() {
                 return (
                   <section key={g}>
                     <h3>{g}</h3>
-                    {bs.length === 0 && <p className="caption-p">Not yet documented.</p>}
+                    {bs.length === 0 && <div className="undoc undoc-lg">Not yet documented</div>}
                     {bs.map((b, i) => <BlockView key={i} b={b} />)}
                   </section>
                 );
@@ -415,7 +415,7 @@ export default function App() {
                   {([["Must have", m.must], ["Should have", m.should], ["Could have", m.could], ["Won't have", m.wont]] as const).map(([label, items]) => (
                     <div key={label} className="moscow-col" data-kind={label.split(" ")[0]!.toLowerCase()}>
                       <b>{label}</b>
-                      {items.length ? <Bullets items={[...items]} /> : <span className="t-caption">Nothing listed</span>}
+                      {items.length ? <Bullets items={[...items]} /> : <div className="undoc">Nothing listed</div>}
                     </div>
                   ))}
                 </div>

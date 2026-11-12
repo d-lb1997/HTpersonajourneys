@@ -428,3 +428,12 @@ ol.doc-list { list-style: decimal; }
 .jgrid .sh.hov button:not([aria-pressed="true"]) { background: #628FDB; }
 .jgrid .sh button[aria-pressed="true"] { background: var(--primary); color: #FFFFFF; box-shadow: inset 0 -4px 0 #C20012; }
 .headline-bio { flex-basis: 100%; order: 4; margin: 4px 0 0; max-width: 70ch; font-size: var(--fs-body); }
+
+/* placeholder for undocumented content: room for workshop sticky notes (e.g. Miro) */
+.undoc {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  min-height: 72px; padding: 10px; border: 2px dashed var(--primary); border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--muted-foreground); font-size: var(--fs-caption); font-style: italic;
+}
+.undoc-lg { min-height: 160px; }
